@@ -10,6 +10,7 @@ import {
   TextInput,
 } from "react-native";
 import Icons from "react-native-vector-icons/MaterialCommunityIcons";
+import { router } from 'expo-router'
 
 
 const Header = () => {
@@ -35,7 +36,8 @@ const Header = () => {
           className="h-10 mt-1 w-[60%] object-contain"
           style={{ resizeMode: "contain" }}
         />
-        <TouchableOpacity>
+        <TouchableOpacity onPress={() => {router.push('/productcart')}}>
+
           <View>
             <View style={styles.cartIcon}>
               <Icons name="cart" size={30} color={"#000"} />
@@ -48,13 +50,13 @@ const Header = () => {
           </View>
         </TouchableOpacity>
       </View>
-      <View>
+      {/* <View>
         <TextInput
           placeholder="search..."
           className="border-salte-200 border-[0.5px] mx-4 my-2 rounded-xl px-5"
           style={{ height: 50, backgroundColor: "white" }}
         />
-      </View>
+      </View> */}
     </View>
   );
 };

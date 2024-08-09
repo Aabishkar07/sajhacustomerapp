@@ -1,46 +1,22 @@
-import { View, Text, Image } from 'react-native';
-import React from 'react';
+import { View, Text, TouchableOpacity, Image,ImageBackground } from 'react-native'
+import React, { useState } from 'react'
+// import { HeartIcon } from 'react-native-heroicons/solid'
 
-export default function Card({ category }) {
+export default function Category({category}) {
+
+    // console.log("hiii",category)
   return (
-    <View style={{ marginHorizontal: 8, borderRadius: 15, overflow: 'hidden', width: 175, position: 'relative' }}>
-      <View className="flex flex-row"
-        // style={{
-        //   shadowColor: '#000', // Example shadow color, adjust as needed
-        //   shadowRadius: 40,
-        //   shadowOffset: { width: 0, height: 10 },
-        //   shadowOpacity: 0.6,
-        //   overflow: 'hidden',
+    <View className="mx-1 overflow-hidden w-[95px] " >
         
-        // }}
-      >
-        <Image 
-          source={{ uri: 'https://via.placeholder.com/64' }} 
-          style={{ width: '100%', height: 112 }} 
-        />
-
-<Image 
-          source={{ uri: 'https://via.placeholder.com/64' }} 
-          style={{ width: '100%', height: 112 }} 
-        />
-      </View>
-
-      <View
-        style={{
-          position: 'absolute',
-          bottom: 8,
-          left: 8,
-          right: 8,
-          alignItems: 'center',
-          backgroundColor: 'rgba(0, 0, 0, 0.5)',
-          borderRadius: 8,
-          paddingVertical: 4,
-        }}
-      >
-        <Text style={{ fontWeight: 'bold', fontSize: 18, color: 'white', textAlign: 'center' }}>
-       Name
-        </Text>
-      </View>
+    {/* <View className="flex-row justify-center" style={{boxShadow: '0px 120px 100px -40px rgba(0, 0, 0, 1)'}}> */}
+    <View className="flex-row justify-center rounded-full overflow-hidden">
+        <Image source={{uri:category.image}} className="w-16 h-16 rounded-full"  />
     </View>
-  );
+
+    <View className="p-1">
+        <Text className="font-semibold text-[14px] text-center text-[#ec4c15] shadow">{category.name}</Text>
+        {/* <Text className="text-lg text-gray-600 shadow   ">$ {people.price}</Text> */}
+    </View>
+</View>
+  )
 }
