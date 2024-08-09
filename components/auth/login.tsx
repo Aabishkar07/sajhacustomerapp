@@ -94,14 +94,14 @@ const Login = () => {
 
                         <View className="flex-row justify-between w-full ">
                             <View className="w-[48%] mr-1">
-                                {/* <TouchableOpacity className="w-full  py-2.5 border rounded-lg duration-150 " onPress={navigation.navigate.openDrawer}  > */}
+                                <TouchableOpacity className="w-full  py-1.5 border rounded-lg duration-150 " >
                                     <Text className="text-[#0F6FFF] text-center text-lg p-2 mb-1">
                                         Google
                                     </Text>
-                                {/* </TouchableOpacity> */}
+                                </TouchableOpacity>
                             </View>
                             <View className="w-[48%]">
-                                <TouchableOpacity className="w-full py-2.5 border rounded-lg duration-150 " >
+                                <TouchableOpacity className="w-full py-1.5 border rounded-lg duration-150 " >
                                     <Text className="text-[#0F6FFF] text-center text-lg p-2 mb-1">
                                         Facebook
                                     </Text>

@@ -11,8 +11,10 @@ export default function TabLayout() {
   return (
     <Tabs
       screenOptions={{
-        tabBarActiveTintColor: Colors[colorScheme ?? 'light'].tint,
+        
         headerShown: false,
+        tabBarActiveTintColor: "red",
+        tabBarInactiveTintColor: "gray",
       }}>
       <Tabs.Screen
         name="homepage"
@@ -28,9 +30,9 @@ export default function TabLayout() {
         options={{
           title: 'profile',
           headerShown: false,
-          // tabBarIcon: ({ color, focused }) => (
-          //   <TabBarIcon name={focused ? 'home' : 'home-outline'} color={color} />
-          // ),
+          tabBarIcon: ({ color, focused }) => (
+            <TabBarIcon name={focused ? 'person' : 'person-outline'} color={color} />
+          ),
         }}
       />
     
@@ -40,7 +42,16 @@ export default function TabLayout() {
         options={{
           title: 'Explore',
           tabBarIcon: ({ color, focused }) => (
-            <TabBarIcon name={focused ? 'code-slash' : 'code-slash-outline'} color={color} />
+            <TabBarIcon name={focused ? 'search' : 'search-outline'} color={color} />
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name="notification"
+        options={{
+          title: 'Notification',
+          tabBarIcon: ({ color, focused }) => (
+            <TabBarIcon name={focused ? 'notifications' : 'notifications-outline'} color={color} />
           ),
         }}
       />
