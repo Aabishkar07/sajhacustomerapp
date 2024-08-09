@@ -20,7 +20,7 @@ import {
   Button,
 } from "react-native";
 
-const Index = () => {
+const Homepage = () => {
   const featuredcategorys = [
     {
       name: "Australian Orange",
@@ -106,13 +106,13 @@ const Index = () => {
         <ImageSlider />
       </View>
       <ScrollView>
-        <View className="bg-white h-full pt-10">
+        <View className="h-full pt-10 bg-white">
           <View className="">
             <View className="">
               {/* category  */}
               <View>
                 <View className="flex-row items-center justify-between mx-5">
-                  <View className=" ">
+                  <View className="">
                     <Text className="text-2xl text-[#ec4c15]">Categories</Text>
                   </View>
                   <View>
@@ -125,7 +125,7 @@ const Index = () => {
                 </View>
 
                 {/* carousel */}
-                <View className="carousel mt-5 mx-1">
+                <View className="mx-1 mt-5 carousel">
                   <ScrollView horizontal showsHorizontalScrollIndicator={false}>
                     {featuredcategorys.map((category, index) => {
                       return <Category category={category} key={index} />;
@@ -148,7 +148,7 @@ const Index = () => {
   );
 };
 
-export default Index;
+export default Homepage;
 
 const styles = StyleSheet.create({
   gridContainer: {
