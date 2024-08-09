@@ -8,17 +8,17 @@ const Login = () => {
    
 
     return (
-            <ScrollView>
+            <ScrollView className="h-full bg-white">
         <SafeAreaView >
 
-            <View className="bg-white w-full h-full">
-                <View className=" relative">
+            <View className="w-full h-full ">
+                <View className="relative ">
                     <View className="">
-                        <ImageBackground className="w-full object-contain h-64 "
+                        <ImageBackground className="object-contain w-full h-56 "
                             source={require("../../assets/images/signup.jpg")}
                         />
                     </View>
-                    <View className="absolute top-28 left-8">
+                    <View className="absolute top-[30%] left-8">
                         <View>
                             <Text className="text-[30px] text-white  font-bold">
                                 Welcome
@@ -37,11 +37,11 @@ const Login = () => {
                     </View>
                 </View>
 
-                <View className="px-8 mt-6">
+                <View className="px-8 ">
                
 
                     {/* email  */}
-                    <View className="my-5 w-full flex-row items-center bg-gray-50 border  rounded-lg border-gray-300">
+                    <View className="flex-row items-center w-full my-5 border border-gray-300 rounded-lg bg-gray-50">
                         <View className="p-2 border-r border-r-[#0F6FFF]">
                             <Icon name="email" size={30} color="#0F6FFF" />
                         </View>
@@ -57,7 +57,7 @@ const Login = () => {
                         </View>
                     </View>
                     {/* password  */}
-                    <View className=" w-full flex-row items-center bg-gray-50 border  rounded-lg border-gray-300">
+                    <View className="flex-row items-center w-full border border-gray-300 rounded-lg bg-gray-50">
                         <View className="p-2 border-r border-r-[#0F6FFF]">
                             <Key name="key" size={30} color="#0F6FFF" />
                         </View>
@@ -80,19 +80,19 @@ const Login = () => {
                             </Text>
                         </TouchableOpacity>
                     </View>
-                    {/* <TouchableOpacity className="w-full  duration-150 " onPress={() => { navigation.navigate('Choose') }}> */}
-                        <Text className="bg-[#0F6FFF] mb-5 text-white text-center p-3 text-lg flex gap-2 rounded-lg">
+                    {/* <TouchableOpacity className="w-full duration-150 " onPress={() => { navigation.navigate('Choose') }}> */}
+                        <Text   className="bg-[#0F6FFF] mb-5 text-white text-center p-3 text-lg flex gap-2 rounded-lg">
                             Login
                         </Text>
                     {/* </TouchableOpacity> */}
 
                     <View className="my-3">
                         <View>
-                            <Text className=" w-fit text-sm bg-red px-2 mb-5 text-center inset-x-0 mx-auto">Or
+                            <Text className="inset-x-0 px-2 mx-auto mb-5 text-sm text-center w-fit bg-red">Or
                                 continue with</Text>
                         </View>
 
-                        <View className="flex-row  justify-between w-full ">
+                        <View className="flex-row justify-between w-full ">
                             <View className="w-[48%] mr-1">
                                 {/* <TouchableOpacity className="w-full  py-2.5 border rounded-lg duration-150 " onPress={navigation.navigate.openDrawer}  > */}
                                     <Text className="text-[#0F6FFF] text-center text-lg p-2 mb-1">
@@ -115,7 +115,7 @@ const Login = () => {
                 <View className="px-8">
                     <View>
                         <Text className="text-center">Dont't have an account ? </Text>
-                        <TouchableOpacity onPress={() => {router.push('/signup')}}>
+                        <TouchableOpacity onPress={() => {router.push('/profile/signup')}}>
                             <Text className="text-center underline text-lg text-[#0F6FFF]">Signup</Text>
                         </TouchableOpacity>
                     </View>

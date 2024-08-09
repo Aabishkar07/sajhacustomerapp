@@ -11,10 +11,10 @@ export class signup extends Component {
       <View>
         <ScrollView>
         <SafeAreaView>
-            <View className="bg-white h-full">
+            <View className="h-full bg-white">
                 <View className="relative">
                     <View className="">
-                        <ImageBackground className="w-full object-contain h-64 "
+                        <ImageBackground className="object-contain w-full h-64 "
                             source={require("../../assets/images/signup.jpg")}
                         />
                     </View>
@@ -39,7 +39,7 @@ export class signup extends Component {
 
                 <View className="px-8 mt-6">
                     {/* email  */}
-                    <View className="my-5 w-full flex-row items-center bg-gray-50 border  rounded-lg border-gray-300">
+                    <View className="flex-row items-center w-full my-5 border border-gray-300 rounded-lg bg-gray-50">
                         <View className="p-2 border-r border-r-[#0F6FFF]">
                             <Icon name="email" size={30} color="#0F6FFF" />
                         </View>
@@ -56,7 +56,7 @@ export class signup extends Component {
                     </View>
 
                     {/* password  */}
-                    <View className="mb-5 w-full flex-row items-center bg-gray-50 border  rounded-lg border-gray-300">
+                    <View className="flex-row items-center w-full mb-5 border border-gray-300 rounded-lg bg-gray-50">
                         <View className="p-2 border-r border-r-[#0F6FFF]">
                             <Key name="key" size={30} color="#0F6FFF" />
                         </View>
@@ -73,7 +73,7 @@ export class signup extends Component {
                     </View>
 
                     {/*confirm password  */}
-                    <View className="mb-9 w-full flex-row items-center bg-gray-50 border  rounded-lg border-gray-300">
+                    <View className="flex-row items-center w-full border border-gray-300 rounded-lg mb-9 bg-gray-50">
                         <View className="p-2 border-r border-r-[#0F6FFF]">
                             <Key name="key" size={30} color="#0F6FFF" />
                         </View>
@@ -92,7 +92,7 @@ export class signup extends Component {
 
                     <TouchableOpacity onPress={()=>{
                         router.push('/otpcheck')
-                    }} className="w-full  duration-150 " >
+                    }} className="w-full duration-150 " >
                         <Text className="bg-[#0F6FFF] mb-5 text-white text-center p-3 text-lg flex gap-2 rounded-lg">
                             Signup
                         </Text>
@@ -100,11 +100,11 @@ export class signup extends Component {
 
                     <View className="my-3">
                         <View>
-                            <Text className=" w-fit text-sm bg-red px-2 mb-5 text-center inset-x-0 mx-auto">Or
+                            <Text className="inset-x-0 px-2 mx-auto mb-5 text-sm text-center  w-fit bg-red">Or
                                 continue with</Text>
                         </View>
 
-                        <View className="flex-row  justify-between w-full ">
+                        <View className="flex-row justify-between w-full ">
                             <View className="w-[48%] mr-1">
                                 <TouchableOpacity className="w-full  py-2.5 border rounded-lg duration-150 " >
                                     <Text className="text-[#0F6FFF] text-center text-lg p-2 mb-1">
