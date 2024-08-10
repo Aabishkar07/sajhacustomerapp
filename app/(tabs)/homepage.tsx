@@ -2,7 +2,9 @@ import Category from "@/components/category";
 import Header from "@/components/layouts/Header";
 import Product from "@/components/products/product";
 import ImageSlider from "@/components/slider";
-import React, { useState } from "react";
+import Toast from "react-native-easy-toast";
+
+import React, { useContext, useState } from "react";
 import {router} from 'expo-router';
 import {
   View,
@@ -19,8 +21,15 @@ import {
   TouchableOpacity,
   Button,
 } from "react-native";
+import productsData from "../../product.json";
+import { addCart } from "@/context/func";
+import { AuthContext } from "@/context/context";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const Homepage = () => {
+  const toastRef = React.createRef();
+
+  const auth=useContext(AuthContext)
   const featuredcategorys = [
     {
       name: "Australian Orange",
@@ -91,9 +100,37 @@ const Homepage = () => {
     },
   ];
 
+  const handleCart = async (product) => {
+    try {
+      await addCart(
+        product.id,
+        product.name,
+        product.price,
+        1,
+        product.image_url
+      );
+      auth.loadCart();
+      toastRef.current.show("Added to cart successfully", 3000);
+      // console.log(await AsyncStorage.getItem("cart"));
+    } catch (error) {
+      console.error("Error updating cart:", error);
+    }
+  };
+
+  const toastStyles = StyleSheet.create({
+    container: {
+      backgroundColor: "#366735",
+      // Add any additional styling for the toast here
+    },
+  });
   return (
     <ScrollView>
     <SafeAreaView>
+    <Toast
+        ref={toastRef}
+        position="top"
+        style={toastStyles.container} // Style for the toast
+      />
       <Header />
         <View>
         <TextInput
@@ -133,10 +170,20 @@ const Homepage = () => {
                   </ScrollView>
                 </View>
 
-                <ScrollView contentContainerStyle={styles.gridContainer}>
-                  {featuredproducts.map((product, index) => (
-                    <Product product={product} key={index} />
+                <ScrollView 
+                contentContainerStyle={styles.gridContainer}
+                >
+           
+                   
+                  {productsData.map((product, index) => (
+                    <View className="w-[50%]" key={index}>
+
+                      <Product product={product} 
+      onPressCart={() => handleCart(product)}
+      />
+                    </View>
                   ))}
+                 
                 </ScrollView>
               </View>
             </View>
@@ -152,6 +199,7 @@ export default Homepage;
 
 const styles = StyleSheet.create({
   gridContainer: {
+    flex:1,
     flexDirection: "row",
     flexWrap: "wrap",
     justifyContent: "space-around",

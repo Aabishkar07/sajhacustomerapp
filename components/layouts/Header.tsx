@@ -11,13 +11,27 @@ import {
 } from "react-native";
 import Icons from "react-native-vector-icons/MaterialCommunityIcons";
 import { router } from 'expo-router'
+import { AuthContext } from "@/context/context";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 
 const Header = () => {
   const navigation = useNavigation();
   const [cartItems, setCartItems] = useState(0);
+  const auth = useContext(AuthContext);
 
+  const cartCount = async () => {
+    // const count = await getCart();
+    const count1 = await AsyncStorage.getItem("cart");
+    const count = JSON.parse(count1);
+    console.log(count.length, "length");
+    setCartItems(count.length);
+  };
 
+  useEffect(() => {
+    cartCount();
+    console.log("adsaaa");
+  }, [auth]);
   const handleOpenDrawer = () => {
     navigation.dispatch(DrawerActions.toggleDrawer());
   };

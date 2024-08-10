@@ -1,0 +1,105 @@
+[
+  {
+    "id": 1,
+    "name": "MEN'S BETTER THAN NAKED™ JACKET",
+    "price": 200,
+    "description": "hello world",
+    "discount_price": 80,
+    "discount_percent": "-80%",
+    "image_url": "http://images.thenorthface.com/is/image/TheNorthFace/236x204_CLR/mens-better-than-naked-jacket-AVMH_LC9_hero.png",
+    "category_name": "CO"
+  },
+  {
+    "id": 2,
+    "name": "WOMEN'S BETTER THAN NAKED™ JACKET",
+    "price": 200,
+    "description": "hello world",
+    "discount_price": 80,
+    "discount_percent": "-50%",
+
+    "image_url": "http://images.thenorthface.com/is/image/TheNorthFace/236x204_CLR/womens-better-than-naked-jacket-AVKL_NN4_hero.png",
+    "category_name": "CO"
+  },
+  {
+    "id": 3,
+    "name": "WOMEN'S SINGLE-TRACK SHOE",
+    "price": 200,
+    "description": "hello world",
+    "discount_price": 80,
+    "discount_percent": "-40%",
+
+    "image_url": "http://images.thenorthface.com/is/image/TheNorthFace/236x204_CLR/womens-single-track-shoe-ALQF_JM3_hero.png",
+    "category_name": "CO"
+  },
+  {
+    "id": 4,
+    "name": "Enduro Boa® Hydration Pack",
+    "price": 200,
+    "description": "hello world",
+    "discount_price": 80,
+    "discount_percent": "-30%",
+
+    "image_url": "http://images.thenorthface.com/is/image/TheNorthFace/236x204_CLR/enduro-boa-hydration-pack-AJQZ_JK3_hero.png",
+    "category_name": "CO"
+  },
+  {
+    "id": 5,
+    "name": "Stainless Steel Cooking Utensil Set",
+    "description": "A complete set of stainless steel kitchen Utensils.",
+    "price": 35,
+    "discount_price": 28,
+    "discount_percent": "-20%",
+    "category_name": "Utensils",
+    "image_url": "https://static-01.daraz.com.np/p/7b9dbcbfdc3e2ab2a5cba227d7bba5f1.jpg_750x750.jpg_.webp"
+  },
+  {
+    "id": 6,
+    "name": "Non-Stick Silicone Spatula",
+    "description": "A heat-resistant non-stick silicone spatula for easy cooking.",
+    "price": 10,
+    "discount_price": 8,
+    "discount_percent": "-20%",
+    "category_name": "Utensils",
+    "image_url": "data:image/jpeg;base64,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"
+  },
+  {
+    "id": 7,
+    "name": "Wooden Cooking Spoon Set",
+    "description": "A set of durable wooden cooking spoons for various kitchen tasks.",
+    "price": 15,
+    "discount_price": 12,
+    "discount_percent": "-20%",
+    "category_name": "Utensils",
+    "image_url": "https://cdn11.bigcommerce.com/s-iai44k5nej/images/stencil/original/products/172/1880/BF_Mixing_Spoon-0004__95663.1653489931.png?c=1"
+  },
+  {
+    "id": 9,
+    "name": "iPhone 9",
+    "description": "An apple mobile which is nothing like apple",
+    "price": 549,
+    "discount_price": 12.96,
+    "discount_percent": "-5%",
+    "category_name": "smartphones",
+    "image_url": "https://i.dummyjson.com/data/products/1/thumbnail.jpg"
+  },
+  {
+    "id": 10,
+    "name": "iPhone X",
+    "description": "SIM-Free, Model A19211 6.5-inch Super Retina HD display with OLED technology A12 Bionic chip with ...",
+    "price": 899,
+    "discount_price": 12.96,
+    "discount_percent": "-5%",
+    "category_name": "smartphones",
+    "image_url": "https://i.dummyjson.com/data/products/2/thumbnail.jpg"
+  },
+  {
+    "id": 11,
+    "name": "Samsung Universe 9",
+    "description": "Samsung's new variant which goes beyond Galaxy to the Universe",
+    "price": 1249,
+    "discount_price": 12.96,
+    "discount_percent": "-5%",
+    "category_name": "smartphones",
+    "image_url": "https://i.dummyjson.com/data/products/3/thumbnail.jpg"
+  }
+]

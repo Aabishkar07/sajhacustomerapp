@@ -1,101 +1,97 @@
 import React from 'react';
-import { View, Text, TouchableOpacity, Image, StyleSheet } from 'react-native';
+import { View, Text, TouchableOpacity, Image, StyleSheet, Pressable } from 'react-native';
 import { router } from 'expo-router'
+import Icons from "react-native-vector-icons/MaterialCommunityIcons";
 
-export default function Product({ product }) {
+export default function Product({  product, onPress, onPressCart }) {
   return (
-
-    // <TouchableOpacity onPress={() => {router.push('/signup')}}>
-
-    <View className="mt-5" style={styles.card}>
-      <TouchableOpacity onPress={()=>{
-        router.push('/productdetails')
-      }}>
-      <View style={styles.imageContainer}>
-        <TouchableOpacity style={styles.favIcon}>
-          <Text style={styles.favIconText}>♥</Text>
-        </TouchableOpacity>
-        <Image
-          source={{ uri: product.image }}
-          style={styles.image}
-        />
-      </View>
-      <View style={styles.infoContainer}>
-        <Text style={styles.title}>{product.title}</Text>
-        <Text style={styles.price}>${product.price}</Text>
-        <Text style={styles.description}>{product.description}</Text>
-        <TouchableOpacity style={styles.cartButton}>
-          <Text style={styles.cartButtonText}>Add to Cart</Text>
-        </TouchableOpacity>
-      </View>
-    </TouchableOpacity>
+    <Pressable
+    onPress={() => {router.push('/productdetails')}}
+    // onPress={onPress}
+    className="p-2 mx-2 my-5 border border-gray-200 shadow-sm shadow-slate-200"
+  >
+    <View className="relative">
+      <Image
+        source={{ uri: product.image_url }}
+        className=" p-2 h-[20vh] object-cover"
+      />
     </View>
+    <View style={styles.dis}>
+      <Text
+        style={{ zIndex: 90, color: "#fff" }}
+        className="text-xs font-semibold"
+      >
+        {product.discount_percent}
+      </Text>
+    </View>
+
+    <View className="">
+      <View className="flex-row justify-between px-2 pt-1 pr-1">
+        <View>
+          <Text className="text-xs text-slate-300">
+            {product.category_name}
+          </Text>
+        </View>
+      </View>
+    </View>
+    <View className="flex-row pl-2">
+      <Text style={styles.productName}>{product.name.substring(0, 32)}</Text>
+    </View>
+    <View className="flex-row items-center justify-between">
+      <View className="flex-col pb-2 pl-2 mt-2">
+        <Text className="text-base font-semibold text-orange-700 ">
+          Rs. {product.discount_price}
+        </Text>
+        <Text className="text-sm line-through text-slate-400">
+          Rs. {product.price.toFixed(2)}
+        </Text>
+      </View>
+      <Pressable
+        className="items-center justify-center w-12 h-8 mr-2 bg-blue-600 rounded-lg"
+        onPress={onPressCart}
+      >
+        <Icons name="cart" size={20} color={"#fff"} />
+      </Pressable>
+    </View>
+  </Pressable>
   );
 }
 
 const styles = StyleSheet.create({
-  card: {
-    backgroundColor: '#fff',
+  container: {
+    flex: 1,
+    paddingHorizontal: 16,
+    backgroundColor: "#F5F5F5",
+  },
+  container1: {
+    flex: 1,
+    backgroundColor: "#F5F5F5",
+  },
+  gridItemContainer: {
+    flex: 1,
+    backgroundColor: "#FFFFFF",
     borderRadius: 8,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
-    shadowRadius: 8,
-    elevation: 5,
-    margin: 10,
-   
-    overflow: 'hidden',
-    width: '45%', 
+    width: 200,
   },
-  imageContainer: {
-    position: 'relative',
-  },
-  favIcon: {
-    position: 'absolute',
-    top: 10,
-    right: 10,
-    zIndex: 10,
-    backgroundColor: 'rgba(255, 255, 255, 0.8)',
-    borderRadius: 15,
-    padding: 5,
-  },
-  favIconText: {
-    fontSize: 16,
-    color: 'red',
-  },
-  image: {
-    width: '100%',
-    height: 120, // Reduced height for compact design
-  },
-  infoContainer: {
-    padding: 10,
-  },
-  title: {
-    fontSize: 16,
-    fontWeight: 'bold',
-  },
-  description: {
-    fontSize: 12,
-    color: '#666',
-    marginVertical: 5,
-  },
-  price: {
+  productName: {
     fontSize: 14,
-    fontWeight: 'bold',
-    marginTop: 5,
-    color: '#333',
   },
-  cartButton: {
-    marginTop: 10,
-    backgroundColor: '#0F6FFF', 
-    paddingVertical: 8,
-    paddingHorizontal: 12,
-    borderRadius: 5,
-    alignItems: 'center',
+  dis: {
+    position: "absolute",
+    top: 0,
+    right: 0,
+    width: 50,
+    height: 20,
+    backgroundColor: "#FF5733", // Background color
+    justifyContent: "center",
+    alignItems: "center",
+    borderTopLeftRadius: 10,
+    borderBottomRightRadius: 0,
   },
-  cartButtonText: {
-    fontSize: 14,
-    color: '#fff',
-    fontWeight: 'bold',
-  },
+  // categoryTitle: {
+  //   fontSize: 18,
+  //   fontWeight: "bold",
+  //   marginTop: 20,
+  //   marginLeft: 16,
+  // },
 });
