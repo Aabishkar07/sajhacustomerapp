@@ -181,14 +181,14 @@ const Homepage = () => {
                 </View>
 
                 <View 
-                style={styles.gridContainer}
+                 style={styles.gridContainer}
                 >
                     {productsData.map((product, index) => (
                     <View className="w-[50%]" key={index}>
 
                       <Product product={product} 
                      onPressCart={() => handleCart(product)}
-      onPress={() => handleProductPress(product)}
+                      onPress={() => handleProductPress(product)}
 
                     />
                     </View>

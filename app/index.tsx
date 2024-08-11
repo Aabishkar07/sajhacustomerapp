@@ -29,7 +29,7 @@ const index = () => {
     </View>
 
     <View className="items-center mt-[40%]">
-        <Link href="/profile" asChild>
+        <Link href="/homepage" asChild>
         <TouchableOpacity className="bg-[#fe6700]  text-center  w-[75%] flex gap-2 items-center rounded-md" >
             <Text className="p-2 mb-1 text-lg text-white">
                 Get Started

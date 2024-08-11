@@ -6,48 +6,6 @@ import Icons from "react-native-vector-icons/MaterialCommunityIcons";
 import Toast from "react-native-easy-toast";
 import Header from '../layouts/Header';
 
-
-const CartItem = ({ item, onPress }) => (
-  <View >
-    <View style={styles.cartItem} className="relative flex-row items-center">
-
-    <Image
-      source={{ uri: item.image_url }}
-      className="w-20 h-full"
-      style={{ resizeMode: "contain" }}
-    />
-    <View className=" w-[70%] ">
-      <View className="">
-        <Text style={styles.cartItemName}>{item.name}</Text>
-      </View>
-
-      <View className="flex-row items-center justify-between ">
-
-      <Text>Rs. {item.price}</Text>
-     <View className="flex-row items-center border rounded-lg w-[30%] justify-between">
-      <Pressable className="border-r">
-        <Icons name="minus" size={20} />
-      </Pressable>
-      <Text className="text-lg">{item.quantity}</Text>
-      <Pressable className="border-l">
-        <Icons name="plus" size={20} />
-      </Pressable>
-    </View>
-    </View>
-    <View className="flex-row justify-end mt-2">
-    <Text>Rs. {item.quantity* item.price}</Text>
-    </View>
-    </View>
-    </View>
-    
-    <Pressable onPress={onPress} className="absolute top-2 right-2">
-      <Icons name="close" size={20} />
-    </Pressable>
-
-    
-  </View>
-);
-
 const cart = () => {
 
   const toastRef = React.createRef();
@@ -125,13 +83,48 @@ const cart = () => {
     <View style={styles.container}>
       <Header />
         <ScrollView contentContainerStyle={styles.scrollContainer}>
-            <FlatList 
-                data={cartItems}
-                renderItem={({ item }) => (
-                  <CartItem onPress={() => clearData(item)} item={item} />
-                )}
-                keyExtractor={(item) => item.id.toString()}
-              />
+            
+
+                {cartItems.map((item, index) => (
+                    <View key={index}>
+                    <View style={styles.cartItem} className="relative flex-row items-center">
+                
+                    <Image
+                      source={{ uri: item.image_url }}
+                      className="w-20 h-full"
+                      style={{ resizeMode: "contain" }}
+                    />
+                    <View className=" w-[70%] ">
+                      <View className="">
+                        <Text style={styles.cartItemName}>{item.name}</Text>
+                      </View>
+                
+                      <View className="flex-row items-center justify-between ">
+                
+                      <Text>Rs. {item.price}</Text>
+                     <View className="flex-row items-center border rounded-lg w-[30%] justify-between">
+                      <Pressable className="border-r">
+                        <Icons name="minus" size={20} />
+                      </Pressable>
+                      <Text className="text-lg">{item.quantity}</Text>
+                      <Pressable className="border-l">
+                        <Icons name="plus" size={20} />
+                      </Pressable>
+                    </View>
+                    </View>
+                    <View className="flex-row justify-end mt-2">
+                    <Text>Rs. {item.quantity* item.price}</Text>
+                    </View>
+                    </View>
+                    </View>
+                    
+                    <Pressable onPress={() => clearData(item)} item={item} className="absolute top-2 right-2">
+                      <Icons name="close" size={20} />
+                    </Pressable>
+                
+                    
+                  </View>
+                ))}
 
  
         <View >

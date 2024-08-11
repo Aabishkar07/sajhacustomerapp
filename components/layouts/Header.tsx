@@ -32,29 +32,27 @@ const Header = () => {
     cartCount();
     console.log("adsaaa");
   }, [auth]);
-  const handleOpenDrawer = () => {
-    navigation.dispatch(DrawerActions.toggleDrawer());
-  };
+
 
   return (
-    <View>
+    <View >
       <View
         style={{ zIndex: 0 }}
-        className="pt-11 px-5 justify-between flex-row items-center bg-white pb-5 border-b-[0.5px] border-slate-400"
+        className="pt-11  justify-between flex-row items-center bg-white pb-2 border-b-[0.5px] border-slate-400"
       >
-        <TouchableOpacity onPress={handleOpenDrawer}>
-          <Icons name="" size={25} color={"#000"} />
-        </TouchableOpacity>
+      <View className=" w-[60%] -left-4">
+
         <Image
           source={require("../../assets/images/logo.png")}
-          className="h-10 mt-1 w-[60%] object-contain"
+          className="object-contain w-full h-12 "
           style={{ resizeMode: "contain" }}
         />
-        <TouchableOpacity onPress={() => {router.push('/productcart')}}>
+      </View>
+        <TouchableOpacity className="pr-4" onPress={() => {router.push('/productcart')}}>
 
           <View>
             <View style={styles.cartIcon}>
-              <Icons name="cart" size={30} color={"#000"} />
+              <Icons name="cart" size={30} color={"#0066ff"} />
             </View>
             {/* {cartItems > 0 && ( */}
             <View style={styles.cartItemCount}>
@@ -64,13 +62,7 @@ const Header = () => {
           </View>
         </TouchableOpacity>
       </View>
-      {/* <View>
-        <TextInput
-          placeholder="search..."
-          className="border-salte-200 border-[0.5px] mx-4 my-2 rounded-xl px-5"
-          style={{ height: 50, backgroundColor: "white" }}
-        />
-      </View> */}
+      
     </View>
   );
 };
@@ -86,10 +78,10 @@ const styles = StyleSheet.create({
     position: "absolute",
     top: -5,
     right: 2,
-    backgroundColor: "#dc143c",
+    backgroundColor: "#fe6700",
     borderRadius: 50,
-    width: 15,
-    height: 15,
+    width: 16,
+    height: 16,
     justifyContent: "center",
     alignItems: "center",
   },
