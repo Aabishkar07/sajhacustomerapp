@@ -7,7 +7,29 @@
     "discount_price": 80,
     "discount_percent": "-80%",
     "image_url": "http://images.thenorthface.com/is/image/TheNorthFace/236x204_CLR/mens-better-than-naked-jacket-AVMH_LC9_hero.png",
-    "category_name": "CO"
+    "category_name": "CO",
+    "attribute":[
+      {
+        "id":"1",
+        "name":"Small",
+        "group":"Size"
+      },
+      {
+        "id":"2",
+        "name":"Large",
+        "group":"Size"
+      },
+      {
+        "id":"3",
+        "name":"Red",
+        "group":"Color"
+      },
+      {
+        "id":"4",
+        "name":"Black",
+        "group":"Color"
+      }
+    ]
   },
   {
     "id": 2,
@@ -70,27 +92,83 @@
     "discount_price": 12,
     "discount_percent": "-20%",
     "category_name": "Utensils",
-    "image_url": "https://cdn11.bigcommerce.com/s-iai44k5nej/images/stencil/original/products/172/1880/BF_Mixing_Spoon-0004__95663.1653489931.png?c=1"
+    "image_url": "https://cdn11.bigcommerce.com/s-iai44k5nej/images/stencil/original/products/172/1880/BF_Mixing_Spoon-0004__95663.1653489931.png?c=1",
+    "attribute":[
+      
+      {
+        "id":"3",
+        "name":"Orange",
+        "group":"Color"
+      },
+      {
+        "id":"4",
+        "name":"Black",
+        "group":"Color"
+      },
+      {
+        "id":"5",
+        "name":"Red",
+        "group":"Color"
+      },
+      {
+        "id":"6",
+        "name":"Green",
+        "group":"Color"
+      }
+    ]
   },
   {
     "id": 8,
     "name": "iPhone 9",
     "description": "An apple mobile which is nothing like apple",
-    "price": 549,
-    "discount_price": 12.96,
+    "price": 275000,
+    "discount_price": 25000,
     "discount_percent": "-5%",
     "category_name": "smartphones",
-    "image_url": "http://images.thenorthface.com/is/image/TheNorthFace/236x204_CLR/enduro-boa-hydration-pack-AJQZ_JK3_hero.png"
+    "image_url": "https://images.pexels.com/photos/1647976/pexels-photo-1647976.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+    "attribute":[
+      
+      {
+        "id":"7",
+        "name":"64/128",
+        "group":"Variant"
+      },
+      {
+        "id":"8",
+        "name":"128/512",
+        "group":"Variant"
+      },
+      {
+        "id":"4",
+        "name":"Black",
+        "group":"Color"
+      },
+      {
+        "id":"11",
+        "name":"Silver",
+        "group":"Color"
+      },
+      {
+        "id":"10",
+        "name":"White",
+        "group":"Color"
+      },
+      {
+        "id":"2",
+        "name":"Large",
+        "group":"Size"
+      }
+    ]
   },
   {
     "id": 9,
     "name": "iPhone X",
     "description": "SIM-Free, Model A19211 6.5-inch Super Retina HD display with OLED technology A12 Bionic chip with ...",
-    "price": 899,
-    "discount_price": 12.96,
+    "price": 150000,
+    "discount_price": 20000,
     "discount_percent": "-5%",
     "category_name": "smartphones",
-    "image_url": "https://static-01.daraz.com.np/p/7b9dbcbfdc3e2ab2a5cba227d7bba5f1.jpg_750x750.jpg_.webp"
+    "image_url": "https://images.pexels.com/photos/788946/pexels-photo-788946.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
   },
   {
     "id": 10,

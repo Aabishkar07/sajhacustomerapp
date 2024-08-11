@@ -97,6 +97,20 @@ const cart = () => {
                     <View className=" w-[70%] ">
                       <View className="">
                         <Text style={styles.cartItemName}>{item.name}</Text>
+                        <Text className="" >
+                         
+                        {item.variation && 
+  Object.values(item.variation).map((value, index) => (
+    <View key={index}> 
+      <Text className='px-1 text-xs py-1 mr-1.5 text-white bg-red-500 rounded'>
+        {value}
+      </Text>
+    </View>
+  ))
+}
+
+                        </Text>
+                        
                       </View>
                 
                       <View className="flex-row items-center justify-between ">

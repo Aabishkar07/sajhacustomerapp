@@ -104,7 +104,7 @@ const Homepage = () => {
       await addCart(
         product.id,
         product.name,
-        product.price.toFixed(2)-product.discount_price,
+        product.price-product.discount_price,
         1,
         product.image_url
       );

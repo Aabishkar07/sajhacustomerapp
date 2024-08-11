@@ -1,8 +1,10 @@
 
 import { useLocalSearchParams } from 'expo-router';
-import React, { useEffect, useState } from 'react';
-import { View, Text, Image, ScrollView, TouchableOpacity, TextInput } from 'react-native';
+import React, { useContext, useEffect, useState } from 'react';
+import { View, Text, Image, ScrollView, TouchableOpacity, TextInput, SectionList, StyleSheet } from 'react-native';
 import productsData from "../../product.json";
+import { AuthContext } from '@/context/context';
+import { addCart } from '@/context/func';
 
 
 
@@ -13,17 +15,99 @@ const Singleproductdetails = () => {
   const {id}=useLocalSearchParams();
   console.log("aabbb",id)
 
-
-
   const [product, setProduct] = useState(productsData[Number(id) - 1]);
   // console.log("aabbbproduct",product)
-
-  const [quantity, setQuantity] = useState(2);
+  const [selectedItems, setSelectedItems] = useState({});
+  const [quantity, setQuantity] = useState(1);
 
   const handleQuantityChange = (value) => {
     if (value >= 0) setQuantity(value);
   };
 
+  var sections={};
+    // Group attributes by 'group'
+    if(product.attribute)
+    {
+      const groupedAttributes = product.attribute.reduce((acc, attribute) => {
+        if (!acc[attribute.group]) {
+          acc[attribute.group] = [];
+        }
+        acc[attribute.group].push(attribute);
+        return acc;
+      }, {});
+    
+      // Convert groupedAttributes to array format for SectionList
+      sections = Object.keys(groupedAttributes).map(group => ({
+        title: group,
+        data: groupedAttributes[group]
+      }));
+
+       // Set default selected items (first item in each group)
+      useEffect(() => {
+        const defaultSelections = sections.reduce((acc, section) => {
+          if (section.data.length > 0) {
+            acc[section.title] = section.data[0].name;
+          }
+          return acc;
+        }, {});
+        setSelectedItems(defaultSelections);
+      }, []);
+    
+    }
+    // Handle item click
+    const handleItemClick = (item, group) => {
+      setSelectedItems(prevState => ({
+        ...prevState,
+        [group]: item.name
+      }));
+    };
+    
+    const auth=useContext(AuthContext)
+    const handleCartChange = async() => {
+      var join=Object.values(selectedItems).join('-');
+      console.log("koin",join)
+     console.log("cart change", product.id+"-"+join);
+     var cart_id="";
+     var variation={};
+     if(join)
+     {
+       cart_id=product.id+"-"+join;
+       variation=selectedItems;
+      }
+      else
+      {
+       cart_id=product.id+"";
+       variation="";
+
+     }
+
+     
+     var abc=selectedItems?selectedItems:null;
+     console.log("asssssdd",abc)
+     
+      try {
+        await addCart(
+          cart_id,
+          product.name,
+          product.price-product.discount_price,
+          quantity,
+          product.image_url,
+          variation
+        );
+        auth.loadCart();
+       
+        // console.log(await AsyncStorage.getItem("cart"));
+      } catch (error) {
+        console.error("Error updating cart:", error);
+      }
+
+
+    };
+
+  
+   
+
+console.log("selectedItems",selectedItems)
   return (
     <ScrollView style={{ backgroundColor: 'white' }}>
       <View style={{ padding: 16, marginTop: 20 }}>
@@ -192,6 +276,7 @@ const Singleproductdetails = () => {
                 <Text style={{ color: 'white' }}>BUY NOW</Text>
               </TouchableOpacity>
               <TouchableOpacity
+              onPress={() => handleCartChange()}
                 style={{
                   borderWidth: 1,
                   borderColor: '#3b82f6',
@@ -232,8 +317,66 @@ const Singleproductdetails = () => {
           </View>
         </View>
       </View>
+
+{product.attribute &&
+      <SectionList
+      sections={sections}
+      keyExtractor={(item) => item.name}
+      renderItem={({ item, section }) => {
+        const isSelected = selectedItems[section.title] === item.name;
+        return (
+          <TouchableOpacity
+            style={[styles.itemContainer, isSelected && styles.selectedItemContainer]}
+            onPress={() => handleItemClick(item, section.title)}
+          >
+            <Text style={[styles.itemText, isSelected && styles.selectedItemText]}>
+              {item.name}
+            </Text>
+          </TouchableOpacity>
+        );
+      }}
+      renderSectionHeader={({ section: { title } }) => (
+        <Text style={styles.header}>{title}</Text>
+      )}
+    />
+}
+
+      
     </ScrollView>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    padding: 16
+  },
+  title: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    marginBottom: 16
+  },
+  header: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    marginTop: 16,
+    marginBottom: 8
+  },
+  itemContainer: {
+    padding: 8,
+    borderBottomWidth: 1,
+    borderBottomColor: '#ddd'
+  },
+  selectedItemContainer: {
+    backgroundColor: '#cce5ff' // Light blue background for selected item
+  },
+  itemText: {
+    fontSize: 16
+  },
+  selectedItemText: {
+    fontWeight: 'bold', // Bold text for selected item
+    color: '#0056b3'    // Darker blue color for selected text
+  }
+});
 
 export default Singleproductdetails;
