@@ -73,33 +73,33 @@
     "image_url": "https://cdn11.bigcommerce.com/s-iai44k5nej/images/stencil/original/products/172/1880/BF_Mixing_Spoon-0004__95663.1653489931.png?c=1"
   },
   {
-    "id": 9,
+    "id": 8,
     "name": "iPhone 9",
     "description": "An apple mobile which is nothing like apple",
     "price": 549,
     "discount_price": 12.96,
     "discount_percent": "-5%",
     "category_name": "smartphones",
-    "image_url": "https://i.dummyjson.com/data/products/1/thumbnail.jpg"
+    "image_url": "http://images.thenorthface.com/is/image/TheNorthFace/236x204_CLR/enduro-boa-hydration-pack-AJQZ_JK3_hero.png"
   },
   {
-    "id": 10,
+    "id": 9,
     "name": "iPhone X",
     "description": "SIM-Free, Model A19211 6.5-inch Super Retina HD display with OLED technology A12 Bionic chip with ...",
     "price": 899,
     "discount_price": 12.96,
     "discount_percent": "-5%",
     "category_name": "smartphones",
-    "image_url": "https://i.dummyjson.com/data/products/2/thumbnail.jpg"
+    "image_url": "https://static-01.daraz.com.np/p/7b9dbcbfdc3e2ab2a5cba227d7bba5f1.jpg_750x750.jpg_.webp"
   },
   {
-    "id": 11,
+    "id": 10,
     "name": "Samsung Universe 9",
     "description": "Samsung's new variant which goes beyond Galaxy to the Universe",
     "price": 1249,
     "discount_price": 12.96,
     "discount_percent": "-5%",
     "category_name": "smartphones",
-    "image_url": "https://i.dummyjson.com/data/products/3/thumbnail.jpg"
+    "image_url": "https://static-01.daraz.com.np/p/7b9dbcbfdc3e2ab2a5cba227d7bba5f1.jpg_750x750.jpg_.webp"
   }
 ]

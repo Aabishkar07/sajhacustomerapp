@@ -1,8 +1,23 @@
 
-import React, { useState } from 'react';
+import { useLocalSearchParams } from 'expo-router';
+import React, { useEffect, useState } from 'react';
 import { View, Text, Image, ScrollView, TouchableOpacity, TextInput } from 'react-native';
+import productsData from "../../product.json";
 
-const singleproductdetails = () => {
+
+
+
+const Singleproductdetails = () => {
+  
+
+  const {id}=useLocalSearchParams();
+  console.log("aabbb",id)
+
+
+
+  const [product, setProduct] = useState(productsData[Number(id) - 1]);
+  // console.log("aabbbproduct",product)
+
   const [quantity, setQuantity] = useState(2);
 
   const handleQuantityChange = (value) => {
@@ -16,7 +31,7 @@ const singleproductdetails = () => {
           <View style={{ width: '100%', paddingHorizontal: 8 }}>
             <View style={{ borderRadius: 12, overflow: 'hidden', margin: 8 }}>
               <Image
-                source={{ uri: 'https://cdn.easyfrontend.com/pictures/products/mouse2.jpg' }}
+              source={{ uri: product.image_url }}
                 style={{ width: '100%', height: 288, resizeMode: 'cover' }}
               />
             </View>
@@ -31,13 +46,18 @@ const singleproductdetails = () => {
                 </TouchableOpacity>
               ))}
             </View>
+
           </View>
 
           <View style={{ width: '100%', paddingHorizontal: 8 }}>
             <View style={{ marginBottom: 24 }}>
               <Text style={{ fontSize: 24, lineHeight: 28, fontWeight: '500', marginBottom: 16 }}>
-                Stitching Women Summer Shoulder Crossbody Bag
+                {product.name}
               </Text>
+                <Text className="text-[10px]">
+                {product.category_name}
+
+                </Text>
               <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 24 }}>
                 <Text style={{ opacity: 0.7 }}>
                   <Text>4.0</Text>
@@ -46,7 +66,11 @@ const singleproductdetails = () => {
                   <Text style={{ marginLeft: 8 }}>104 Order</Text>
                 </Text>
               </View>
-              <Text style={{ fontSize: 24, color: 'blue', fontWeight: '500' }}>Rs. 1,147</Text>
+              <View className="flex-row justify-between">
+
+              <Text style={{ fontSize: 24, color: 'blue', fontWeight: '500' }}>Rs. {product.price-product.discount_price}</Text>
+              <Text className="text-gray-600" style={{ fontSize: 20, fontWeight: '500', textDecorationLine: "line-through" }}>Rs. {product.price}</Text>
+              </View>
             </View>
 
             <View>
@@ -212,4 +236,4 @@ const singleproductdetails = () => {
   );
 };
 
-export default singleproductdetails;
+export default Singleproductdetails;

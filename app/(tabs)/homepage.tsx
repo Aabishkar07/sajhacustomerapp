@@ -24,7 +24,6 @@ import {
 import productsData from "../../product.json";
 import { addCart } from "@/context/func";
 import { AuthContext } from "@/context/context";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const Homepage = () => {
   const toastRef = React.createRef();
@@ -123,6 +122,15 @@ const Homepage = () => {
       // Add any additional styling for the toast here
     },
   });
+
+  const handleProductPress = (product) => {
+    console.log("Product pressed:", product.id);
+    router.push({pathname:'/productdetails/[index]',
+      params :{id:product.id}
+    })
+    // navigation.navigate("Single", { product });
+  };
+
   return (
     <View className="bg-white pb-28">
 
@@ -180,6 +188,8 @@ const Homepage = () => {
 
                       <Product product={product} 
                      onPressCart={() => handleCart(product)}
+      onPress={() => handleProductPress(product)}
+
                     />
                     </View>
                   ))}

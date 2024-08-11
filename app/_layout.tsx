@@ -38,7 +38,6 @@ export default function RootLayout() {
     <AuthContext.Provider value={authContext}>
       <>
    
-  
       
       <ThemeProvider value={colorScheme === 'dark' ? DefaultTheme : DefaultTheme}>
         <Stack>

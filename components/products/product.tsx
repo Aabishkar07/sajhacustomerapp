@@ -6,8 +6,8 @@ import Icons from "react-native-vector-icons/MaterialCommunityIcons";
 export default function Product({  product, onPress, onPressCart }) {
   return (
     <Pressable
-    onPress={() => {router.push('/productdetails')}}
-    // onPress={onPress}
+   
+    onPress={onPress}
     className="p-2 mx-2 my-5 border border-gray-200 shadow-sm shadow-slate-200"
   >
     <View className="relative">
