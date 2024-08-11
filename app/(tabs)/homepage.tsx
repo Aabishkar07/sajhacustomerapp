@@ -105,7 +105,7 @@ const Homepage = () => {
       await addCart(
         product.id,
         product.name,
-        product.price,
+        product.price.toFixed(2)-product.discount_price,
         1,
         product.image_url
       );
@@ -124,6 +124,9 @@ const Homepage = () => {
     },
   });
   return (
+    <View className="bg-white pb-28">
+
+    <Header />
     <ScrollView>
     <SafeAreaView>
     <Toast
@@ -131,7 +134,6 @@ const Homepage = () => {
         position="top"
         style={toastStyles.container} // Style for the toast
       />
-      <Header />
         <View>
         <TextInput
           placeholder="search..."
@@ -142,7 +144,7 @@ const Homepage = () => {
       <View className="items-center">
         <ImageSlider />
       </View>
-      <ScrollView>
+      <View>
         <View className="h-full pt-10 bg-white">
           <View className="">
             <View className="">
@@ -170,28 +172,27 @@ const Homepage = () => {
                   </ScrollView>
                 </View>
 
-                <ScrollView 
-                contentContainerStyle={styles.gridContainer}
+                <View 
+                style={styles.gridContainer}
                 >
-           
-                   
-                  {productsData.map((product, index) => (
+                    {productsData.map((product, index) => (
                     <View className="w-[50%]" key={index}>
 
                       <Product product={product} 
-      onPressCart={() => handleCart(product)}
-      />
+                     onPressCart={() => handleCart(product)}
+                    />
                     </View>
                   ))}
                  
-                </ScrollView>
+                </View>
               </View>
             </View>
           </View>
         </View>
-      </ScrollView>
+      </View>
     </SafeAreaView>
     </ScrollView>
+    </View>
   );
 };
 
@@ -203,5 +204,6 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     flexWrap: "wrap",
     justifyContent: "space-around",
+   
   },
 });

@@ -28,7 +28,7 @@ const index = () => {
         <Text className="text-center text-[#fe6700] text-[25px] font-extrabold" >Your Digital Marketplace for All Things Awesome!</Text>
     </View>
 
-    <View className="items-center mt-[70%]">
+    <View className="items-center mt-[40%]">
         <Link href="/profile" asChild>
         <TouchableOpacity className="bg-[#fe6700]  text-center  w-[75%] flex gap-2 items-center rounded-md" >
             <Text className="p-2 mb-1 text-lg text-white">

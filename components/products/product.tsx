@@ -40,7 +40,7 @@ export default function Product({  product, onPress, onPressCart }) {
     <View className="flex-row items-center justify-between">
       <View className="flex-col pb-2 pl-2 mt-2">
         <Text className="text-base font-semibold text-orange-700 ">
-          Rs. {product.discount_price}
+          Rs. {product.price.toFixed(2)-product.discount_price}
         </Text>
         <Text className="text-sm line-through text-slate-400">
           Rs. {product.price.toFixed(2)}
