@@ -12,8 +12,8 @@ const productdetails = () => {
   return (
 
    <View className="pb-28">
-<Header/>
-     <Singleproductdetails />
+      <Header/>
+      <Singleproductdetails />
    </View>
    
    

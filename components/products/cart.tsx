@@ -1,5 +1,5 @@
 import { AuthContext } from '@/context/context';
-import { clearSingle, getCart } from '@/context/func';
+import { addQuantity, clearCart, clearSingle, getCart, subQuantity } from '@/context/func';
 import React, { useContext, useEffect, useState } from 'react';
 import { View, Text, Image, ScrollView, TouchableOpacity, TextInput, StyleSheet, Pressable, FlatList } from 'react-native';
 import Icons from "react-native-vector-icons/MaterialCommunityIcons";
@@ -67,6 +67,24 @@ const cart = () => {
     auth.loadCart();
     // toastRef.current.show("Removed item from cart successfully", 3000);
   };
+
+  const addCartQuantity = (item) => {
+    addQuantity(item.id);
+    auth.loadCart();
+    // toastRef.current.show("Removed item from cart successfully", 3000);
+  };
+
+  const subCartQuantity = (item) => {
+    subQuantity(item.id);
+    auth.loadCart();
+    // toastRef.current.show("Removed item from cart successfully", 3000);
+  };
+
+  const clearAll = () => {
+    clearCart();
+    auth.loadCart();
+    // toastRef.current.show("Removed item from cart successfully", 3000);
+  };
   
   useEffect(() => {
     loadCartItems();
@@ -78,12 +96,16 @@ const cart = () => {
   };
 
   return (
-
-    
     <View style={styles.container}>
       <Header />
         <ScrollView contentContainerStyle={styles.scrollContainer}>
-            
+        {cartItems.length != 0 && (
+  <Pressable className="flex-row justify-end my-4" onPress={() => clearAll()}>
+    {/* fe6700 */}
+    <Text className="text-white rounded text-sm bg-[#0066ff] p-1 m-1">Clear All</Text>
+  </Pressable>
+)}
+
 
                 {cartItems.map((item, index) => (
                     <View key={index}>
@@ -100,15 +122,14 @@ const cart = () => {
                         <Text className="" >
                          
                         {item.variation && 
-  Object.values(item.variation).map((value, index) => (
-    <View key={index}> 
-      <Text className='px-1 text-xs py-1 mr-1.5 text-white bg-red-500 rounded'>
-        {value}
-      </Text>
-    </View>
-  ))
-}
-
+                            Object.values(item.variation).map((value, index) => (
+                              <View key={index}> 
+                                <Text className='px-1 text-xs py-1 mr-1.5 text-white bg-red-500 rounded'>
+                                  {value}
+                                </Text>
+                              </View>
+                            ))
+                        }
                         </Text>
                         
                       </View>
@@ -117,11 +138,11 @@ const cart = () => {
                 
                       <Text>Rs. {item.price}</Text>
                      <View className="flex-row items-center border rounded-lg w-[30%] justify-between">
-                      <Pressable className="border-r">
+                      <Pressable   className={`border-r ${item.quantity === 1 ? 'opacity-50' : ''}`}  onPress={() => subCartQuantity(item)}>
                         <Icons name="minus" size={20} />
                       </Pressable>
                       <Text className="text-lg">{item.quantity}</Text>
-                      <Pressable className="border-l">
+                      <Pressable className="border-l" onPress={() => addCartQuantity(item)}>
                         <Icons name="plus" size={20} />
                       </Pressable>
                     </View>
@@ -411,7 +432,7 @@ const styles = StyleSheet.create({
   scrollContainer: {
         flexGrow: 1,
         paddingHorizontal: 16,
-        paddingVertical: 24,
+        // paddingVertical: 24,
       },
 });
 // const styles = StyleSheet.create({

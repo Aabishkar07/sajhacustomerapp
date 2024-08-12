@@ -28,8 +28,8 @@ export default function RootLayout() {
     // const count = await getCart();
     const count1 = await AsyncStorage.getItem("cart");
     const count = JSON.parse(count1);
-    console.log(count.length, "length");
-    setcartCount(count.length);
+    console.log(count.length?count.length:0, "lengthss");
+    setcartCount(count.length?count.length:0);
   };
   const authContext = useMemo(() => ({ loadCart: async () => setCartItems(await getCart()) }), [cartItems]);
 
