@@ -1,49 +1,69 @@
-import { AuthContext } from '@/context/context';
-import { addQuantity, clearCart, clearSingle, getCart, subQuantity } from '@/context/func';
-import React, { useContext, useEffect, useState } from 'react';
-import { View, Text, Image, ScrollView, TouchableOpacity, TextInput, StyleSheet, Pressable, FlatList } from 'react-native';
+import { AuthContext } from "@/context/context";
+import {
+  addQuantity,
+  clearCart,
+  clearSingle,
+  getCart,
+  subQuantity,
+} from "@/context/func";
+import React, { useContext, useEffect, useState } from "react";
+import {
+  View,
+  Text,
+  Image,
+  ScrollView,
+  TouchableOpacity,
+  TextInput,
+  StyleSheet,
+  Pressable,
+  FlatList,
+} from "react-native";
 import Icons from "react-native-vector-icons/MaterialCommunityIcons";
 import Toast from "react-native-easy-toast";
-import Header from '../layouts/Header';
+import Header from "../layouts/Header";
+import { Link, router } from "expo-router";
 
 const cart = () => {
-
   const toastRef = React.createRef();
 
   const [billingAddress, setBillingAddress] = useState({
-    name: '',
-    address: '',
-    city: '',
-    state: '',
-    zip: '',
+    name: "",
+    address: "",
+    city: "",
+    state: "",
+    zip: "",
   });
 
   const products = [
     {
       id: 1,
-      image: 'https://cdn.easyfrontend.com/pictures/portfolio/portfolio14.jpg',
-      title: 'Luxury Black Matte Paint Custom Laser Logo Square Wooden Gift Box Watch Men for your Luxury Brand Heren Horloge',
+      image: "https://cdn.easyfrontend.com/pictures/portfolio/portfolio14.jpg",
+      title:
+        "Luxury Black Matte Paint Custom Laser Logo Square Wooden Gift Box Watch Men for your Luxury Brand Heren Horloge",
       price: 11328,
       quantity: 1,
     },
     {
       id: 2,
-      image: 'https://cdn.easyfrontend.com/pictures/portfolio/portfolio20.jpg',
-      title: 'Iron Handle 60 90 Sheets Clothes Pet Dog Cat Hair Adhesive Sticky Lint. Storage Welded Nesting Metal Foldable Logistics Steel Wire Mesh',
+      image: "https://cdn.easyfrontend.com/pictures/portfolio/portfolio20.jpg",
+      title:
+        "Iron Handle 60 90 Sheets Clothes Pet Dog Cat Hair Adhesive Sticky Lint. Storage Welded Nesting Metal Foldable Logistics Steel Wire Mesh",
       price: 5411,
       quantity: 5,
     },
     {
       id: 3,
-      image: 'https://cdn.easyfrontend.com/pictures/portfolio/portfolio19.jpg',
-      title: '2022 Europe And America Hot Sell Stainless Steel Hot Sell Spoon Gift Coffee Stir Spoon Gold-plated Dessert Spoon',
+      image: "https://cdn.easyfrontend.com/pictures/portfolio/portfolio19.jpg",
+      title:
+        "2022 Europe And America Hot Sell Stainless Steel Hot Sell Spoon Gift Coffee Stir Spoon Gold-plated Dessert Spoon",
       price: 21345,
       quantity: 3,
     },
     {
       id: 4,
-      image: 'https://cdn.easyfrontend.com/pictures/portfolio/portfolio15.jpg',
-      title: '3150A Withdrawable Type Indoor AC High Voltage Vacuum Circuit Breaker High Quality With Professional Manufacturer',
+      image: "https://cdn.easyfrontend.com/pictures/portfolio/portfolio15.jpg",
+      title:
+        "3150A Withdrawable Type Indoor AC High Voltage Vacuum Circuit Breaker High Quality With Professional Manufacturer",
       price: 27351,
       quantity: 4,
     },
@@ -51,7 +71,10 @@ const cart = () => {
   const [cartItems, setCartItems] = useState([]);
   const auth = useContext(AuthContext);
 
-  const subtotal = cartItems.reduce((sum, product) => sum + product.price * product.quantity, 0);
+  const subtotal = cartItems.reduce(
+    (sum, product) => sum + product.price * product.quantity,
+    0
+  );
   const shippingFee = 0;
   const tax = 0;
   const total = subtotal + shippingFee + tax;
@@ -59,8 +82,6 @@ const cart = () => {
   const handleBillingChange = (field, value) => {
     setBillingAddress({ ...billingAddress, [field]: value });
   };
-
-  
 
   const clearData = (item) => {
     clearSingle(item.id);
@@ -85,7 +106,7 @@ const cart = () => {
     auth.loadCart();
     // toastRef.current.show("Removed item from cart successfully", 3000);
   };
-  
+
   useEffect(() => {
     loadCartItems();
   }, [auth]); // Now listening for changes in auth, not cartItems
@@ -98,108 +119,137 @@ const cart = () => {
   return (
     <View style={styles.container}>
       <Header />
-        <ScrollView contentContainerStyle={styles.scrollContainer}>
+      <ScrollView contentContainerStyle={styles.scrollContainer}>
         {cartItems.length != 0 && (
-  <Pressable className="flex-row justify-end my-4" onPress={() => clearAll()}>
-    {/* fe6700 */}
-    <Text className="text-white rounded text-sm bg-[#0066ff] p-1 m-1">Clear All</Text>
-  </Pressable>
-)}
+          <Pressable
+            className="flex-row justify-end my-4"
+            onPress={() => clearAll()}
+          >
+            {/* fe6700 */}
+            <Text className="text-white rounded text-sm bg-[#0066ff] p-1 m-1">
+              Clear All
+            </Text>
+          </Pressable>
+        )}
 
-
-                {cartItems.map((item, index) => (
-                    <View key={index}>
-                    <View style={styles.cartItem} className="relative flex-row items-center">
-                
-                    <Image
-                      source={{ uri: item.image_url }}
-                      className="w-20 h-full"
-                      style={{ resizeMode: "contain" }}
-                    />
-                    <View className=" w-[70%] ">
-                      <View className="">
-                        <Text style={styles.cartItemName}>{item.name}</Text>
-                        <Text className="" >
-                         
-                        {item.variation && 
-                            Object.values(item.variation).map((value, index) => (
-                              <View key={index}> 
-                                <Text className='px-1 text-xs py-1 mr-1.5 text-white bg-red-500 rounded'>
-                                  {value}
-                                </Text>
-                              </View>
-                            ))
-                        }
-                        </Text>
-                        
-                      </View>
-                
-                      <View className="flex-row items-center justify-between ">
-                
-                      <Text>Rs. {item.price}</Text>
-                     <View className="flex-row items-center border rounded-lg w-[30%] justify-between">
-                      <Pressable   className={`border-r ${item.quantity === 1 ? 'opacity-50' : ''}`}  onPress={() => subCartQuantity(item)}>
-                        <Icons name="minus" size={20} />
-                      </Pressable>
-                      <Text className="text-lg">{item.quantity}</Text>
-                      <Pressable className="border-l" onPress={() => addCartQuantity(item)}>
-                        <Icons name="plus" size={20} />
-                      </Pressable>
+        {cartItems.length === 0 ? (
+          <>
+            <View className="px-5 py-10">
+              <Text className="text-[#fe6700] text-center text-lg">
+                Your cart is empty
+              </Text>
+              <TouchableOpacity
+                className="bg-[#0066ff] mt-4 rounded-md p-2"
+                onPress={()=>router.push("/homepage")}
+              >
+                <Text className="text-center text-white text-md">
+                  Continue Shopping
+                </Text>
+              </TouchableOpacity>
+            </View>
+          </>
+        ) : (
+          <>
+            {cartItems.map((item, index) => (
+              <View key={index}>
+                <View
+                  style={styles.cartItem}
+                  className="relative flex-row items-center"
+                >
+                  <Image
+                    source={{ uri: item.image_url }}
+                    className="w-20 h-full"
+                    style={{ resizeMode: "contain" }}
+                  />
+                  <View className=" w-[70%] ">
+                    <View className="">
+                      <Text style={styles.cartItemName}>{item.name}</Text>
+                      <Text className="">
+                        {item.variation &&
+                          Object.values(item.variation).map((value, index) => (
+                            <View key={index}>
+                              <Text className="px-1 text-xs py-1 mr-1.5 text-white bg-red-500 rounded">
+                                {value}
+                              </Text>
+                            </View>
+                          ))}
+                      </Text>
                     </View>
+
+                    <View className="flex-row items-center justify-between ">
+                      <Text>Rs. {item.price}</Text>
+                      <View className="flex-row items-center border rounded-lg w-[30%] justify-between">
+                        <Pressable
+                          className={`border-r ${
+                            item.quantity === 1 ? "opacity-50" : ""
+                          }`}
+                          onPress={() => subCartQuantity(item)}
+                        >
+                          <Icons name="minus" size={20} />
+                        </Pressable>
+                        <Text className="text-lg">{item.quantity}</Text>
+                        <Pressable
+                          className="border-l"
+                          onPress={() => addCartQuantity(item)}
+                        >
+                          <Icons name="plus" size={20} />
+                        </Pressable>
+                      </View>
                     </View>
                     <View className="flex-row justify-end mt-2">
-                    <Text>Rs. {item.quantity* item.price}</Text>
+                      <Text>Rs. {item.quantity * item.price}</Text>
                     </View>
-                    </View>
-                    </View>
-                    
-                    <Pressable onPress={() => clearData(item)} item={item} className="absolute top-2 right-2">
-                      <Icons name="close" size={20} />
-                    </Pressable>
-                
-                    
                   </View>
-                ))}
+                </View>
 
- 
-        <View >
-          <Text style={styles.billingTitle}>Billing Address</Text>
-          <TextInput
-            style={styles.input}
-            placeholder="Name"
-            value={billingAddress.name}
-            onChangeText={(text) => handleBillingChange('name', text)}
-          />
-          <TextInput
-            style={styles.input}
-            placeholder="Address"
-            value={billingAddress.address}
-            onChangeText={(text) => handleBillingChange('address', text)}
-          />
-          <TextInput
-            style={styles.input}
-            placeholder="City"
-            value={billingAddress.city}
-            onChangeText={(text) => handleBillingChange('city', text)}
-          />
-          <TextInput
-            style={styles.input}
-            placeholder="State"
-            value={billingAddress.state}
-            onChangeText={(text) => handleBillingChange('state', text)}
-          />
-          <TextInput
-            style={styles.input}
-            placeholder="ZIP Code"
-            value={billingAddress.zip}
-            onChangeText={(text) => handleBillingChange('zip', text)}
-          />
-        </View>
+                <Pressable
+                  onPress={() => clearData(item)}
+                  item={item}
+                  className="absolute top-2 right-2"
+                >
+                  <Icons name="close" size={20} />
+                </Pressable>
+              </View>
+            ))}
 
+            <View>
+              <Text style={styles.billingTitle}>Billing Address</Text>
+              <TextInput
+                style={styles.input}
+                placeholder="Name"
+                value={billingAddress.name}
+                onChangeText={(text) => handleBillingChange("name", text)}
+              />
+              <TextInput
+                style={styles.input}
+                placeholder="Address"
+                value={billingAddress.address}
+                onChangeText={(text) => handleBillingChange("address", text)}
+              />
+              <TextInput
+                style={styles.input}
+                placeholder="City"
+                value={billingAddress.city}
+                onChangeText={(text) => handleBillingChange("city", text)}
+              />
+              <TextInput
+                style={styles.input}
+                placeholder="State"
+                value={billingAddress.state}
+                onChangeText={(text) => handleBillingChange("state", text)}
+              />
+              <TextInput
+                style={styles.input}
+                placeholder="ZIP Code"
+                value={billingAddress.zip}
+                onChangeText={(text) => handleBillingChange("zip", text)}
+              />
+            </View>
+          </>
+        )}
       </ScrollView>
 
-
-       {/* <ScrollView contentContainerStyle={styles.scrollContainer}>
+      {/* <ScrollView contentContainerStyle={styles.scrollContainer}>
         <View style={styles.productsContainer}>
           {products.map((product) => (
             <View key={product.id} style={styles.productItem}>
@@ -276,7 +326,6 @@ const cart = () => {
         </View>
       </ScrollView> */}
 
-
       {/* Order Summary at Bottom */}
       <View style={styles.summaryContainer}>
         <Text style={styles.summaryTitle}>Order Summary</Text>
@@ -307,7 +356,6 @@ const cart = () => {
   );
 };
 
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -322,10 +370,7 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     marginBottom: 10,
   },
-  emptyCartText: {
-    color: "#888",
-    fontSize: 16,
-  },
+
   cartItem: {
     flexDirection: "row",
     marginBottom: 10,
@@ -342,18 +387,7 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: "#888",
   },
-  continueShoppingButton: {
-    backgroundColor: "#444",
-    paddingVertical: 10,
-    paddingHorizontal: 20,
-    borderRadius: 10,
-    marginTop: 10,
-  },
-  continueShoppingButtonText: {
-    color: "#fff",
-    fontSize: 16,
-    textAlign: "center",
-  },
+
   productsTitle: {
     marginTop: 20,
     marginLeft: 20,
@@ -361,79 +395,79 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
   },
 
-    billingFormContainer: {
-    backgroundColor: '#f8f8f8',
+  billingFormContainer: {
+    backgroundColor: "#f8f8f8",
     borderRadius: 12,
     padding: 16,
     marginTop: 24,
   },
   billingTitle: {
     fontSize: 18,
-    fontWeight: 'bold',
+    fontWeight: "bold",
     marginBottom: 16,
   },
   input: {
-    backgroundColor: 'white',
+    backgroundColor: "white",
     borderRadius: 8,
     padding: 12,
     marginBottom: 12,
-    borderColor: '#ddd',
+    borderColor: "#ddd",
     borderWidth: 1,
   },
   summaryContainer: {
-    backgroundColor: '#f8f8f8',
+    backgroundColor: "#f8f8f8",
     borderTopLeftRadius: 12,
     borderTopRightRadius: 12,
     padding: 16,
     paddingBottom: 24,
     borderTopWidth: 1,
-    borderColor: '#ddd',
+    borderColor: "#ddd",
   },
   summaryTitle: {
     fontSize: 18,
-    fontWeight: 'bold',
+    fontWeight: "bold",
     marginBottom: 16,
   },
   summaryRow: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
+    flexDirection: "row",
+    justifyContent: "space-between",
     marginBottom: 8,
   },
   summaryLabel: {
     fontSize: 14,
-    color: '#333',
+    color: "#333",
   },
   summaryValue: {
     fontSize: 14,
-    fontWeight: 'bold',
-    color: '#1e40af',
+    fontWeight: "bold",
+    color: "#1e40af",
   },
   divider: {
     height: 1,
-    backgroundColor: '#ddd',
+    backgroundColor: "#ddd",
     marginVertical: 8,
   },
   totalTitle: {
     fontSize: 16,
-    fontWeight: 'bold',
+    fontWeight: "bold",
   },
   buyButton: {
-    backgroundColor: '#1e40af',
+    backgroundColor: "#1e40af",
     padding: 12,
     borderRadius: 8,
-    alignItems: 'center',
+    alignItems: "center",
   },
   buyButtonText: {
-    color: 'white',
+    color: "white",
     fontSize: 16,
-    fontWeight: 'bold',
+    fontWeight: "bold",
   },
 
   scrollContainer: {
-        flexGrow: 1,
-        paddingHorizontal: 16,
-        // paddingVertical: 24,
-      },
+    flexGrow: 1,
+    paddingHorizontal: 16,
+    // paddingVertical: 24,
+  },
 });
 // const styles = StyleSheet.create({
 //   container: {

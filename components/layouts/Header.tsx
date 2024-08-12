@@ -1,4 +1,3 @@
-
 import { DrawerActions, useNavigation } from "@react-navigation/native";
 import React, { useContext, useEffect, useState } from "react";
 import {
@@ -10,10 +9,9 @@ import {
   TextInput,
 } from "react-native";
 import Icons from "react-native-vector-icons/MaterialCommunityIcons";
-import { router } from 'expo-router'
+import { router } from "expo-router";
 import { AuthContext } from "@/context/context";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-
 
 const Header = () => {
   const navigation = useNavigation();
@@ -33,23 +31,25 @@ const Header = () => {
     console.log("adsaaa");
   }, [auth]);
 
-
   return (
-    <View >
+    <View>
       <View
         style={{ zIndex: 0 }}
         className="pt-11  justify-between flex-row items-center bg-white pb-2 border-b-[0.5px] border-slate-400"
       >
-      <View className=" w-[60%] -left-4">
-
-        <Image
-          source={require("../../assets/images/logo.png")}
-          className="object-contain w-full h-12 "
-          style={{ resizeMode: "contain" }}
-        />
-      </View>
-        <TouchableOpacity className="pr-4" onPress={() => {router.push('/productcart')}}>
-
+        <View className=" w-[60%] -left-4">
+          <Image
+            source={require("../../assets/images/logo.png")}
+            className="object-contain w-full h-12 "
+            style={{ resizeMode: "contain" }}
+          />
+        </View>
+        <TouchableOpacity
+          className="pr-4"
+          onPress={() => {
+            router.push("/productcart");
+          }}
+        >
           <View>
             <View style={styles.cartIcon}>
               <Icons name="cart" size={30} color={"#0066ff"} />
@@ -62,7 +62,6 @@ const Header = () => {
           </View>
         </TouchableOpacity>
       </View>
-      
     </View>
   );
 };
@@ -86,7 +85,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   cartItemCountText: {
-    color: "#FFFFFF", 
+    color: "#FFFFFF",
     fontWeight: "bold",
     fontSize: 12,
   },
