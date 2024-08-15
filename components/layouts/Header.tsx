@@ -9,7 +9,7 @@ import {
   TextInput,
 } from "react-native";
 import Icons from "react-native-vector-icons/MaterialCommunityIcons";
-import { router } from "expo-router";
+import { Link, router } from "expo-router";
 import { AuthContext } from "@/context/context";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
@@ -37,13 +37,17 @@ const Header = () => {
         style={{ zIndex: 0 }}
         className="pt-11  justify-between flex-row items-center bg-white pb-2 border-b-[0.5px] border-slate-400"
       >
-        <View className=" w-[60%] -left-4">
+      
+        <TouchableOpacity onPress={() => {
+            router.push("/homepage");
+          }}  className=" w-[60%] -left-4">
           <Image
             source={require("../../assets/images/logo.png")}
             className="object-contain w-full h-12 "
             style={{ resizeMode: "contain" }}
           />
-        </View>
+        </TouchableOpacity>
+        
         <TouchableOpacity
           className="pr-4"
           onPress={() => {
