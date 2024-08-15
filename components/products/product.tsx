@@ -1,59 +1,65 @@
-import React from 'react';
-import { View, Text, TouchableOpacity, Image, StyleSheet, Pressable } from 'react-native';
-import { router } from 'expo-router'
+import React from "react";
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  Image,
+  StyleSheet,
+  Pressable,
+} from "react-native";
+import { router } from "expo-router";
 import Icons from "react-native-vector-icons/MaterialCommunityIcons";
 
-export default function Product({  product, onPress, onPressCart }) {
+export default function Product({ product, onPress, onPressCart }) {
   return (
     <Pressable
-   
-    onPress={onPress}
-    className="p-2 mx-2 my-5 border border-gray-200 shadow-sm shadow-slate-200"
-  >
-    <View className="relative">
-      <Image
-        source={{ uri: product.image_url }}
-        className=" p-2 h-[20vh] object-cover"
-      />
-    </View>
-    <View style={styles.dis}>
-      <Text
-        style={{ zIndex: 90, color: "#fff" }}
-        className="text-xs font-semibold"
-      >
-        {product.discount_percent}
-      </Text>
-    </View>
+      onPress={onPress}
+      className="p-2 mx-2 my-5 border border-gray-200 shadow-sm shadow-slate-200"
+    >
+      <View className="relative">
+        <Image
+          source={{ uri: product.image_url }}
+          className=" p-2 h-[20vh] object-cover"
+        />
+      </View>
+      <View style={styles.dis}>
+        <Text
+          style={{ zIndex: 90, color: "#fff" }}
+          className="text-xs font-semibold"
+        >
+          {product.discount_percent}
+        </Text>
+      </View>
 
-    <View className="">
-      <View className="flex-row justify-between px-2 pt-1 pr-1">
-        <View>
-          <Text className="text-xs text-slate-300">
-            {product.category_name}
-          </Text>
+      <View className="">
+        <View className="flex-row justify-between px-2 pt-1 pr-1">
+          <View>
+            <Text className="text-xs text-slate-300">
+              {product.category_name}
+            </Text>
+          </View>
         </View>
       </View>
-    </View>
-    <View className="flex-row pl-2">
-      <Text style={styles.productName}>{product.name.substring(0, 32)}</Text>
-    </View>
-    <View className="flex-row items-center justify-between">
-      <View className="flex-col pb-2 pl-2 mt-2">
-        <Text className="text-base font-semibold text-orange-700 ">
-          Rs. {product.price-product.discount_price}
-        </Text>
-        <Text className="text-sm line-through text-slate-400">
-          Rs. {product.price}
-        </Text>
+      <View className="flex-row pl-2">
+        <Text style={styles.productName}>{product.name.substring(0, 32)}</Text>
       </View>
-      <Pressable
-        className="items-center justify-center w-12 h-8 mr-2 bg-blue-600 rounded-lg"
-        onPress={onPressCart}
-      >
-        <Icons name="cart" size={20} color={"#fff"} />
-      </Pressable>
-    </View>
-  </Pressable>
+      <View className="flex-row items-center justify-between">
+        <View className="flex-col pb-2 pl-2 mt-2">
+          <Text className="text-base font-semibold text-orange-700 ">
+            Rs. {product.price - product.discount_price}
+          </Text>
+          <Text className="text-sm line-through text-slate-400">
+            Rs. {product.price}
+          </Text>
+        </View>
+        <Pressable
+          className="items-center justify-center w-12 h-8 mr-2 bg-blue-600 rounded-lg"
+          onPress={onPressCart}
+        >
+          <Icons name="cart" size={20} color={"#fff"} />
+        </Pressable>
+      </View>
+    </Pressable>
   );
 }
 

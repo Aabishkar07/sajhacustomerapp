@@ -13,16 +13,19 @@ import {
 import productsData from "../../product.json";
 import { AuthContext } from "@/context/context";
 import { addCart } from "@/context/func";
-
+import { Button } from "react-native";
+import RatingModal from "../modal/RatingModal";
+import Icons from "react-native-vector-icons/MaterialCommunityIcons";
+import { AirbnbRating, Rating } from "react-native-ratings";
 const Singleproductdetails = () => {
   const { id } = useLocalSearchParams();
-  console.log("aabbb", id);
+  // console.log("aabbb", id);
 
   const [product, setProduct] = useState(productsData[Number(id) - 1]);
   // console.log("aabbbproduct",product)
   const [selectedItems, setSelectedItems] = useState({});
   const [quantity, setQuantity] = useState(1);
-
+  const [visible, setVisible] = React.useState(false);
   const handleQuantityChange = (value) => {
     if (value >= 0) setQuantity(value);
   };
@@ -373,6 +376,14 @@ const Singleproductdetails = () => {
               </TouchableOpacity>
             </View>
 
+            <View className="flex-row justify-center mt-4 mb-4">
+              <TouchableOpacity
+                className="bg-[#3b82f6] p-2 rounded w-32  text-center items-center mx-4"
+                onPress={() => setVisible(true)}
+              >
+                <Text className="text-white">Write a review</Text>
+              </TouchableOpacity>
+            </View>
             <Text style={{ opacity: 0.7, marginTop: 16 }}>
               Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque
               nec consequat lorem. Maecenas elementum at diam consequat
@@ -382,6 +393,7 @@ const Singleproductdetails = () => {
         </View>
       </View>
 
+      {/* attributes  */}
       {product.attribute && (
         <SectionList
           sections={sections}
@@ -412,6 +424,98 @@ const Singleproductdetails = () => {
           )}
         />
       )}
+
+      {/* RatingModal */}
+      <View
+        className="relative"
+        style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
+      >
+        <RatingModal visible={visible}>
+          <TouchableOpacity onPress={() => setVisible(false)}>
+            <View
+              className="absolute top-0 border rounded right-1"
+              style={{ alignItems: "center" }}
+            >
+              <View classname="">
+                <Icons name="close" size={20} color={"#000"} />
+              </View>
+            </View>
+          </TouchableOpacity>
+
+          <View>
+            <Text className="mx-4 text-lg text-[#fe6700] font-semibold">
+              Write a review
+            </Text>
+            <TextInput
+              placeholder="Write a review..."
+              multiline={true}
+              numberOfLines={4}
+              className="border-salte-200 border-[0.5px] mx-4 my-2 rounded px-3"
+              style={{ backgroundColor: "white" }}
+            />
+          </View>
+
+          <Rating
+            type="star" // heart, star, bell, rocket
+            ratingCount={5}
+            showRating={true}
+            ratingTextColor="red"
+            // readonly
+            // showReadOnlyText={false}
+            fractions={1} // 0-20
+            jumpValue={0}
+            startingValue={1}
+            onStartRating={(rating) => console.log(`Inital: ${rating}`)}
+            onFinishRating={(rating) =>
+              
+              console.log(`Rating finished ${rating}`)
+            }
+            onSwipeRating={(rating) => console.log(`Swiping: ${rating}`)}
+          />
+
+          <TouchableOpacity className="bg-[#3b82f6] mt-5 p-2 rounded w-32 text-center items-center mx-4">
+            <Text style={{ color: "white" }}>Post a review</Text>
+          </TouchableOpacity>
+        </RatingModal>
+      </View>
+
+      {/* <AirbnbRating
+        reviews={[
+          "Poor",
+          "Very Bad",
+          "Bad",
+          "Ok",
+          "Good",
+          "Very Good",
+          "Excellent",
+        ]}
+        count={7}
+        defaultRating={3}
+        selectedColor="green"
+        unSelectedColor="lightgray"
+        reviewColor="green"
+        size={25}
+        reviewSize={25}
+        showRating={true}
+        // isDisabled
+        // starContainerStyle={{ backgroundColor:"red" }}
+        ratingContainerStyle={{ marginVertical: 20 }}
+        starImage={require("./../../assets/icon.png")}
+        onFinishRating={(rating) => alert(rating)}
+      /> */}
+
+      {/* <Rating 
+        type="heart"
+        ratingCount={7}
+        showRating={true}
+        ratingTextColor="red"
+        fractions={1}
+        jumpValue={0.5}
+        startingValue={5}
+        onStartRating={(rating) => console.log(`Inital: ${rating}`)}
+        onFinishRating={(rating) => console.log(`Rating finished ${rating}`)}
+        onSwipeRating={(rating) => console.log(`Swiping: ${rating}`)}
+      />*/}
     </ScrollView>
   );
 };
@@ -431,6 +535,12 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     marginTop: 16,
     marginBottom: 8,
+  },
+  modalheader: {
+    width: "100%",
+    height: 40,
+    alignItems: "flex-end",
+    justifyContent: "center",
   },
   itemContainer: {
     padding: 8,

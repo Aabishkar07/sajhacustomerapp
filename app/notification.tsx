@@ -9,7 +9,7 @@ export class Notification extends Component {
         <View className="mt-10">
           <View className="flex-row items-center p-2">
             <Icon name="notifications" size={24} color="#000" />
-            <Text className="text-xl ml-2">Notification</Text>
+            <Text className="ml-2 text-xl">Notification</Text>
           </View>
 
           <View

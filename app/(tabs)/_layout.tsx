@@ -4,7 +4,7 @@ import React from 'react';
 import { TabBarIcon } from '@/components/navigation/TabBarIcon';
 import { Colors } from '@/constants/Colors';
 import { useColorScheme } from '@/hooks/useColorScheme';
-
+import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 export default function TabLayout() {
   const colorScheme = useColorScheme();
 
@@ -48,11 +48,15 @@ export default function TabLayout() {
         }}
       />
       <Tabs.Screen
-        name="notification"
+        name="category"
         options={{
-          title: 'Notification',
+          title: 'Category',
           tabBarIcon: ({ color, focused }) => (
-            <TabBarIcon name={focused ? 'notifications' : 'notifications-outline'} color={color} />
+
+            <MaterialIcons name="category" size={28} style={[{ marginBottom: -3 }]} color={color} />
+            // <TabBarIcon name={focused ? 'view-dashboard' : 'notifications-outline'} color={color} />
+            // return <Ionicons size={28} style={[{ marginBottom: -3 }, style]} {...rest} />;
+
           ),
         }}
       />

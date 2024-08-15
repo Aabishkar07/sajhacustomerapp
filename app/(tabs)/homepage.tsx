@@ -164,7 +164,7 @@ const Homepage = () => {
                   </View>
                   <View>
                   <TouchableOpacity onPress={()=>{
-                        router.push('/allcategory')
+                        router.push('/category')
                     }}>
                     <Text className="text-gray-600 text-[16px]">see all </Text>
                     </TouchableOpacity>
