@@ -3,7 +3,7 @@ import Header from "@/components/layouts/Header";
 import Product from "@/components/products/product";
 import ImageSlider from "@/components/slider";
 import Toast from "react-native-easy-toast";
-
+import AntDesign from '@expo/vector-icons/AntDesign';
 import React, { useContext, useState } from "react";
 import {router} from 'expo-router';
 import {
@@ -163,10 +163,11 @@ const Homepage = () => {
                     <Text className="text-2xl text-[#ec4c15]">Categories</Text>
                   </View>
                   <View>
-                  <TouchableOpacity onPress={()=>{
+                  <TouchableOpacity className="flex-row gap-x-2" onPress={()=>{
                         router.push('/category')
                     }}>
-                    <Text className="text-gray-600 text-[16px]">see all </Text>
+                    <Text className="text-[#0066ff] text-[16px]">See all </Text>
+                    <AntDesign name="arrowright" size={24} color="#0066ff" />
                     </TouchableOpacity>
                   </View>
                 </View>

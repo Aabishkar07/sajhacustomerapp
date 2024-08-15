@@ -54,9 +54,7 @@ export default function TabLayout() {
           tabBarIcon: ({ color, focused }) => (
 
             <MaterialIcons name="category" size={28} style={[{ marginBottom: -3 }]} color={color} />
-            // <TabBarIcon name={focused ? 'view-dashboard' : 'notifications-outline'} color={color} />
-            // return <Ionicons size={28} style={[{ marginBottom: -3 }, style]} {...rest} />;
-
+            
           ),
         }}
       />

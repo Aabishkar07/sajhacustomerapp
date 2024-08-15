@@ -46,6 +46,7 @@ export default function RootLayout() {
           <Stack.Screen name="+not-found" />
           <Stack.Screen name="productcart" options={{ headerShown: false, title: `Cart(${cartCount})` }} />
           <Stack.Screen name="productdetails/[index]" options={{ headerShown: false, title: "SinglePage" }} />
+          <Stack.Screen name="checkout/index" options={{ headerShown: false, title: "Checkout" }} />
         </Stack>
       </ThemeProvider>
       </>

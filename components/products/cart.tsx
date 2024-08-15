@@ -26,13 +26,6 @@ import { Link, router } from "expo-router";
 const cart = () => {
   const toastRef = React.createRef();
 
-  const [billingAddress, setBillingAddress] = useState({
-    name: "",
-    address: "",
-    city: "",
-    state: "",
-    zip: "",
-  });
 
   const products = [
     {
@@ -79,9 +72,6 @@ const cart = () => {
   const tax = 0;
   const total = subtotal + shippingFee + tax;
 
-  const handleBillingChange = (field, value) => {
-    setBillingAddress({ ...billingAddress, [field]: value });
-  };
 
   const clearData = (item) => {
     clearSingle(item.id);
@@ -212,144 +202,21 @@ const cart = () => {
               </View>
             ))}
 
-            <View>
-              <Text style={styles.billingTitle}>Billing Address</Text>
-              <TextInput
-                style={styles.input}
-                placeholder="Name"
-                value={billingAddress.name}
-                onChangeText={(text) => handleBillingChange("name", text)}
-              />
-              <TextInput
-                style={styles.input}
-                placeholder="Address"
-                value={billingAddress.address}
-                onChangeText={(text) => handleBillingChange("address", text)}
-              />
-              <TextInput
-                style={styles.input}
-                placeholder="City"
-                value={billingAddress.city}
-                onChangeText={(text) => handleBillingChange("city", text)}
-              />
-              <TextInput
-                style={styles.input}
-                placeholder="State"
-                value={billingAddress.state}
-                onChangeText={(text) => handleBillingChange("state", text)}
-              />
-              <TextInput
-                style={styles.input}
-                placeholder="ZIP Code"
-                value={billingAddress.zip}
-                onChangeText={(text) => handleBillingChange("zip", text)}
-              />
-            </View>
+            
           </>
         )}
       </ScrollView>
 
-      {/* <ScrollView contentContainerStyle={styles.scrollContainer}>
-        <View style={styles.productsContainer}>
-          {products.map((product) => (
-            <View key={product.id} style={styles.productItem}>
-            
-              <View style={styles.imageContainer}>
-                <TouchableOpacity>
-                  <Image source={{ uri: product.image }} style={styles.productImage} />
-                </TouchableOpacity>
-              </View>
-
-              <View style={styles.productDetails}>
-               
-                <View style={styles.productInfo}>
-                  <TouchableOpacity>
-                    <Text style={styles.productTitle}>{product.title}</Text>
-                  </TouchableOpacity>
-                  <Text style={styles.productPrice}>Rs. {product.price}</Text>
-                  <View style={styles.quantityContainer}>
-                    <TouchableOpacity style={styles.quantityButton}>
-                      <Text style={styles.quantityButtonText}>-</Text>
-                    </TouchableOpacity>
-                    <TextInput
-                      value={product.quantity.toString()}
-                      keyboardType="number-pad"
-                      style={styles.quantityInput}
-                    />
-                    <TouchableOpacity style={styles.quantityButton}>
-                      <Text style={styles.quantityButtonText}>+</Text>
-                    </TouchableOpacity>
-                  </View>
-                </View>
-                
-                <TouchableOpacity style={styles.deleteButton}>
-                  <Text style={styles.deleteIcon}>🗑️</Text>
-                </TouchableOpacity>
-              </View>
-            </View>
-          ))}
-        </View>
-
-       
-        <View style={styles.billingFormContainer}>
-          <Text style={styles.billingTitle}>Billing Address</Text>
-          <TextInput
-            style={styles.input}
-            placeholder="Name"
-            value={billingAddress.name}
-            onChangeText={(text) => handleBillingChange('name', text)}
-          />
-          <TextInput
-            style={styles.input}
-            placeholder="Address"
-            value={billingAddress.address}
-            onChangeText={(text) => handleBillingChange('address', text)}
-          />
-          <TextInput
-            style={styles.input}
-            placeholder="City"
-            value={billingAddress.city}
-            onChangeText={(text) => handleBillingChange('city', text)}
-          />
-          <TextInput
-            style={styles.input}
-            placeholder="State"
-            value={billingAddress.state}
-            onChangeText={(text) => handleBillingChange('state', text)}
-          />
-          <TextInput
-            style={styles.input}
-            placeholder="ZIP Code"
-            value={billingAddress.zip}
-            onChangeText={(text) => handleBillingChange('zip', text)}
-          />
-        </View>
-      </ScrollView> */}
-
       {/* Order Summary at Bottom */}
       <View style={styles.summaryContainer}>
-        <Text style={styles.summaryTitle}>Order Summary</Text>
+      
         <View style={styles.summaryRow}>
-          <Text style={styles.summaryLabel}>Sub total</Text>
-          <Text style={styles.summaryValue}>Rs. {subtotal}</Text>
-        </View>
-        <View style={styles.divider}></View>
-        <View style={styles.summaryRow}>
-          <Text style={styles.summaryLabel}>Shipping Fee</Text>
-          <Text style={styles.summaryValue}>Rs. {shippingFee}</Text>
-        </View>
-        <View style={styles.divider}></View>
-        <View style={styles.summaryRow}>
-          <Text style={styles.summaryLabel}>Tax</Text>
-          <Text style={styles.summaryValue}>Rs. {tax}</Text>
-        </View>
-        <View style={styles.divider}></View>
-        <View style={styles.summaryRow}>
-          <Text style={styles.totalTitle}>Total</Text>
-          <Text style={styles.summaryValue}>Rs. {total}</Text>
-        </View>
-        <TouchableOpacity style={styles.buyButton}>
-          <Text style={styles.buyButtonText}>BUY ({products.length})</Text>
+          <Text style={styles.summaryTitle}>Sub total</Text>
+          
+          <Text className="font-bold text-lg text-[#1e40af]">Rs. {subtotal}</Text>
+        </View>      
+        <TouchableOpacity style={styles.buyButton} onPress={()=>router.push('checkout')}>
+          <Text style={styles.buyButtonText}>BUY</Text>
         </TouchableOpacity>
       </View>
     </View>
@@ -437,11 +304,7 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: "#333",
   },
-  summaryValue: {
-    fontSize: 14,
-    fontWeight: "bold",
-    color: "#1e40af",
-  },
+
   divider: {
     height: 1,
     backgroundColor: "#ddd",
