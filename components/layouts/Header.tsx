@@ -1,4 +1,3 @@
-import { DrawerActions, useNavigation } from "@react-navigation/native";
 import React, { useContext, useEffect, useState } from "react";
 import {
   Image,
@@ -14,7 +13,6 @@ import { AuthContext } from "@/context/context";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const Header = () => {
-  const navigation = useNavigation();
   const [cartItems, setCartItems] = useState(0);
   const auth = useContext(AuthContext);
 

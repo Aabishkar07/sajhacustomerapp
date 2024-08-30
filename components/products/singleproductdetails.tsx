@@ -467,7 +467,6 @@ const Singleproductdetails = () => {
             startingValue={1}
             onStartRating={(rating) => console.log(`Inital: ${rating}`)}
             onFinishRating={(rating) =>
-              
               console.log(`Rating finished ${rating}`)
             }
             onSwipeRating={(rating) => console.log(`Swiping: ${rating}`)}
@@ -477,6 +476,31 @@ const Singleproductdetails = () => {
             <Text style={{ color: "white" }}>Post a review</Text>
           </TouchableOpacity>
         </RatingModal>
+
+        {/* <AirbnbRating
+          reviews={[
+            "Poor",
+            "Very Bad",
+            "Bad",
+            "Ok",
+            "Good",
+            "Very Good",
+            "Excellent",
+          ]}
+          count={7}
+          defaultRating={3}
+          selectedColor="green"
+          unSelectedColor="lightgray"
+          reviewColor="green"
+          size={25}
+          reviewSize={25}
+          showRating={true}
+          // isDisabled
+          // starContainerStyle={{ backgroundColor:"red" }}
+          ratingContainerStyle={{ marginVertical: 20 }}
+          starImage={require("./../../assets/icon.png")}
+          onFinishRating={(rating) => alert(rating)}
+        /> */}
       </View>
 
       {/* <AirbnbRating
