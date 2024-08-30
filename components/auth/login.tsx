@@ -37,7 +37,7 @@ const Login = () => {
 
     try {
       const response = await axios.post(
-        "http://192.168.0.100:8000/api/customer/checkauth",
+        "http://192.168.0.100:8080/api/customer/checkauth",
         data
       );
 
@@ -112,6 +112,7 @@ const Login = () => {
                   onChangeText={setPassword}
                   value={password}
                   placeholder="Enter Your Password"
+                  secureTextEntry
 
                   // keyboardType="numeric"
                 />

@@ -20,6 +20,9 @@ const Signup = () => {
   const [password, setPassword] = useState("");
   const [passwordConfirmation, setPasswordConfirmation] = useState("");
   const [loading, setLoading] = useState(false);
+  const [phone, setPhone] = useState("");
+  const [name, setName] = useState("");
+  const [address, setAddress] = useState("");
 
   const onSubmit = async () => {
     if (!email || !password || !passwordConfirmation) {
@@ -32,16 +35,38 @@ const Signup = () => {
       return;
     }
 
+    if(!name){
+      Alert.alert("Error", "Name required");
+      return;
+    }
+
+    if(!email){
+      Alert.alert("Error", "Email required");
+      return;
+    }
+    if(!phone){
+      Alert.alert("Error", "Phone required");
+      return;
+    }
+    if(!address){
+      Alert.alert("Error", "Address required");
+      return;
+    }
+
     setLoading(true);
     const data = {
       email: email,
       password: password,
       password_confirmation: passwordConfirmation,
+      name: name,
+      phone: phone,
+      address: address
+
     };
 
     try {
       const response = await axios.post(
-        "http://192.168.0.100:8000/api/customer/signup",
+        "http://192.168.0.100:8080/api/customer/signup",
         data
       );
       if (response.status === 201) {
@@ -85,6 +110,48 @@ const Signup = () => {
             </View>
 
             <View className="px-8">
+
+
+
+
+
+            <View className="flex-row items-center mt-5 w-full border border-gray-300 rounded-lg bg-gray-50">
+                <View className="p-2 border-r border-r-[#0F6FFF]">
+                  <Icon name="account" size={30} color="#0F6FFF" />
+                </View>
+                <TextInput
+                  className="w-full text-[#202544] sm:text-sm block p-2.5"
+                  onChangeText={setName}
+                  value={name}
+                  placeholder="Enter Your name"
+                  keyboardType="name"
+                />
+              </View>
+              <View className="flex-row items-center mt-5 w-full border border-gray-300 rounded-lg bg-gray-50">
+                <View className="p-2 border-r border-r-[#0F6FFF]">
+                  <Icon name="phone" size={30} color="#0F6FFF" />
+                </View>
+                <TextInput
+                  className="w-full text-[#202544] sm:text-sm block p-2.5"
+                  onChangeText={setPhone}
+                  value={phone}
+                  placeholder="Enter Your number"
+                  keyboardType="numeric"
+                  />
+              </View>
+              <View className="flex-row items-center mt-5 w-full border border-gray-300 rounded-lg bg-gray-50">
+                <View className="p-2 border-r border-r-[#0F6FFF]">
+                  <Icon name="map-marker" size={30} color="#0F6FFF" />
+                </View>
+                <TextInput
+                  className="w-full text-[#202544] sm:text-sm block p-2.5"
+                  onChangeText={setAddress}
+                  value={address}
+                  placeholder="Enter Your Address"
+                  keyboardType="name"
+                />
+              </View>
+
               {/* Email Input */}
               <View className="flex-row items-center w-full my-5 border border-gray-300 rounded-lg bg-gray-50">
                 <View className="p-2 border-r border-r-[#0F6FFF]">

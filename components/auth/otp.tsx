@@ -35,7 +35,7 @@ const otp = () => {
       const email = JSON.parse(useremail);
 
       const response = await axios.post(
-        `http://192.168.0.100:8000/api/customer/checkotp/${email}`,
+        `http://192.168.0.100:8080/api/customer/checkotp/${email}`,
         data
       );
 
@@ -70,7 +70,6 @@ const otp = () => {
                 onChangeText={setotp}
                 value={otp}
                 placeholder="Enter Your otp"
-                keyboardType="email-address"
                 keyboardType="numeric"
                 required
               />

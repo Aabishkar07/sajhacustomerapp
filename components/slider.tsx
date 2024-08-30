@@ -1,5 +1,6 @@
+import axios from "axios";
 import React, { useState, useEffect } from "react";
-import { View, StyleSheet, Image } from "react-native";
+import { View, StyleSheet, Image, ScrollView, Text } from "react-native";
 
 const dataSource = [
   {
@@ -21,6 +22,23 @@ const dataSource = [
 
 const ImageSlider = () => {
   const [position, setPosition] = useState(0);
+  const [dataSource, setDataSource] = useState([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get(
+          "http://192.168.0.100:8080/api/banner"
+        );
+        const data = response.data;
+        console.log(data, "slider");
+        setDataSource(data);
+      } catch (error) {
+        console.error("Error fetching data: ", error);
+      }
+    };
+    fetchData();
+  }, []);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -32,12 +50,25 @@ const ImageSlider = () => {
   }, [position]);
 
   return (
-    <View
-      style={styles.sliderContainer}
-      className="border-[0.5px] border-slate-400"
-    >
-      <Image source={{ uri: dataSource[position].url }} style={styles.image} />
-    </View>
+    <ScrollView horizontal pagingEnabled style={styles.sliderContainer}>
+      {dataSource.map((item, index) => (
+        //       <View key={index} >
+        // <Text>
+        // {item.banner_image }
+        // </Text>
+        // </View>
+
+        <View key={index} style={styles.imageContainer}>
+          <Image
+          // source={{ uri: "https://img.freepik.com/premium-vector/cosmetic-bottle-advertising-banner-template_87720-1602.jpg?w=1380"}}
+          source={{ uri: `${item.full_image_path}` }}
+
+            style={styles.image}
+            
+          />
+        </View>
+      ))}
+    </ScrollView>
   );
 };
 
@@ -52,6 +83,11 @@ const styles = StyleSheet.create({
     height: "100%",
     width: "100%",
     resizeMode: "cover",
+    borderRadius: 8,
+  },
+  imageContainer: {
+    width: 370,
+    height: "100%",
   },
 });
 
