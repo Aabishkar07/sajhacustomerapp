@@ -15,14 +15,15 @@ export default function Category({ category }) {
       {/* <View className="flex-row justify-center" style={{boxShadow: '0px 120px 100px -40px rgba(0, 0, 0, 1)'}}> */}
       <View className="flex-row justify-center overflow-hidden rounded-full">
         <Image
-          source={{ uri: category.image }}
+          // source={{ uri: category.image }}
+          source={{ uri: "https://imagepasal.com/watermark/IMG_9980-image-pasal-2023-09-11.jpg" }}
           className="w-16 h-16 rounded-full"
         />
       </View>
 
       <View className="p-1">
         <Text className="font-semibold text-[14px] text-center text-[#ec4c15] shadow">
-          {category.name}
+          {category.category_name}
         </Text>
         {/* <Text className="text-lg text-gray-600 shadow ">$ {people.price}</Text> */}
       </View>

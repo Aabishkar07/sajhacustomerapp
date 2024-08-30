@@ -4,7 +4,8 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import Key from 'react-native-vector-icons/FontAwesome5';
 import {router} from 'expo-router';
 import Header from '@/components/layouts/Header';
-import { Signup } from '@/components/auth/signup';
+import Signup from '@/components/auth/signup';
+
 
 
 
