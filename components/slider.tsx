@@ -21,38 +21,22 @@ const dataSource = [
   },
 ];
 
-const ImageSlider = () => {
+const ImageSlider = ({ banners }) => {
   const [position, setPosition] = useState(0);
   const [dataSource, setDataSource] = useState([]);
 
-  console.log(BaseUrl, "BaseUrlssssss");
-  const fetchData = async () => {
-    try {
-      const response = await axios.get(`${BaseUrl}api/banner`);
-      const data = response.data;
-      // console.log(data, "slider");
-      setDataSource(data);
-    } catch (error) {
-      console.error("Error fetching data: ", error);
-    }
-  };
-  useEffect(() => {
-    
-    fetchData();
-  }, []);
+  // useEffect(() => {
+  //   const interval = setInterval(() => {
+  //     const newPosition = position === dataSource.length - 1 ? 0 : position + 1;
+  //     setPosition(newPosition);
+  //   }, 3000);
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      const newPosition = position === dataSource.length - 1 ? 0 : position + 1;
-      setPosition(newPosition);
-    }, 3000); // Change image every 3 seconds
-
-    return () => clearInterval(interval);
-  }, [position]);
+  //   return () => clearInterval(interval);
+  // }, [position]);
 
   return (
     <ScrollView horizontal pagingEnabled style={styles.sliderContainer}>
-      {dataSource.map((item, index) => (
+      {banners.map((item, index) => (
         //       <View key={index} >
         // <Text>
         // {item.banner_image }

@@ -35,16 +35,25 @@ const Homepage = () => {
 
   const auth = useContext(AuthContext);
 
-  const [dataSource, setDataSource] = useState([]);
+  const [dataSource, setDataSource] = useState([]); 
+  const [banner, setBanner] = useState([]); 
+  const [allProduct, setProductData] = useState([]); 
 
   const fetchData = async () => {
     try {
-      const response = await axios.get(
-        `${BaseUrl}api/category`
-      );
-      const data = response.data;
-      // console.log(data);
+      const response = await Promise.all([
+        axios.get(`${BaseUrl}api/category`),
+        axios.get(`${BaseUrl}api/banner`),
+        axios.get(`${BaseUrl}api/products`)
+      ]);
+      const data = response[0].data;
+      const banners = response[1].data;
+      const productdata = response[2].data;
+    
       setDataSource(data);
+      setBanner(banners);
+      setProductData(productdata.data);
+      
     } catch (error) {
       console.error("Error fetchingddd data: ", error);
     }
@@ -54,75 +63,6 @@ const Homepage = () => {
     fetchData();
   }, []);
 
-  // const featuredcategorys = [
-  //   {
-  //     name: "Australian Orange",
-  //     price: "12.30",
-  //     stars: 4,
-  //     desc: "Sweet and juicy",
-  //     shadow: "orange",
-  //     image:
-  //       "https://imagepasal.com/watermark/IMG_9980-image-pasal-2023-09-11.jpg",
-  //     color: (opacity) => `rgba(251, 216, 146, ${opacity})`,
-  //   },
-  //   {
-  //     name: "Flesh Nectari",
-  //     shadow: "red",
-  //     price: "12",
-  //     stars: 3,
-  //     desc: "Sweet and juicy",
-  //     image:
-  //       "https://buffer.com/library/content/images/2023/10/free-images.jpg",
-  //     color: (opacity) => `rgba(255, 170, 157, ${opacity})`,
-  //   },
-
-  //   {
-  //     name: "Black Grapes",
-  //     price: "40",
-  //     stars: 4,
-  //     desc: "Sweet and juicy",
-  //     shadow: "purple",
-  //     image:
-  //       "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSqHqVr-CbHrt6TbZXYpaO7TR1weVwUFpOoK7EWtnNG&s",
-  //     color: (opacity) => `rgba(214, 195, 246, ${opacity})`,
-  //   },
-
-  //   {
-  //     name: "Red Grapecategory",
-  //     price: "30",
-  //     stars: 4,
-  //     desc: "Sweet and juicy",
-  //     shadow: "red",
-  //     image:
-  //       "https://buffer.com/library/content/images/2023/10/free-images.jpg",
-  //     color: (opacity) => `rgba(255, 163, 120, ${opacity})`,
-  //   },
-  //   {
-  //     name: "Green Apple",
-  //     price: "10.5",
-  //     stars: 4,
-  //     desc: "Sweet and juicy",
-  //     shadow: "green",
-  //     image:
-  //       "https://imagepasal.com/watermark/IMG_9980-image-pasal-2023-09-11.jpg",
-  //     color: (opacity) => `rgba(139, 243, 139, ${opacity})`,
-  //   },
-  // ];
-
-  const featuredproducts = [
-    {
-      title: "Product Title",
-      description: "Product description goes here.",
-      price: 99.99,
-      image: "https://cdn.easyfrontend.com/pictures/products/couch3.png",
-    },
-    {
-      title: "Product Title",
-      description: "Product description goes here.",
-      price: 99.99,
-      image: "https://cdn.easyfrontend.com/pictures/products/couch3.png",
-    },
-  ];
 
   const handleCart = async (product) => {
     try {
@@ -175,7 +115,7 @@ const Homepage = () => {
             />
           </View>
           <View className="items-center">
-            <ImageSlider />
+            <ImageSlider  banners={banner}/>
           </View>
           <View>
             <View className="h-full pt-10 bg-white">
@@ -234,7 +174,7 @@ const Homepage = () => {
                     </View>
 
                     <View style={styles.gridContainer}>
-                      {productsData.map((product, index) => (
+                      {allProduct.map((product, index) => (
                         <View className="w-[50%]" key={index}>
                           <Product
                             product={product}
