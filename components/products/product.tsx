@@ -18,45 +18,55 @@ export default function Product({ product, onPress, onPressCart }) {
     >
       <View className="relative">
         <Image
-          source={{ uri: product.image_url }}
+          source={{ uri: product.full_image_path }}
           className=" p-2 h-[20vh] object-cover"
         />
       </View>
-      <View style={styles.dis}>
-        <Text
-          style={{ zIndex: 90, color: "#fff" }}
-          className="text-xs font-semibold"
-        >
-          {product.discount_percent}
-        </Text>
-      </View>
+      {product.discount_amount > 0 && product.product_price > 0 && (
+        <View style={styles.dis}>
+          <Text
+            style={{ zIndex: 90, color: "#fff" }}
+            className="text-xs font-semibold"
+          >
+            {((product.discount_amount / product.product_price) * 100).toFixed(
+              0
+            )}
+            %
+          </Text>
+        </View>
+      )}
 
       <View className="">
         <View className="flex-row justify-between px-2 pt-1 pr-1">
           <View>
-            <Text className="text-xs text-slate-300">
-              {product.category_name}
+            <Text className="text-xs font-semibold text-slate-500">
+              {product.category.category_name}
             </Text>
           </View>
         </View>
       </View>
-      <View className="flex-row pl-2">
-        <Text style={styles.productName}>{product.name.substring(0, 32)}</Text>
+      <View className="flex-row pl-2 mt-2">
+        <Text style={styles.productName}>
+          {product.product_name.substring(0, 32)}
+        </Text>
       </View>
       <View className="flex-row items-center justify-between">
         <View className="flex-col pb-2 pl-2 mt-2">
           <Text className="text-base font-semibold text-orange-700 ">
-            Rs. {product.price - product.discount_price}
+            Rs. {product.product_price - product.discount_amount}
           </Text>
-          <Text className="text-sm line-through text-slate-400">
-            Rs. {product.price}
-          </Text>
+          {product.discount_amount > 0 && (
+            <Text className="text-sm line-through text-slate-400">
+              Rs. {product.product_price}
+            </Text>
+          )}
         </View>
+        
         <Pressable
           className="items-center justify-center w-12 h-8 mr-2 bg-blue-600 rounded-lg"
           onPress={onPressCart}
         >
-          <Icons name="cart" size={20} color={"#fff"} />
+          <Icons name="heart" size={20} color={"#fff"} />
         </Pressable>
       </View>
     </Pressable>
