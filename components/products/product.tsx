@@ -61,6 +61,7 @@ export default function Product({ product, onPress, onPressCart }) {
             </Text>
           )}
         </View>
+        
         <Pressable
           className="items-center justify-center w-12 h-8 mr-2 bg-blue-600 rounded-lg"
           onPress={onPressCart}
