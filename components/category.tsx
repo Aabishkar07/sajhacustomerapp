@@ -10,13 +10,15 @@ import React, { useState } from "react";
 
 export default function Category({ category }) {
   // console.log("hiii",category)
+  
   return (
     <View className="mx-1 overflow-hidden w-[95px] ">
       {/* <View className="flex-row justify-center" style={{boxShadow: '0px 120px 100px -40px rgba(0, 0, 0, 1)'}}> */}
       <View className="flex-row justify-center overflow-hidden rounded-full">
         <Image
           // source={{ uri: category.image }}
-          source={{ uri: "https://imagepasal.com/watermark/IMG_9980-image-pasal-2023-09-11.jpg" }}
+          // source={{ uri: `${category.category_image}` }}
+          source={{ uri: `http://192.168.0.101:8000/images/category/${category.image}` }}
           className="w-16 h-16 rounded-full"
         />
       </View>

@@ -25,27 +25,32 @@ import productsData from "../../product.json";
 import { addCart } from "@/context/func";
 import { AuthContext } from "@/context/context";
 import axios from "axios";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { BaseUrl } from "@/components/baseurl/baseurl";
 
 const Homepage = () => {
+  // const baseurl=BaseUrl
+
   const toastRef = React.createRef();
 
   const auth = useContext(AuthContext);
 
   const [dataSource, setDataSource] = useState([]);
 
+  const fetchData = async () => {
+    try {
+      const response = await axios.get(
+        `${BaseUrl}api/category`
+      );
+      const data = response.data;
+      // console.log(data);
+      setDataSource(data);
+    } catch (error) {
+      console.error("Error fetchingddd data: ", error);
+    }
+  };
+
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await axios.get(
-          "http://192.168.0.100:8080/api/category"
-        );
-        const data = response.data;
-        console.log(data);
-        setDataSource(data);
-      } catch (error) {
-        console.error("Error fetching data: ", error);
-      }
-    };
     fetchData();
   }, []);
 
@@ -210,9 +215,9 @@ const Homepage = () => {
                         showsHorizontalScrollIndicator={false}
                       >
                         {dataSource.map((category, index) => {
-                      return <Category category={category} key={index} />;
-                    })}
-{/* 
+                          return <Category category={category} key={index} />;
+                        })}
+                        {/* 
                         {dataSource.map((item, index) => (
                           <View key={index}>
                             <Image
@@ -259,6 +264,4 @@ const styles = StyleSheet.create({
     flexWrap: "wrap",
     justifyContent: "space-around",
   },
-  
-  
 });

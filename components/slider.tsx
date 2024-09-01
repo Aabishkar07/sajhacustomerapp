@@ -1,6 +1,7 @@
 import axios from "axios";
 import React, { useState, useEffect } from "react";
 import { View, StyleSheet, Image, ScrollView, Text } from "react-native";
+import { BaseUrl } from "@/components/baseurl/baseurl";
 
 const dataSource = [
   {
@@ -24,19 +25,19 @@ const ImageSlider = () => {
   const [position, setPosition] = useState(0);
   const [dataSource, setDataSource] = useState([]);
 
+  console.log(BaseUrl, "BaseUrlssssss");
+  const fetchData = async () => {
+    try {
+      const response = await axios.get(`${BaseUrl}api/banner`);
+      const data = response.data;
+      // console.log(data, "slider");
+      setDataSource(data);
+    } catch (error) {
+      console.error("Error fetching data: ", error);
+    }
+  };
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await axios.get(
-          "http://192.168.0.100:8080/api/banner"
-        );
-        const data = response.data;
-        console.log(data, "slider");
-        setDataSource(data);
-      } catch (error) {
-        console.error("Error fetching data: ", error);
-      }
-    };
+    
     fetchData();
   }, []);
 
@@ -60,11 +61,9 @@ const ImageSlider = () => {
 
         <View key={index} style={styles.imageContainer}>
           <Image
-          // source={{ uri: "https://img.freepik.com/premium-vector/cosmetic-bottle-advertising-banner-template_87720-1602.jpg?w=1380"}}
-          source={{ uri: `${item.full_image_path}` }}
-
+            // source={{ uri: "https://img.freepik.com/premium-vector/cosmetic-bottle-advertising-banner-template_87720-1602.jpg?w=1380"}}
+            source={{ uri: `${item.full_image_path}` }}
             style={styles.image}
-            
           />
         </View>
       ))}
