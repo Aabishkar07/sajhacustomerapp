@@ -31,7 +31,7 @@ export default function Product({ product, onPress, onPressCart }) {
             {((product.discount_amount / product.product_price) * 100).toFixed(
               0
             )}
-            %
+            % off
           </Text>
         </View>
       )}
@@ -55,13 +55,15 @@ export default function Product({ product, onPress, onPressCart }) {
           <Text className="text-base font-semibold text-orange-700 ">
             Rs. {product.product_price - product.discount_amount}
           </Text>
-          {product.discount_amount > 0 && (
+          {product.discount_amount > 0 ? (
             <Text className="text-sm line-through text-slate-400">
               Rs. {product.product_price}
             </Text>
+          ) : (
+            <Text></Text>
           )}
         </View>
-        
+
         <Pressable
           className="items-center justify-center w-12 h-8 mr-2 bg-blue-600 rounded-lg"
           onPress={onPressCart}

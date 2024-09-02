@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   ScrollView,
   View,
@@ -9,31 +9,46 @@ import {
   SafeAreaView,
 } from "react-native";
 import Header from "../layouts/Header";
+import axios from "axios";
+import { BaseUrl } from "../baseurl/baseurl";
 
-const categories = [
-  {
-    id: 1,
-    title: "Fashion",
-    image: "https://cdn.easyfrontend.com/pictures/ecommerce/product23.png",
-  },
-  {
-    id: 2,
-    title: "Perfume",
-    image: "https://cdn.easyfrontend.com/pictures/ecommerce/product12.png",
-  },
-  {
-    id: 3,
-    title: "Shoes",
-    image: "https://cdn.easyfrontend.com/pictures/ecommerce/product18.png",
-  },
-  {
-    id: 4,
-    title: "Kitchen",
-    image: "https://cdn.easyfrontend.com/pictures/ecommerce/product8.png",
-  },
-];
+// const categories = [
+//   {
+//     id: 1,
+//     title: "Fashion",
+//     image: "https://cdn.easyfrontend.com/pictures/ecommerce/product23.png",
+//   },
+//   {
+//     id: 2,
+//     title: "Perfume",
+//     image: "https://cdn.easyfrontend.com/pictures/ecommerce/product12.png",
+//   },
+//   {
+//     id: 3,
+//     title: "Shoes",
+//     image: "https://cdn.easyfrontend.com/pictures/ecommerce/product18.png",
+//   },
+//   {
+//     id: 4,
+//     title: "Kitchens",
+//     image: "https://cdn.easyfrontend.com/pictures/ecommerce/product8.png",
+//   },
+// ];
 
 const ShopByCategory = () => {
+  const [categories,setCategory]=useState([]);
+  const fetchData = async () => {
+    try {
+      const response = await axios.get(`${BaseUrl}api/category`); 
+      // console.log(response.data)
+      setCategory(response.data);
+    } catch (error) {
+      console.error("Error fetching in category data: ", error);
+    }
+  };
+  useEffect(() => {
+    fetchData();
+  }, []);
   return (
     <SafeAreaView>
       <Header/>
@@ -48,12 +63,12 @@ const ShopByCategory = () => {
               <TouchableOpacity key={category.id} style={styles.card}>
                 <View style={styles.cardImageContainer}>
                   <Image
-                    source={{ uri: category.image }}
+                    source={{ uri: category.category_image }}
                     style={styles.cardImage}
                   />
                 </View>
                 <View style={styles.cardTextContainer}>
-                  <Text style={styles.cardText}>{category.title}</Text>
+                  <Text style={styles.cardText}>{category.category_name}</Text>
                 </View>
               </TouchableOpacity>
             ))}
@@ -91,7 +106,7 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
   },
   card: {
-    width: "30%", // Adjusted to fit 3 cards in a row
+    width: "30%", 
     backgroundColor: "white",
     borderRadius: 15,
     marginBottom: 20,
@@ -117,7 +132,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   cardText: {
-    fontSize: 18,
+    fontSize: 12,
     fontWeight: "bold",
   },
 });

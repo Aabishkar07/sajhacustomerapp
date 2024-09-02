@@ -42,9 +42,9 @@ const Homepage = () => {
   const fetchData = async () => {
     try {
       const response = await Promise.all([
-        axios.get(`${BaseUrl}api/category`),
-        axios.get(`${BaseUrl}api/banner`),
-        axios.get(`${BaseUrl}api/products`)
+        axios.get(`${BaseUrl}category`),
+        axios.get(`${BaseUrl}banner`),
+        axios.get(`${BaseUrl}products`)
       ]);
       const data = response[0].data;
       const banners = response[1].data;
@@ -68,10 +68,10 @@ const Homepage = () => {
     try {
       await addCart(
         product.id,
-        product.name,
-        product.price - product.discount_price,
+        product.product_name,
+        product.product_price - product.discount_amount,
         1,
-        product.image_url
+        product.full_image_path
       );
       auth.loadCart();
       toastRef.current.show("Added to cart successfully", 3000);

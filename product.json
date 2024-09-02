@@ -8,26 +8,46 @@
     "discount_percent": "-80%",
     "image_url": "http://images.thenorthface.com/is/image/TheNorthFace/236x204_CLR/mens-better-than-naked-jacket-AVMH_LC9_hero.png",
     "category_name": "CO",
-    "attribute":[
+    "attribute": [
       {
-        "id":"1",
-        "name":"Small",
-        "group":"Size"
+        "id": "1",
+        "name": "Small",
+        "group": [
+          {
+            "id": "3",
+            "name": "Size"
+          }
+        ]
       },
       {
-        "id":"2",
-        "name":"Large",
-        "group":"Size"
+        "id": "2",
+        "name": "Large",
+        "group": [
+          {
+            "id": "3",
+            "name": "Size"
+          }
+        ]
       },
       {
-        "id":"3",
-        "name":"Red",
-        "group":"Color"
+        "id": "3",
+        "name": "Red",
+        "group": [
+          {
+            "id": "2",
+            "name": "Color"
+          }
+        ]
       },
       {
-        "id":"4",
-        "name":"Black",
-        "group":"Color"
+        "id": "4",
+        "name": "Black",
+        "group": [
+          {
+            "id": "2",
+            "name": "Color"
+          }
+        ]
       }
     ]
   },
@@ -72,7 +92,41 @@
     "discount_price": 28,
     "discount_percent": "-20%",
     "category_name": "Utensils",
-    "image_url": "https://static-01.daraz.com.np/p/7b9dbcbfdc3e2ab2a5cba227d7bba5f1.jpg_750x750.jpg_.webp"
+    "image_url": "https://static-01.daraz.com.np/p/7b9dbcbfdc3e2ab2a5cba227d7bba5f1.jpg_750x750.jpg_.webp",
+    "attribute": [
+      {
+        "id": "1",
+        "name": "Small",
+        "group": {
+          "id": "3",
+          "name": "Size"
+        }
+      },
+      {
+        "id": "2",
+        "name": "Large",
+        "group": {
+          "id": "3",
+          "name": "Size"
+        }
+      },
+      {
+        "id": "3",
+        "name": "Red",
+        "group": {
+          "id": "2",
+          "name": "Color"
+        }
+      },
+      {
+        "id": "4",
+        "name": "Black",
+        "group": {
+          "id": "2",
+          "name": "Color"
+        }
+      }
+    ]
   },
   {
     "id": 6,
@@ -93,27 +147,46 @@
     "discount_percent": "-20%",
     "category_name": "Utensils",
     "image_url": "https://cdn11.bigcommerce.com/s-iai44k5nej/images/stencil/original/products/172/1880/BF_Mixing_Spoon-0004__95663.1653489931.png?c=1",
-    "attribute":[
-      
+    "attribute": [
       {
-        "id":"3",
-        "name":"Orange",
-        "group":"Color"
+        "id": "3",
+        "name": "Orange",
+        "group": [
+          {
+            "id": "2",
+            "name": "Color"
+          }
+        ]
       },
       {
-        "id":"4",
-        "name":"Black",
-        "group":"Color"
+        "id": "4",
+        "name": "Black",
+        "group": [
+          {
+            "id": "2",
+            "name": "Color"
+          }
+        ]
       },
       {
-        "id":"5",
-        "name":"Red",
-        "group":"Color"
+        "id": "5",
+        "name": "Red",
+        "group": [
+          {
+            "id": "2",
+            "name": "Color"
+          }
+        ]
       },
       {
-        "id":"6",
-        "name":"Green",
-        "group":"Color"
+        "id": "6",
+        "name": "Green",
+        "group": [
+          {
+            "id": "2",
+            "name": "Color"
+          }
+        ]
       }
     ]
   },
@@ -126,36 +199,57 @@
     "discount_percent": "-5%",
     "category_name": "smartphones",
     "image_url": "https://images.pexels.com/photos/1647976/pexels-photo-1647976.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
-    "attribute":[
+    "attribute": [
       {
-        "id":"7",
-        "name":"64/128",
-        "group":"Variant"
+        "id": "7",
+        "name": "64/128",
+        "group": "Variant"
       },
       {
-        "id":"8",
-        "name":"128/512",
-        "group":"Variant"
+        "id": "8",
+        "name": "128/512",
+        "group": [
+          {
+            "id": "1",
+            "name": "Variant"
+          }
+        ]
       },
       {
-        "id":"4",
-        "name":"Black",
-        "group":"Color"
+        "id": "4",
+        "name": "Black",
+        "group": [
+          {
+            "id": "2",
+            "name": "Color"
+          }
+        ]
       },
       {
-        "id":"11",
-        "name":"Silver",
-        "group":"Color"
+        "id": "11",
+        "name": "Silver",
+        "group": [
+          {
+            "id": "2",
+            "name": "Color"
+          }
+        ]
       },
       {
-        "id":"10",
-        "name":"White",
-        "group":"Color"
+        "id": "10",
+        "name": "White",
+        "group": {
+          "id": "2",
+          "name": "Color"
+        }
       },
       {
-        "id":"2",
-        "name":"Large",
-        "group":"Size"
+        "id": "2",
+        "name": "Large",
+        "group": {
+          "id": "3",
+          "name": "Size"
+        }
       }
     ]
   },
