@@ -1,1 +1,1 @@
-export const BaseUrl="http://192.168.0.101:8000/";
+export const BaseUrl="http://192.168.0.106:8000/api/";

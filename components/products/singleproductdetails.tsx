@@ -17,11 +17,37 @@ import { Button } from "react-native";
 import RatingModal from "../modal/RatingModal";
 import Icons from "react-native-vector-icons/MaterialCommunityIcons";
 import { AirbnbRating, Rating } from "react-native-ratings";
+import axios from "axios";
+import { BaseUrl } from "../baseurl/baseurl";
 const Singleproductdetails = () => {
   const { id } = useLocalSearchParams();
-  // console.log("aabbb", id);
 
   const [product, setProduct] = useState(productsData[Number(id) - 1]);
+  const [productDatas, setProductData] = useState();
+  const [renderapp, setRenderapp] = useState(false);
+
+
+  useEffect(() => {
+    console.log("clsfclsfm")
+    loadData(id);
+  }, []);
+  
+  const loadData=async(id)=>{
+    try {
+      console.log("aabbb", id);
+    const response=await axios.get(`${BaseUrl}productbyid/${id}`);
+    setProductData(response.data.data.product)
+    setRenderapp(true)
+    // setProductattribute(response.data.data.attribute)
+    console.log(response.data.data.product,"akakaa");
+    } catch (error) {
+      console.log("error",error)
+    }
+
+  }
+
+  // console.log("aabbb", id);
+
   // console.log("aabbbproduct",product)
   const [selectedItems, setSelectedItems] = useState({});
   const [quantity, setQuantity] = useState(1);
@@ -34,10 +60,11 @@ const Singleproductdetails = () => {
   // Group attributes by 'group'
   if (product.attribute) {
     const groupedAttributes = product.attribute.reduce((acc, attribute) => {
-      if (!acc[attribute.group]) {
-        acc[attribute.group] = [];
+    
+      if (!acc[attribute.group.name]) {
+        acc[attribute.group.name] = [];
       }
-      acc[attribute.group].push(attribute);
+      acc[attribute.group.name].push(attribute);
       return acc;
     }, {});
 
@@ -103,7 +130,8 @@ const Singleproductdetails = () => {
 
   console.log("selectedItems", selectedItems);
   return (
-    <ScrollView style={{ backgroundColor: "white" }}>
+   
+      <ScrollView style={{ backgroundColor: "white" }}>
       <View style={{ padding: 16, marginTop: 20 }}>
         <View
           style={{
@@ -112,10 +140,11 @@ const Singleproductdetails = () => {
             marginHorizontal: -8,
           }}
         >
+
           <View style={{ width: "100%", paddingHorizontal: 8 }}>
             <View style={{ borderRadius: 12, overflow: "hidden", margin: 8 }}>
               <Image
-                source={{ uri: product.image_url }}
+                source={{ uri: productDatas.product_image }}
                 style={{ width: "100%", height: 288, resizeMode: "cover" }}
               />
             </View>
@@ -541,6 +570,8 @@ const Singleproductdetails = () => {
         onSwipeRating={(rating) => console.log(`Swiping: ${rating}`)}
       />*/}
     </ScrollView>
+    
+   
   );
 };
 
