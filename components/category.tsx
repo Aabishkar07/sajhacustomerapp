@@ -18,7 +18,7 @@ export default function Category({ category }) {
         <Image
           // source={{ uri: category.image }}
           // source={{ uri: `${category.category_image}` }}
-          source={{ uri: `http://192.168.0.101:8000/images/category/${category.image}` }}
+          source={{ uri: category.category_image}}
           className="w-16 h-16 rounded-full"
         />
       </View>
