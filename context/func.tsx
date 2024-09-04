@@ -13,7 +13,7 @@ export const getCart = async () => {
 };
 
 // add cart to Asyncstorage 
-export const addCart = async (id, name, price, quantity, image_url,variation) => {
+export const addCart = async (id,product_id, name, price, quantity, image_url,variation) => {
   try {
     let cart1 = await AsyncStorage.getItem("cart");
 
@@ -28,7 +28,7 @@ export const addCart = async (id, name, price, quantity, image_url,variation) =>
     if (existingProductIndex !== -1) {
       cart[existingProductIndex].quantity += quantity; // Update the quantity
     } else {
-      cart.push({ id, name, price, quantity, image_url,variation });
+      cart.push({ id,product_id, name, price, quantity, image_url,variation });
     }
 
     // console.log(cart, "single");

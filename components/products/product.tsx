@@ -18,10 +18,11 @@ export default function Product({ product, onPress, onPressCart }) {
     >
       <View className="relative">
         <Image
-          source={{ uri: product.full_image_path }}
+          source={{ uri: product.featured_image }}
           className=" p-2 h-[20vh] object-cover"
         />
       </View>
+
       {product.discount_amount > 0 && product.product_price > 0 && (
         <View style={styles.dis}>
           <Text

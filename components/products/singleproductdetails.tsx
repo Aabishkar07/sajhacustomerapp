@@ -19,7 +19,7 @@ import Icons from "react-native-vector-icons/MaterialCommunityIcons";
 import { AirbnbRating, Rating } from "react-native-ratings";
 import axios from "axios";
 import { BaseUrl } from "../baseurl/baseurl";
-const SingleProductDetails = ({productData,productAttribute}) => {
+const SingleProductDetails = ({ productData, productAttribute }) => {
   // Assuming useLocalSearchParams is a hook that gets query parameters or similar
   const { id } = useLocalSearchParams();
   console.log("myid", id);
@@ -28,7 +28,7 @@ const SingleProductDetails = ({productData,productAttribute}) => {
   const [selectedItems, setSelectedItems] = useState({});
   const [quantity, setQuantity] = useState(1);
   const [visible, setVisible] = React.useState(false);
-  
+
   const handleQuantityChange = (value) => {
     if (value >= 0) setQuantity(value);
   };
@@ -56,7 +56,10 @@ const SingleProductDetails = ({productData,productAttribute}) => {
       // Set default selected items (first item in each group)
       const defaultSelections = newSections.reduce((acc, section) => {
         if (section.data.length > 0) {
-          acc[section.title] = section.data[0].name;
+          acc[section.title] = {
+            id: section.data[0].id,
+            name: section.data[0].name,
+          };
         }
         return acc;
       }, {});
@@ -67,15 +70,20 @@ const SingleProductDetails = ({productData,productAttribute}) => {
   const handleItemClick = (item, groupName) => {
     setSelectedItems((prevSelectedItems) => ({
       ...prevSelectedItems,
-      [groupName]: item.name,
+      [groupName]: {
+        id: item.id,
+        name: item.name,
+      },
     }));
   };
 
-
   const auth = useContext(AuthContext);
   const handleCartChange = async () => {
-    var join = Object.values(selectedItems).join("-");
-    console.log("koin", join);
+    // var join = Object.values(selectedItems).join("-");
+    const join = Object.values(selectedItems)
+      .map((item) => item.name)
+      .join("-");
+    console.log("ddasasas", join);
     console.log("cart change", productData.id + "-" + join);
     var cart_id = "";
     var variation = {};
@@ -89,14 +97,16 @@ const SingleProductDetails = ({productData,productAttribute}) => {
 
     var abc = selectedItems ? selectedItems : null;
     console.log("asssssdd", abc);
+    console.log("asssssdd", abc);
 
     try {
       await addCart(
         cart_id,
+        productData.id,
         productData.product_name,
         productData.product_price - productData.discount_amount,
         quantity,
-        productData.product_image,
+        productData.featured_image,
         variation
       );
       auth.loadCart();
@@ -109,7 +119,6 @@ const SingleProductDetails = ({productData,productAttribute}) => {
 
   return (
     <ScrollView style={{ backgroundColor: "white" }}>
-    
       {productData ? (
         <View>
           {/* <Text>{productData.product_name}</Text> */}
@@ -127,7 +136,7 @@ const SingleProductDetails = ({productData,productAttribute}) => {
                   style={{ borderRadius: 12, overflow: "hidden", margin: 8 }}
                 >
                   <Image
-                    source={{ uri: productData.product_image }}
+                    source={{ uri: productData.featured_image }}
                     style={{ width: "100%", height: 288, resizeMode: "cover" }}
                   />
                 </View>
@@ -174,7 +183,9 @@ const SingleProductDetails = ({productData,productAttribute}) => {
                   >
                     {productData.product_name}
                   </Text>
-                  <Text className="text-[10px]">{productData.category_name}</Text>
+                  <Text className="text-[10px]">
+                    {productData.category_name}
+                  </Text>
                   <View
                     style={{
                       flexDirection: "row",
@@ -203,7 +214,8 @@ const SingleProductDetails = ({productData,productAttribute}) => {
                     <Text
                       style={{ fontSize: 24, color: "blue", fontWeight: "500" }}
                     >
-                      Rs. {productData.product_price - productData.discount_amount}
+                      Rs.{" "}
+                      {productData.product_price - productData.discount_amount}
                     </Text>
                     <Text
                       className="text-gray-600"
@@ -437,38 +449,37 @@ const SingleProductDetails = ({productData,productAttribute}) => {
           </View>
 
           {/* attributes  */}
-         {console.log(sections,'sections')}
-         {productAttribute && (
-        <SectionList
-          sections={sections}
-          keyExtractor={(item) => item.id.toString()}
-          renderItem={({ item, section }) => {
-            const isSelected = selectedItems[section.title] === item.name;
-            return (
-              <TouchableOpacity
-                style={[
-                  styles.itemContainer,
-                  isSelected && styles.selectedItemContainer,
-                ]}
-                onPress={() => handleItemClick(item, section.title)}
-              >
-                <Text
-                  style={[
-                    styles.itemText,
-                    isSelected && styles.selectedItemText,
-                  ]}
-                >
-                  {item.name}
-                </Text>
-              </TouchableOpacity>
-            );
-          }}
-          renderSectionHeader={({ section: { title } }) => (
-            <Text style={styles.header}>{title}</Text>
+          {console.log(sections, "sections")}
+          {productAttribute && (
+            <SectionList
+              sections={sections}
+              keyExtractor={(item) => item.id.toString()}
+              renderItem={({ item, section }) => {
+                const isSelected = selectedItems[section.title]?.id === item.id;
+                return (
+                  <TouchableOpacity
+                    style={[
+                      styles.itemContainer,
+                      isSelected && styles.selectedItemContainer,
+                    ]}
+                    onPress={() => handleItemClick(item, section.title)}
+                  >
+                    <Text
+                      style={[
+                        styles.itemText,
+                        isSelected && styles.selectedItemText,
+                      ]}
+                    >
+                      {item.name}
+                    </Text>
+                  </TouchableOpacity>
+                );
+              }}
+              renderSectionHeader={({ section: { title } }) => (
+                <Text style={styles.header}>{title}</Text>
+              )}
+            />
           )}
-        />
-      )}
-
 
           {/* RatingModal */}
           {/* <View

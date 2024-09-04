@@ -159,7 +159,7 @@ const cart = () => {
                           Object.values(item.variation).map((value, index) => (
                             <View key={index}>
                               <Text className="px-1 text-xs py-1 mr-1.5 text-white bg-red-500 rounded">
-                                {value}
+                                {value.name}
                               </Text>
                             </View>
                           ))}

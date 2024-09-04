@@ -13,6 +13,8 @@ import Header from "../layouts/Header";
 import { AuthContext } from "@/context/context";
 import { getCart } from "@/context/func";
 import { router } from "expo-router";
+import axios from "axios";
+import { BaseUrl } from "../baseurl/baseurl";
 
 const Checkout = () => {
   const auth = useContext(AuthContext);
@@ -20,10 +22,9 @@ const Checkout = () => {
 
   const [billingAddress, setBillingAddress] = useState({
     name: "",
+    email: "",
     address: "",
-    city: "",
-    state: "",
-    zip: "",
+    phonenumber: "",
   });
 
   const handleBillingChange = (field, value) => {
@@ -44,8 +45,30 @@ const Checkout = () => {
     0
   );
   const shippingFee = 0;
-  const tax = 0;
-  const total = subtotal + shippingFee + tax;
+  const total = subtotal + shippingFee ;
+  const paymentmethod="cash-on-delivery"
+  const handleformsubmit=async()=>{
+    console.log("billingAddress",cartItems);
+
+    const alltotal={
+      "paymentmethod":paymentmethod,
+      "shippingFee":shippingFee,
+      "total":total,
+    }
+    const orderData={
+     "billingAddress": billingAddress,
+      "alltotal":alltotal,
+      "cartItems": cartItems
+    }
+    try {
+      
+      const response = await axios.post(`${BaseUrl}checkout`,orderData);
+      console.log('Success:', response.data);
+  } catch (error) {
+      console.error('Error:', error);
+  }
+   
+  }
 
   return (
     <SafeAreaView style={styles.container}>
@@ -68,28 +91,24 @@ const Checkout = () => {
           />
           <TextInput
             style={styles.input}
+            placeholder="Email"
+            value={billingAddress.email}
+            onChangeText={(text) => handleBillingChange("email", text)}
+          />
+          <TextInput
+            style={styles.input}
             placeholder="Address"
             value={billingAddress.address}
             onChangeText={(text) => handleBillingChange("address", text)}
           />
+          
           <TextInput
             style={styles.input}
-            placeholder="City"
-            value={billingAddress.city}
-            onChangeText={(text) => handleBillingChange("city", text)}
+            placeholder="Phonenumber"
+            value={billingAddress.phonenumber}
+            onChangeText={(text) => handleBillingChange("phonenumber", text)}
           />
-          <TextInput
-            style={styles.input}
-            placeholder="State"
-            value={billingAddress.state}
-            onChangeText={(text) => handleBillingChange("state", text)}
-          />
-          <TextInput
-            style={styles.input}
-            placeholder="ZIP Code"
-            value={billingAddress.zip}
-            onChangeText={(text) => handleBillingChange("zip", text)}
-          />
+         
         </View>
 
         <View>
@@ -118,16 +137,12 @@ const Checkout = () => {
           <Text style={styles.summaryValue}>Rs. {shippingFee}</Text>
         </View>
         <View style={styles.divider}></View>
-        <View style={styles.summaryRow}>
-          <Text style={styles.summaryLabel}>Tax</Text>
-          <Text style={styles.summaryValue}>Rs. {tax}</Text>
-        </View>
-        <View style={styles.divider}></View>
+       
         <View style={styles.summaryRow}>
           <Text style={styles.totalTitle}>Total</Text>
           <Text style={styles.summaryValue}>Rs. {total}</Text>
         </View>
-        <TouchableOpacity style={styles.buyButton}>
+        <TouchableOpacity onPress={()=>handleformsubmit()} style={styles.buyButton}>
           <Text style={styles.buyButtonText}>Checkout</Text>
         </TouchableOpacity>
       </View>
