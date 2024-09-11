@@ -41,7 +41,7 @@ export default class index extends Component {
                 <Ionicons name="bag-check" size={30} color="#007bff" />
                 <Text>To Receive</Text>
               </View>
-              
+
               <View className="items-center">
                 <Icon name="cancel" size={30} color="#007bff" />
 
@@ -49,7 +49,7 @@ export default class index extends Component {
               </View>
 
               <View className="items-center">
-              <Ionicons name="heart" size={30} color="#007bff" />
+                <Ionicons name="heart" size={30} color="#007bff" />
                 <Text>Wishlist</Text>
               </View>
             </View>
@@ -65,6 +65,27 @@ export default class index extends Component {
                 elevation: 3,
               }}
             >
+              <TouchableOpacity
+                onPress={() => router.push("/addproduct")}
+                style={{
+                  flexDirection: "row",
+                  alignItems: "center",
+                  marginBottom: 20,
+                }}
+              >
+                <Icon name="help-circle" size={30} color="#007bff" />
+                <Text
+                  style={{
+                    marginLeft: 15,
+                    fontSize: 18,
+                    fontWeight: "500",
+                    color: "#333",
+                  }}
+                >
+                  Add Product
+                </Text>
+              </TouchableOpacity>
+
               <TouchableOpacity
                 style={{
                   flexDirection: "row",
