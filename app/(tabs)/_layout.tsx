@@ -48,7 +48,7 @@ export default function TabLayout() {
       <Tabs.Screen
         name="explore"
         options={{
-          title: "Explore",
+          title: "BuyandSale",
           tabBarIcon: ({ color, focused }) => (
             <TabBarIcon
               name={focused ? "search" : "search-outline"}
@@ -58,7 +58,7 @@ export default function TabLayout() {
         }}
       />
 
-      {hasToken ? (
+  
         <Tabs.Screen
           name="profile"
           options={{
@@ -72,21 +72,7 @@ export default function TabLayout() {
             ),
           }}
         />
-      ) : (
-        <Tabs.Screen
-          name="profile"
-          options={{
-            title: "Profile",
-            headerShown: false,
-            tabBarIcon: ({ color, focused }) => (
-              <TabBarIcon
-                name={focused ? "person" : "person-outline"}
-                color={color}
-              />
-            ),
-          }}
-        />
-      )}
+      
 
       <Tabs.Screen
         name="category"

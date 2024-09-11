@@ -178,7 +178,7 @@ const Homepage = () => {
                         <View className="w-[50%]" key={index}>
                           <Product
                             product={product}
-                            onPressCart={() => handleCart(product)}
+                            // onPressCart={() => handleCart(product)}
                             onPress={() => handleProductPress(product)}
                           />
                         </View>

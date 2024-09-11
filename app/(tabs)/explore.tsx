@@ -1,152 +1,121 @@
-// import Ionicons from '@expo/vector-icons/Ionicons';
-// import { StyleSheet, Image, Platform } from 'react-native';
+import Header from "@/components/layouts/Header";
+import Product from "@/components/products/product";
+import Toast from "react-native-easy-toast";
+import React, { useContext, useEffect, useState } from "react";
+import { router } from "expo-router";
+import { View, Text, ScrollView, StyleSheet, TextInput, SafeAreaView } from "react-native";
+import { addCart } from "@/context/func";
+import { AuthContext } from "@/context/context";
+import axios from "axios";
+import { BaseUrl } from "@/components/baseurl/baseurl";
 
-// import { Collapsible } from '@/components/Collapsible';
-// import { ExternalLink } from '@/components/ExternalLink';
-// import ParallaxScrollView from '@/components/ParallaxScrollView';
-// import { ThemedText } from '@/components/ThemedText';
-// import { ThemedView } from '@/components/ThemedView';
+const Explore = () => {
+  const toastRef = React.createRef();
+  const auth = useContext(AuthContext);
+  const [allProduct, setProductData] = useState([]); 
 
-// export default function TabTwoScreen() {
-//   return (
-//     <ParallaxScrollView
-//       headerBackgroundColor={{ light: '#D0D0D0', dark: '#353636' }}
-//       headerImage={<Ionicons size={310} name="code-slash" style={styles.headerImage} />}>
-//       <ThemedView style={styles.titleContainer}>
-//         <ThemedText type="title">Explore</ThemedText>
-//       </ThemedView>
-//       <ThemedText>This app includes example code to help you get started.</ThemedText>
-//       <Collapsible title="File-based routing">
-//         <ThemedText>
-//           This app has two screens:{' '}
-//           <ThemedText type="defaultSemiBold">app/(tabs)/index.tsx</ThemedText> and{' '}
-//           <ThemedText type="defaultSemiBold">app/(tabs)/explore.tsx</ThemedText>
-//         </ThemedText>
-//         <ThemedText>
-//           The layout file in <ThemedText type="defaultSemiBold">app/(tabs)/_layout.tsx</ThemedText>{' '}
-//           sets up the tab navigator.
-//         </ThemedText>
-//         <ExternalLink href="https://docs.expo.dev/router/introduction">
-//           <ThemedText type="link">Learn more</ThemedText>
-//         </ExternalLink>
-//       </Collapsible>
-//       <Collapsible title="Android, iOS, and web support">
-//         <ThemedText>
-//           You can open this project on Android, iOS, and the web. To open the web version, press{' '}
-//           <ThemedText type="defaultSemiBold">w</ThemedText> in the terminal running this project.
-//         </ThemedText>
-//       </Collapsible>
-//       <Collapsible title="Images">
-//         <ThemedText>
-//           For static images, you can use the <ThemedText type="defaultSemiBold">@2x</ThemedText> and{' '}
-//           <ThemedText type="defaultSemiBold">@3x</ThemedText> suffixes to provide files for
-//           different screen densities
-//         </ThemedText>
-//         <Image source={require('@/assets/images/react-logo.png' style={{ alignSelf: 'center' }} />
-//         <ExternalLink href="https://reactnative.dev/docs/images">
-//           <ThemedText type="link">Learn more</ThemedText>
-//         </ExternalLink>
-//       </Collapsible>
-//       <Collapsible title="Custom fonts">
-//         <ThemedText>
-//           Open <ThemedText type="defaultSemiBold">app/_layout.tsx</ThemedText> to see how to load{' '}
-//           <ThemedText style={{ fontFamily: 'SpaceMono' }}>
-//             custom fonts such as this one.
-//           </ThemedText>
-//         </ThemedText>
-//         <ExternalLink href="https://docs.expo.dev/versions/latest/sdk/font">
-//           <ThemedText type="link">Learn more</ThemedText>
-//         </ExternalLink>
-//       </Collapsible>
-//       <Collapsible title="Light and dark mode components">
-//         <ThemedText>
-//           This template has light and dark mode support. The{' '}
-//           <ThemedText type="defaultSemiBold">useColorScheme()</ThemedText> hook lets you inspect
-//           what the user's current color scheme is, and so you can adjust UI colors accordingly.
-//         </ThemedText>
-//         <ExternalLink href="https://docs.expo.dev/develop/user-interface/color-themes/">
-//           <ThemedText type="link">Learn more</ThemedText>
-//         </ExternalLink>
-//       </Collapsible>
-//       <Collapsible title="Animations">
-//         <ThemedText>
-//           This template includes an example of an animated component. The{' '}
-//           <ThemedText type="defaultSemiBold">components/HelloWave.tsx</ThemedText> component uses
-//           the powerful <ThemedText type="defaultSemiBold">react-native-reanimated</ThemedText> library
-//           to create a waving hand animation.
-//         </ThemedText>
-//         {Platform.select({
-//           ios: (
-//             <ThemedText>
-//               The <ThemedText type="defaultSemiBold">components/ParallaxScrollView.tsx</ThemedText>{' '}
-//               component provides a parallax effect for the header image.
-//             </ThemedText>
-//           ),
-//         }
-//       </Collapsible>
-//     </ParallaxScrollView>
-//   );
-// }
+  const fetchData = async () => {
+    try {
+      const response = await axios.get(`${BaseUrl}buyandsell`);
+      console.log("Fetched data:", response.data); 
+      setProductData(response.data.data || []); 
+    } catch (error) {
+      console.error("Error fetching data:", error);
+      setProductData([]); 
+    }
+  };
 
-// const styles = StyleSheet.create({
-//   headerImage: {
-//     color: '#808080',
-//     bottom: -90,
-//     left: -35,
-//     position: 'absolute',
-//   },
-//   titleContainer: {
-//     flexDirection: 'row',
-//     gap: 8,
-//   },
-// });
+  useEffect(() => {
+    fetchData();
+  }, []);
 
+  const handleCart = async (product) => {
+    try {
+      await addCart(
+        product.id,
+        product.product_name,
+        product.product_price - product.discount_amount,
+        1,
+        product.full_image_path
+      );
+      auth.loadCart();
+      toastRef.current.show("Added to cart successfully", 3000);
+    } catch (error) {
+      console.error("Error updating cart:", error);
+    }
+  };
 
+  const toastStyles = StyleSheet.create({
+    container: {
+      backgroundColor: "#366735",
+      // Add any additional styling for the toast here
+    },
+  });
 
-import React from 'react';
-import { ScrollView, View, Text, TouchableOpacity } from 'react-native';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import {router} from 'expo-router';
+  const handleProductPress = (product) => {
+    router.push({
+      pathname: "/productdetails/[index]",
+      params: { id: product.id },
+    });
+  };
 
-const UserProfile = () => {
   return (
-    <ScrollView style={{ backgroundColor: '#f8f9fa' }}>
-      <View className="mt-10" style={{ padding: 30, backgroundColor: '#007bff', marginBottom: 20, borderBottomLeftRadius: 20, borderBottomRightRadius: 20 }}>
-        <Text style={{ fontSize: 26, fontWeight: 'bold', color: '#fff', marginBottom: 5 }}>John Doe</Text>
-        <Text style={{ fontSize: 18, color: '#e9ecef', marginBottom: 2 }}>johndoe@example.com</Text>
-        <Text style={{ fontSize: 18, color: '#e9ecef' }}>Phone: (123) 456-7890</Text>
-      </View>
+    <View className="bg-white pb-28">
+      <Header />
+      <ScrollView>
+        <SafeAreaView>
+          <Toast
+            ref={toastRef}
+            position="top"
+            style={toastStyles.container} // Style for the toast
+          />
+          <View>
+            <TextInput
+              placeholder="search..."
+              className="border-salte-200 border-[0.5px] mx-4 my-2 rounded-xl px-5"
+              style={{ height: 50, backgroundColor: "white" }}
+            />
+          </View>
 
-      <View style={{ paddingHorizontal: 20 }}>
-        <View style={{ backgroundColor: '#fff', borderRadius: 15, marginBottom: 20, padding: 15, elevation: 3 }}>
-          <TouchableOpacity style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 20 }}>
-            <Icon name="help-circle" size={30} color="#007bff" />
-            <Text style={{ marginLeft: 15, fontSize: 18, fontWeight: '500', color: '#333' }}>Help Center</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 20 }}>
-            <Icon name="email" size={30} color="#007bff" />
-            <Text style={{ marginLeft: 15, fontSize: 18, fontWeight: '500', color: '#333' }}>Contact Us</Text>
-          </TouchableOpacity>
-          <TouchableOpacity onPress={()=>router.push('/setting')} style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 20 }}>
-            <Icon name="cog" size={30} color="#007bff" />
-            <Text style={{ marginLeft: 15, fontSize: 18, fontWeight: '500', color: '#333' }}>Settings</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={{ flexDirection: 'row', alignItems: 'center' }}>
-            <Icon name="logout" size={30} color="#dc3545" />
-            <Text style={{ marginLeft: 15, fontSize: 18, fontWeight: '500', color: '#dc3545' }}>Logout</Text>
-          </TouchableOpacity>
-        </View>
-      </View>
-    </ScrollView>
+          <View>
+            <View className="h-full pt-10 bg-white">
+              <View>
+                <Text className="text-2xl mx-3 text-[#ec4c15]">
+                  BuyandSell
+                </Text>
+
+                {/* Conditional rendering to avoid errors */}
+                <View style={styles.gridContainer}>
+                  {Array.isArray(allProduct) && allProduct.length > 0 ? (
+                    allProduct.map((product, index) => (
+                      <View className="w-[50%]" key={index}>
+                        <Product
+                          product={product}
+                          onPressCart={() => handleCart(product)}
+                          onPress={() => handleProductPress(product)}
+                        />
+                      </View>
+                    ))
+                  ) : (
+                    <Text>No products available</Text> // Optional: Message for empty state
+                  )}
+                </View>
+              </View>
+            </View>
+          </View>
+        </SafeAreaView>
+      </ScrollView>
+    </View>
   );
 };
 
-export default UserProfile;
+export default Explore;
 
-
-
-
-
-
-
-
+const styles = StyleSheet.create({
+  gridContainer: {
+    flex: 1,
+    flexDirection: "row",
+    flexWrap: "wrap",
+    justifyContent: "space-around",
+  },
+});

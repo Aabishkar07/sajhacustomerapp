@@ -30,6 +30,12 @@ const SingleProductDetails = ({ productData, productAttribute }) => {
   const [quantity, setQuantity] = useState(1);
   const [visible, setVisible] = React.useState(false);
 
+
+  const formatDate = (dateString) => {
+    const date = new Date(dateString);
+    return date.toLocaleDateString(); // Default format, can be customized
+  };
+
   const handleQuantityChange = (value) => {
     if (value >= 0) setQuantity(value);
   };
@@ -283,7 +289,10 @@ const SingleProductDetails = ({ productData, productAttribute }) => {
                       <Text>This is a wholesale product</Text>
                     </View>
                   ) : productData.is_secondhand === 1 ? (
+                 
+
                     <View>
+                     
                       <Text>This is a secondhand product</Text>
 
                       <View className="flex-row justify-between">
@@ -310,6 +319,81 @@ const SingleProductDetails = ({ productData, productAttribute }) => {
                           Rs. {productData.product_price}
                         </Text>
                       </View>
+
+
+
+                      <View className="mt-5 overflow-hidden border border-gray-300 rounded-lg">
+   
+      <View className="flex-row border-b border-gray-300">
+        <View className="flex-1 p-2 bg-gray-200">
+          <Text className="font-bold text-center">ad_id</Text>
+        </View>
+        <View className="flex-1 p-2">
+          <Text className="font-bold text-center">{productData.ad_id}</Text>
+        </View>
+      </View>
+      <View className="flex-row border-b border-gray-300">
+        <View className="flex-1 p-2 bg-gray-200">
+          <Text className="font-bold text-center">Address</Text>
+        </View>
+        <View className="flex-1 p-2">
+          <Text className="font-bold text-center">{productData.secondhand_address}</Text>
+        </View>
+      </View>
+
+      <View className="flex-row border-b border-gray-300">
+        <View className="flex-1 p-2 bg-gray-200">
+          <Text className="font-bold text-center">Negotiable</Text>
+        </View>
+        <View className="flex-1 p-2">
+          <Text className="font-bold text-center">{productData.secondhand_negotiable}</Text>
+        </View>
+      </View>
+
+      <View className="flex-row border-b border-gray-300">
+        <View className="flex-1 p-2 bg-gray-200">
+          <Text className="font-bold text-center">Condition</Text>
+        </View>
+        <View className="flex-1 p-2">
+          <Text className="font-bold text-center">{productData.secondhand_condition}</Text>
+        </View>
+      </View>
+
+      <View className="flex-row border-b border-gray-300">
+        <View className="flex-1 p-2 bg-gray-200">
+          <Text className="font-bold text-center">Used For</Text>
+        </View>
+        <View className="flex-1 p-2">
+          <Text className="font-bold text-center">{productData.secondhand_used_for}</Text>
+        </View>
+      </View>
+
+      <View className="flex-row border-b border-gray-300">
+        <View className="flex-1 p-2 bg-gray-200">
+          <Text className="font-bold text-center">Ads Posted</Text>
+        </View>
+        <View className="flex-1 p-2">
+          <Text className="font-bold text-center">{formatDate(productData.created_at)}</Text>
+        </View>
+      </View>
+
+      <View className="flex-row border-b border-gray-300">
+        <View className="flex-1 p-2 bg-gray-200">
+          <Text className="font-bold text-center">Ads Expiry</Text>
+        </View>
+        <View className="flex-1 p-2">
+          <Text className="font-bold text-center">{productData.secondhand_expiry_date}</Text>
+        </View>
+      </View>
+
+
+    </View>
+
+
+
+
+
+                      
                     </View>
                   ) : (
                     <View>
@@ -342,7 +426,7 @@ const SingleProductDetails = ({ productData, productAttribute }) => {
                   )}
                 </View>
 
-                <View>
+                {/* <View>
                   <Text style={{ fontWeight: "500", marginBottom: 8 }}>
                     Color
                   </Text>
@@ -407,7 +491,7 @@ const SingleProductDetails = ({ productData, productAttribute }) => {
                       </TouchableOpacity>
                     ))}
                   </View>
-                </View>
+                </View> */}
 
                 <View>
                   <Text style={{ fontWeight: "500", marginBottom: 8 }}>
@@ -551,11 +635,7 @@ const SingleProductDetails = ({ productData, productAttribute }) => {
                     <Text className="text-white">Write a review</Text>
                   </TouchableOpacity>
                 </View>
-                <Text style={{ opacity: 0.7, marginTop: 16 }}>
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                  Quisque nec consequat lorem. Maecenas elementum at diam
-                  consequat bibendum.
-                </Text>
+            
               </View>
             </View>
           </View>
@@ -594,7 +674,7 @@ const SingleProductDetails = ({ productData, productAttribute }) => {
           )}
 
           {/* RatingModal */}
-          {/* <View
+          <View
             className="relative"
             style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
           >
@@ -644,7 +724,7 @@ const SingleProductDetails = ({ productData, productAttribute }) => {
                 <Text style={{ color: "white" }}>Post a review</Text>
               </TouchableOpacity>
             </RatingModal>
-          </View> */}
+          </View>
         </View>
       ) : (
         <Text>Loading...</Text>
