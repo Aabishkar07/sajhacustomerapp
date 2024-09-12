@@ -69,13 +69,13 @@ const Explore = () => {
             position="top"
             style={toastStyles.container} // Style for the toast
           />
-          <View>
+          {/* <View>
             <TextInput
               placeholder="search..."
               className="border-salte-200 border-[0.5px] mx-4 my-2 rounded-xl px-5"
               style={{ height: 50, backgroundColor: "white" }}
             />
-          </View>
+          </View> */}
 
           <View>
             <View className="h-full pt-10 bg-white">

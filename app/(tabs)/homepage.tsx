@@ -107,13 +107,13 @@ const Homepage = () => {
             position="top"
             style={toastStyles.container} // Style for the toast
           />
-          <View>
+          {/* <View>
             <TextInput
               placeholder="search..."
               className="border-salte-200 border-[0.5px] mx-4 my-2 rounded-xl px-5"
               style={{ height: 50, backgroundColor: "white" }}
             />
-          </View>
+          </View> */}
           <View className="items-center">
             <ImageSlider  banners={banner}/>
           </View>
@@ -173,9 +173,9 @@ const Homepage = () => {
                       </ScrollView>
                     </View>
 
-                    <View style={styles.gridContainer}>
+                    <View className="flex-row flex-wrap justify-between">
                       {allProduct.map((product, index) => (
-                        <View className="w-[50%]" key={index}>
+                        <View className="w-1/2" key={index}>
                           <Product
                             product={product}
                             // onPressCart={() => handleCart(product)}

@@ -36,35 +36,37 @@ const index = () => {
   }, []);
 
   return (
-    <View>
+    <View className="">
       <Header />
       <ScrollView className="pt-4">
-      {renderApp ? (
-  <View className="px-4">
-    <View className="flex-row gap-2">
-      <Text className="text-lg text-orange-600">Category : </Text>
-      <Text className="text-lg font-semibold text-blue-600">
-        {catName  ? catName : 'No category'}
-      </Text>
-    </View>
-    <View style={styles.gridContainer}>
-      {allProduct && allProduct.length > 0 ? (
-        allProduct.map((product, index) => (
-          <View className="w-[50%]" key={index}>
-            <Product product={product} onPress={() => handleProductPress(product)} />
+        {renderApp ? (
+          <View className="px-4">
+            <View className="flex-row gap-2">
+              <Text className="text-lg text-orange-600">Category : </Text>
+              <Text className="text-lg font-semibold text-blue-600">
+                {catName ? catName : "No category"}
+              </Text>
+            </View>
+            <View className="flex-row flex-wrap justify-between">
+              {allProduct && allProduct.length > 0 ? (
+                allProduct.map((product, index) => (
+                  <View className="w-1/2" key={index}>
+                    <Product
+                      product={product}
+                      onPress={() => handleProductPress(product)}
+                    />
+                  </View>
+                ))
+              ) : (
+                <Text>No product found</Text>
+              )}
+            </View>
           </View>
-        ))
-      ) : (
-        <Text>No product found</Text>
-      )}
-    </View>
-  </View>
-) : (
-  <View>
-    <Text>Loading...</Text>
-  </View>
-)}
-
+        ) : (
+          <View>
+            <Text>Loading...</Text>
+          </View>
+        )}
       </ScrollView>
     </View>
   );
