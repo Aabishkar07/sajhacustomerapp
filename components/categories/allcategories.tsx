@@ -11,6 +11,7 @@ import {
 import Header from "../layouts/Header";
 import axios from "axios";
 import { BaseUrl } from "../baseurl/baseurl";
+import Category from "../category";
 
 // const categories = [
 //   {
@@ -37,11 +38,14 @@ import { BaseUrl } from "../baseurl/baseurl";
 
 const ShopByCategory = () => {
   const [categories,setCategory]=useState([]);
+  const [renderApp,setRenderApp]=useState(false);
   const fetchData = async () => {
     try {
-      const response = await axios.get(`${BaseUrl}api/category`); 
+      console.log("sasas")
+      const response = await axios.get(`${BaseUrl}parentcategory`); 
       // console.log(response.data)
       setCategory(response.data);
+      setRenderApp(true);
     } catch (error) {
       console.error("Error fetching in category data: ", error);
     }
@@ -58,21 +62,23 @@ const ShopByCategory = () => {
             
           </View>
 
-          <View style={styles.grid}>
-            {categories.map((category) => (
-              <TouchableOpacity key={category.id} style={styles.card}>
-                <View style={styles.cardImageContainer}>
-                  <Image
-                    source={{ uri: category.category_image }}
-                    style={styles.cardImage}
-                  />
+          {renderApp ? (
+          <View className="flex-row flex-wrap gap-1 ">
+            {categories.map((category, index) => {
+              return (
+                <View className="w-[23%]">
+                  <Category category={category} key={index} />
                 </View>
-                <View style={styles.cardTextContainer}>
-                  <Text style={styles.cardText}>{category.category_name}</Text>
-                </View>
-              </TouchableOpacity>
-            ))}
+              );
+            })}
           </View>
+        ) : (
+          <View>
+            <Text>Loading...</Text>
+          </View>
+        )}
+         
+        
         </ScrollView>
       
     </SafeAreaView>

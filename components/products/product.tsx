@@ -10,7 +10,7 @@ import {
 import { router } from "expo-router";
 import Icons from "react-native-vector-icons/MaterialCommunityIcons";
 
-export default function Product({ product, onPress, onPressCart }) {
+export default function Product({ product, onPress }) {
   return (
     <Pressable
       onPress={onPress}
@@ -51,8 +51,8 @@ export default function Product({ product, onPress, onPressCart }) {
           {product.product_name.substring(0, 32)}
         </Text>
       </View>
-      <View className="flex-row items-center justify-between">
-        <View className="flex-col pb-2 pl-2 mt-2">
+      <View className="">
+        <View className="flex-row items-center justify-between pb-2 mt-2 ">
           <Text className="text-base font-semibold text-orange-700 ">
             Rs. {product.product_price - product.discount_amount}
           </Text>
@@ -65,12 +65,12 @@ export default function Product({ product, onPress, onPressCart }) {
           )}
         </View>
 
-        <Pressable
+        {/* <Pressable
           className="items-center justify-center w-12 h-8 mr-2 bg-blue-600 rounded-lg"
-          onPress={onPressCart}
+         
         >
           <Icons name="heart" size={20} color={"#fff"} />
-        </Pressable>
+        </Pressable> */}
       </View>
     </Pressable>
   );

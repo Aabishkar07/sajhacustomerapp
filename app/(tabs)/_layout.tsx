@@ -46,9 +46,9 @@ export default function TabLayout() {
       />
 
       <Tabs.Screen
-        name="explore"
+        name="search"
         options={{
-          title: "BuyandSale",
+          title: "Search",
           tabBarIcon: ({ color, focused }) => (
             <TabBarIcon
               name={focused ? "search" : "search-outline"}
@@ -58,36 +58,18 @@ export default function TabLayout() {
         }}
       />
 
-  
-        {/* <Tabs.Screen
-          name="profile"
-          options={{
-            title: "Profile",
-            headerShown: false,
-            tabBarIcon: ({ color, focused }) => (
-              <TabBarIcon
-                name={focused ? "person" : "person-outline"}
-                color={color}
-              />
-            ),
-          }}
-        /> */}
-
-<Tabs.Screen
-          name="profile/login"
-          options={{
-            title: "Profile",
-            headerShown: false,
-            tabBarIcon: ({ color, focused }) => (
-              <TabBarIcon
-                name={focused ? "person" : "person-outline"}
-                color={color}
-              />
-            ),
-          }}
-        />
-        
-      
+      <Tabs.Screen
+        name="explore"
+        options={{
+          title: "BuyandSale",
+          tabBarIcon: ({ color, focused }) => (
+            <TabBarIcon
+              name={focused ? "bag-add-sharp" : "bag-add-outline"}
+              color={color}
+            />
+          ),
+        }}
+      />
 
       <Tabs.Screen
         name="category"
@@ -98,6 +80,20 @@ export default function TabLayout() {
               name="category"
               size={28}
               style={[{ marginBottom: -3 }]}
+              color={color}
+            />
+          ),
+        }}
+      />
+
+      <Tabs.Screen
+        name="profile"
+        options={{
+          title: "Profile",
+          headerShown: false,
+          tabBarIcon: ({ color, focused }) => (
+            <TabBarIcon
+              name={focused ? "person" : "person-outline"}
               color={color}
             />
           ),

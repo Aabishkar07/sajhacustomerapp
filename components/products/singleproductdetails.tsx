@@ -323,7 +323,7 @@ const SingleProductDetails = ({ productData, productAttribute }) => {
 
 
 
-                      <View className="border border-gray-300 mt-5 rounded-lg overflow-hidden">
+                      <View className="mt-5 overflow-hidden border border-gray-300 rounded-lg">
    
       <View className="flex-row border-b border-gray-300">
         <View className="flex-1 p-2 bg-gray-200">
@@ -681,7 +681,7 @@ const SingleProductDetails = ({ productData, productAttribute }) => {
           )}
 
           {/* RatingModal */}
-          {/* <View
+          <View
             className="relative"
             style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
           >
@@ -731,7 +731,7 @@ const SingleProductDetails = ({ productData, productAttribute }) => {
                 <Text style={{ color: "white" }}>Post a review</Text>
               </TouchableOpacity>
             </RatingModal>
-          </View> */}
+          </View>
         </View>
       ) : (
         <Text>Loading...</Text>
