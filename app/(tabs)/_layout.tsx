@@ -45,7 +45,7 @@ export default function TabLayout() {
         }}
       />
 
-<Tabs.Screen
+      <Tabs.Screen
         name="search"
         options={{
           title: "Search",
@@ -71,22 +71,6 @@ export default function TabLayout() {
         }}
       />
 
-  
-        <Tabs.Screen
-          name="profile"
-          options={{
-            title: "Profile",
-            headerShown: false,
-            tabBarIcon: ({ color, focused }) => (
-              <TabBarIcon
-                name={focused ? "person" : "person-outline"}
-                color={color}
-              />
-            ),
-          }}
-        />
-      
-
       <Tabs.Screen
         name="category"
         options={{
@@ -96,6 +80,20 @@ export default function TabLayout() {
               name="category"
               size={28}
               style={[{ marginBottom: -3 }]}
+              color={color}
+            />
+          ),
+        }}
+      />
+
+      <Tabs.Screen
+        name="profile"
+        options={{
+          title: "Profile",
+          headerShown: false,
+          tabBarIcon: ({ color, focused }) => (
+            <TabBarIcon
+              name={focused ? "person" : "person-outline"}
               color={color}
             />
           ),
