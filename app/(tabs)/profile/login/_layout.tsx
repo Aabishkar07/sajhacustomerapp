@@ -9,5 +9,5 @@ export default class _layout extends Component {
         <Stack.Screen name="index" options={{ headerShown: false,title:"signup" }} />
      </Stack>
     )
-  }
+  }x
 }

@@ -37,14 +37,20 @@ const Login = () => {
 
     try {
       const response = await axios.post(
-        "http://192.168.0.100:8080/api/customer/checkauth",
+        "http://192.168.0.111:8000/api/customer/checkauth",
         data
       );
 
       if (response.status === 200) {
         Alert.alert("Success", "You have successfully loggedin");
-        const token = response.data.token; 
-        AsyncStorage.setItem("userToken", token);        
+        const email = response.data.email;
+console.log(email, "asdas");
+
+        AsyncStorage.setItem("userEmail", email);  
+        
+        const storedEmail =  AsyncStorage.getItem('userEmail');
+console.log(storedEmail,"hhh");
+        
         router.push('/homepage')
       }
     } catch (err) {

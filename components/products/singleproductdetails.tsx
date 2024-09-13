@@ -12,6 +12,7 @@ import {
   FlatList,
 } from "react-native";
 
+
 import { AuthContext } from "@/context/context";
 import { addCart } from "@/context/func";
 import { Button } from "react-native";
@@ -493,6 +494,9 @@ const SingleProductDetails = ({ productData, productAttribute }) => {
                   </View>
                 </View> */}
 
+                  {productData.is_secondhand != 1 && 
+                  <View>
+
                 <View>
                   <Text style={{ fontWeight: "500", marginBottom: 8 }}>
                     QTY
@@ -626,6 +630,9 @@ const SingleProductDetails = ({ productData, productAttribute }) => {
                     </Text>
                   </TouchableOpacity>
                 </View>
+                </View>
+                }
+
 
                 <View className="flex-row justify-center mt-4 mb-4">
                   <TouchableOpacity
