@@ -14,6 +14,7 @@ import Key from "react-native-vector-icons/FontAwesome5";
 import { router } from "expo-router";
 import axios from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { BaseUrl } from "../baseurl/baseurl";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -36,8 +37,9 @@ const Login = () => {
     };
 
     try {
+      axios.get(`${BaseUrl}customer/checkauth`)
       const response = await axios.post(
-        "http://192.168.0.111:8000/api/customer/checkauth",
+        `${BaseUrl}customer/checkauth`,
         data
       );
 

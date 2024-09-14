@@ -1,7 +1,7 @@
 import Login from "@/components/auth/login";
 import Header from "@/components/layouts/Header";
 import React, { Component } from "react";
-import { ImageBackground, Text, TouchableOpacity, View } from "react-native";
+import { ImageBackground, Pressable, Text, TouchableOpacity, View } from "react-native";
 import { router } from "expo-router";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import Ionicons from "@expo/vector-icons/Ionicons";
@@ -31,27 +31,29 @@ export default class index extends Component {
             <Text className="px-6 py-2 text-xl font-bold">My Order</Text>
 
             <View className="flex-row justify-between px-6 py-2 bg-white">
-              <View className="items-center">
+              <Pressable onPress={()=>router.push("/orders/processing")} className="items-center">
+                <Ionicons name="bag-handle-sharp" size={30} color="#007bff" />
+
+                <Text>Processing</Text>
+              </Pressable>
+              <Pressable onPress={()=>router.push("/orders/shipped")} className="items-center">
                 <Ionicons name="bag-handle-sharp" size={30} color="#007bff" />
 
                 <Text>To Ship</Text>
-              </View>
+              </Pressable>
 
-              <View className="items-center">
+              <Pressable onPress={()=>router.push("/orders/delivered")} className="items-center">
                 <Ionicons name="bag-check" size={30} color="#007bff" />
-                <Text>To Receive</Text>
-              </View>
+                <Text>Delivered</Text>
+              </Pressable>
 
-              <View className="items-center">
+              <Pressable onPress={()=>router.push("/orders/cancel")} className="items-center">
                 <Icon name="cancel" size={30} color="#007bff" />
 
                 <Text>Return And Cancel</Text>
-              </View>
+              </Pressable>
 
-              <View className="items-center">
-                <Ionicons name="heart" size={30} color="#007bff" />
-                <Text>Wishlist</Text>
-              </View>
+             
             </View>
           </View>
 
