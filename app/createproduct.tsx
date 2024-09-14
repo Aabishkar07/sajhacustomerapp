@@ -1,19 +1,29 @@
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import axios from 'axios';
-import React, { useState, useEffect, useCallback } from 'react';
-import { Text, View, TextInput, ScrollView, TouchableOpacity, Alert, StyleSheet, Image } from 'react-native';
-import { Dropdown } from 'react-native-element-dropdown';
-import AntDesign from 'react-native-vector-icons/AntDesign';
-import * as ImagePicker from 'expo-image-picker';
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import axios from "axios";
+import React, { useState, useEffect, useCallback } from "react";
+import {
+  Text,
+  View,
+  TextInput,
+  ScrollView,
+  TouchableOpacity,
+  Alert,
+  StyleSheet,
+  Image,
+} from "react-native";
+import { Dropdown } from "react-native-element-dropdown";
+import AntDesign from "react-native-vector-icons/AntDesign";
+import * as ImagePicker from "expo-image-picker";
+import { BaseUrl } from "@/components/baseurl/baseurl";
 
 const CreateProduct = () => {
-  const [productName, setProductName] = useState('');
+  const [productName, setProductName] = useState("");
   const [billbookImage, setBillbookImage] = useState(null);
-  const [address, setAddress] = useState('');
-  const [details, setDetails] = useState('');
-  const [usedFor, setUsedFor] = useState('');
-  const [price, setPrice] = useState('');
-  const [expiryDate, setExpiryDate] = useState('');
+  const [address, setAddress] = useState("");
+  const [details, setDetails] = useState("");
+  const [usedFor, setUsedFor] = useState("");
+  const [price, setPrice] = useState("");
+  const [expiryDate, setExpiryDate] = useState("");
   const [condValue, setCondValue] = useState(null);
   const [email, setEmail] = useState(null);
   const [categoryData, setcategoryData] = useState([]);
@@ -21,14 +31,14 @@ const CreateProduct = () => {
 
   const fetchEmail = useCallback(async () => {
     try {
-      const storedEmail = await AsyncStorage.getItem('userEmail');
+      const storedEmail = await AsyncStorage.getItem("userEmail");
       if (storedEmail) {
         setEmail(storedEmail);
       } else {
-        console.error('No email found in AsyncStorage');
+        console.error("No email found in AsyncStorage");
       }
     } catch (error) {
-      console.error('Error fetching email from AsyncStorage:', error);
+      console.error("Error fetching email from AsyncStorage:", error);
     }
   }, []);
 
@@ -53,97 +63,90 @@ const CreateProduct = () => {
     }
 
     if (!result.canceled && result.assets[0]?.uri) {
-      console.log('Image selected:', result.assets[0]);
+      console.log("Image selected:", result.assets[0]);
       setBillbookImage(result.assets[0]);
     }
   };
 
+  const fetchCatgory = async () => {
+    try {
+      // const response = await axios.get('http://192.168.0.105:8000/api/category');
+      const response = await axios.get(`${BaseUrl}category`);
+      const catgory = response.data;
+      setcategoryData(catgory);
+    } catch (error) {
+      console.log("error", error);
+    }
+  };
 
-const fetchCatgory = async()=>{
-  try{
-    const response = await axios.get('http://192.168.0.111:8000/api/category');
-    const catgory = response.data;
-    setcategoryData(catgory);
-
-  }catch(error){
-    console.log('error', error);
-
-  }
-};
-
-useEffect(()=>{
-  fetchCatgory();
-},[]);
-
-
-
-
+  useEffect(() => {
+    fetchCatgory();
+  }, []);
 
   const onSubmit = async () => {
     if (!email) {
-      Alert.alert('Error', 'Email not found');
+      Alert.alert("Error", "Email not found");
       return;
     }
 
     if (!billbookImage) {
-      Alert.alert('Error', 'Please select an image');
+      Alert.alert("Error", "Please select an image");
       return;
     }
 
     const data = new FormData();
-    data.append('product_name', productName);
-    data.append('secondhand_condition', condValue);
-    data.append('secondhand_address', address);
-    data.append('description', details);
-    data.append('product_price', price);
-    data.append('secondhand_used_for', usedFor);
-    data.append('secondhand_expiry_date', expiryDate);
-    data.append('category_id', selectedCategory); 
+    data.append("product_name", productName);
+    data.append("secondhand_condition", condValue);
+    data.append("secondhand_address", address);
+    data.append("description", details);
+    data.append("product_price", price);
+    data.append("secondhand_used_for", usedFor);
+    data.append("secondhand_expiry_date", expiryDate);
+    data.append("category_id", selectedCategory);
 
-
-    data.append('image', {
+    data.append("image", {
       uri: billbookImage.uri,
-      type: 'image/jpeg',
-      name: billbookImage.fileName || 'photo.jpg',
+      type: "image/jpeg",
+      name: billbookImage.fileName || "photo.jpg",
     });
 
     try {
       const response = await axios.post(
-        `http://192.168.0.111:8000/api/secondhand/${email}`,
+        `${BaseUrl}secondhand/${email}`,
+
         data,
         {
           headers: {
-            'Content-Type': 'multipart/form-data',
+            "Content-Type": "multipart/form-data",
           },
         }
       );
 
       if (response.status === 200) {
-        Alert.alert('Success', 'You have successfully stored the product');
+        Alert.alert("Success", "You have successfully stored the product");
         resetForm();
       }
     } catch (err) {
-      console.error('Error:', err);
-      Alert.alert('Error', `An error occurred: ${err.message}`);
+      console.error("Error:", err);
+      Alert.alert("Error", `An error occurred: ${err.message}`);
     }
   };
 
   const resetForm = () => {
-    setProductName('');
-    setAddress('');
-    setDetails('');
-    setUsedFor('');
-    setPrice('');
-    setExpiryDate('');
+    setProductName("");
+    setAddress("");
+    setDetails("");
+    setUsedFor("");
+    setPrice("");
+    setExpiryDate("");
     setCondValue(null);
     setBillbookImage(null);
     setSelectedCategory(null); // Reset selected category as well
-
   };
 
   const ConditionValue = [
-    { id: '1', condition: 'New' },
-    { id: '2', condition: 'Old' },
+    { id: "1", condition: "New" },
+    { id: "2", condition: "Old" },
   ];
 
   return (
@@ -164,30 +167,33 @@ useEffect(()=>{
             <Text style={styles.imagePickerText}>Add a photo</Text>
           </TouchableOpacity>
           {billbookImage && (
-            <Image
-              source={{ uri: billbookImage.uri }}
-              style={styles.image}
-            />
+            <Image source={{ uri: billbookImage.uri }} style={styles.image} />
           )}
         </View>
 
-
         <Text style={styles.label}>Category:</Text>
-      <Dropdown
-        style={styles.dropdown}
-        placeholderStyle={styles.placeholderStyle}
-        selectedTextStyle={styles.selectedTextStyle}
-        data={categoryData.map(cat => ({ label: cat.category_name, value: cat.id }))}
-        labelField="label"
-        valueField="value"
-        placeholder="Choose a category"
-        value={selectedCategory}
-        onChange={item => setSelectedCategory(item.value)}
-        renderLeftIcon={() => (
-          <AntDesign style={styles.icon} color="black" name="appstore1" size={20} />
-        )}
-      />
-
+        <Dropdown
+          style={styles.dropdown}
+          placeholderStyle={styles.placeholderStyle}
+          selectedTextStyle={styles.selectedTextStyle}
+          data={categoryData.map((cat) => ({
+            label: cat.category_name,
+            value: cat.id,
+          }))}
+          labelField="label"
+          valueField="value"
+          placeholder="Choose a category"
+          value={selectedCategory}
+          onChange={(item) => setSelectedCategory(item.value)}
+          renderLeftIcon={() => (
+            <AntDesign
+              style={styles.icon}
+              color="black"
+              name="appstore1"
+              size={20}
+            />
+          )}
+        />
 
         <Text style={styles.label}>Condition:</Text>
         <Dropdown
@@ -199,9 +205,14 @@ useEffect(()=>{
           valueField="condition"
           placeholder="Choose an option"
           value={condValue}
-          onChange={item => setCondValue(item.condition)}
+          onChange={(item) => setCondValue(item.condition)}
           renderLeftIcon={() => (
-            <AntDesign style={styles.icon} color="black" name="Safety" size={20} />
+            <AntDesign
+              style={styles.icon}
+              color="black"
+              name="Safety"
+              size={20}
+            />
           )}
         />
 
@@ -243,10 +254,7 @@ useEffect(()=>{
           onChangeText={setExpiryDate}
         />
 
-        <TouchableOpacity
-          onPress={onSubmit}
-          style={styles.submitButton}
-        >
+        <TouchableOpacity onPress={onSubmit} style={styles.submitButton}>
           <Text style={styles.submitButtonText}>Submit</Text>
         </TouchableOpacity>
       </View>
@@ -257,7 +265,7 @@ useEffect(()=>{
 const styles = StyleSheet.create({
   container: {
     padding: 16,
-    backgroundColor: '#fff',
+    backgroundColor: "#fff",
   },
   label: {
     fontSize: 16,
@@ -265,14 +273,14 @@ const styles = StyleSheet.create({
   },
   input: {
     borderWidth: 1,
-    borderColor: '#ccc',
+    borderColor: "#ccc",
     borderRadius: 4,
     padding: 8,
     marginBottom: 16,
   },
   dropdown: {
     height: 50,
-    borderColor: 'gray',
+    borderColor: "gray",
     borderWidth: 1,
     borderRadius: 5,
     paddingHorizontal: 8,
@@ -280,25 +288,25 @@ const styles = StyleSheet.create({
   },
   placeholderStyle: {
     fontSize: 16,
-    color: 'gray',
+    color: "gray",
   },
   selectedTextStyle: {
     fontSize: 16,
-    color: 'black',
+    color: "black",
   },
   icon: {
     marginRight: 10,
   },
   submitButton: {
-    backgroundColor: '#0F6FFF',
+    backgroundColor: "#0F6FFF",
     padding: 15,
     borderRadius: 8,
-    alignItems: 'center',
+    alignItems: "center",
   },
   submitButtonText: {
-    color: '#fff',
+    color: "#fff",
     fontSize: 16,
-    fontWeight: 'bold',
+    fontWeight: "bold",
   },
   image: {
     width: 100,
@@ -309,13 +317,13 @@ const styles = StyleSheet.create({
     marginBottom: 16,
   },
   imagePickerButton: {
-    backgroundColor: '#e0e0e0',
+    backgroundColor: "#e0e0e0",
     padding: 10,
     borderRadius: 5,
-    alignItems: 'center',
+    alignItems: "center",
   },
   imagePickerText: {
-    color: '#333',
+    color: "#333",
     fontSize: 16,
   },
 });
