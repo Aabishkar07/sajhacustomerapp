@@ -44,7 +44,7 @@ const Homepage = () => {
       const response = await Promise.all([
         axios.get(`${BaseUrl}category`),
         axios.get(`${BaseUrl}banner`),
-        axios.get(`${BaseUrl}products`)
+        axios.get(`${BaseUrl}homeproducts`)
       ]);
       const data = response[0].data;
       const banners = response[1].data;
