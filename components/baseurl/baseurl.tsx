@@ -1,4 +1,4 @@
-export const BaseUrl="https://sajhamarket.com.np/api/";
 
+export const BaseUrl="https://sajhamarket.com.np/api/";
 
 
