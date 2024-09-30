@@ -37,7 +37,7 @@ const Login = () => {
 
     try {
       const response = await axios.post(
-        "http://192.168.0.111:8000/api/customer/checkauth",
+        "/api/customer/checkauth",
         data
       );
 

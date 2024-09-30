@@ -61,7 +61,7 @@ const CreateProduct = () => {
 
 const fetchCatgory = async()=>{
   try{
-    const response = await axios.get('http://192.168.0.111:8000/api/category');
+    const response = await axios.get('https://sajhamarket.com.np/api/category');
     const catgory = response.data;
     setcategoryData(catgory);
 
@@ -109,7 +109,7 @@ useEffect(()=>{
 
     try {
       const response = await axios.post(
-        `http://192.168.0.111:8000/api/secondhand/${email}`,
+        `https://sajhamarket.com.np/api/secondhand/${email}`,
         data,
         {
           headers: {

@@ -66,7 +66,7 @@ const Signup = () => {
 
     try {
       const response = await axios.post(
-        "http://192.168.0.100:8080/api/customer/signup",
+        "https://sajhamarket.com.np/api/customer/signup",
         data
       );
       if (response.status === 201) {
