@@ -7,18 +7,19 @@ import {
   ScrollView,
   TextInput,
   ImageBackground,
+  Alert,
 } from "react-native";
 import React, { useContext, useEffect, useState } from "react";
 import Header from "../layouts/Header";
 import { AuthContext } from "@/context/context";
 import { clearCart, getCart } from "@/context/func";
-import { Dropdown } from 'react-native-element-dropdown';
+import { Dropdown } from "react-native-element-dropdown";
 import axios from "axios";
 import { BaseUrl } from "../baseurl/baseurl";
-import AntDesign from '@expo/vector-icons/AntDesign';
+import AntDesign from "@expo/vector-icons/AntDesign";
 import { router } from "expo-router";
 
-const Checkout = ({deliveryValue}) => {
+const Checkout = ({ deliveryValue }) => {
   const auth = useContext(AuthContext);
   const [cartItems, setCartItems] = useState([]);
   const [value, setValue] = useState(null);
@@ -36,8 +37,7 @@ const Checkout = ({deliveryValue}) => {
 
   useEffect(() => {
     loadCartItems();
-  }, [auth]); 
- 
+  }, [auth]);
 
   const loadCartItems = async () => {
     const cart = await getCart();
@@ -55,39 +55,60 @@ const Checkout = ({deliveryValue}) => {
     0
   );
   var shippingFee = 0;
-  if(value)
-  {
+  if (value) {
     shippingFee = value.price;
   }
-  const total = subtotal + shippingFee ;
-  const paymentmethod="cash-on-delivery"
-  const handleformsubmit=async()=>{
-    console.log("billingAddress",cartItems);
 
-    const alltotal={
-      "paymentmethod":paymentmethod,
-      "order_from":value.id,
-      "total":total,
+  // return false
+  const total = subtotal + shippingFee;
+  const paymentmethod = "cash-on-delivery";
+  const handleformsubmit = async () => {
+    console.log("billingAddress", cartItems);
+    if (!billingAddress.name) {
+      Alert.alert("Error", "Name Field is Required");
+      return false;
     }
-    const orderData={
-     "billingAddress": billingAddress,
-      "alltotal":alltotal,
-      "cartItems": cartItems
+    if (!billingAddress.email) {
+      Alert.alert("Error", "Email Field is Required");
+      return false;
     }
+    if (!billingAddress.address) {
+      Alert.alert("Error", "Address Field is Required");
+      return false;
+    }
+
+    if (!billingAddress.phonenumber) {
+      Alert.alert("Error", "Phonenumber Field is Required");
+      return false;
+    }
+
+    if (!value) {
+      Alert.alert("Error", "Please Select Delivery Location");
+      return false;
+    }
+
+    // return false;
+    const alltotal = {
+      paymentmethod: paymentmethod,
+      order_from: value.id,
+      total: total,
+    };
+    const orderData = {
+      billingAddress: billingAddress,
+      alltotal: alltotal,
+      cartItems: cartItems,
+    };
     try {
-      
-      const response = await axios.post(`${BaseUrl}checkout`,orderData);
-      console.log('Success:', response.status);
+      const response = await axios.post(`${BaseUrl}checkout`, orderData);
+      console.log("Success:", response.status);
       if (response.status === 200) {
         clearAll();
-        router.push("/homepage")
-       
+        router.push("/homepage");
       }
-  } catch (error) {
-      console.error('Error:', error);
-  }
-   
-  }
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  };
 
   return (
     <SafeAreaView style={styles.container}>
@@ -96,29 +117,32 @@ const Checkout = ({deliveryValue}) => {
         className="mt-4"
         contentContainerStyle={styles.scrollContainer}
       >
-
-<Dropdown
-      style={styles.dropdown}
-      placeholderStyle={styles.placeholderStyle}
-      selectedTextStyle={styles.selectedTextStyle}
-      inputSearchStyle={styles.inputSearchStyle}
-      iconStyle={styles.iconStyle}
-      data={deliveryValue} // Data for the dropdown
-      search
-      maxHeight={300}
-      labelField="location" // This is the field shown in the dropdown
-      valueField="price"    // This is the value field (used for the `value` state)
-      placeholder="Select Delivery Location"
-      searchPlaceholder="Search Location..."
-      value={value} // Current selected value
-      onChange={item => {
-        setValue({ id: item.id,label: item.location, price: item.price }); // Set both label and price in the value state
-      }}
-      renderLeftIcon={() => (
-        <AntDesign style={styles.icon} color="black" name="Safety" size={20} />
-      )}
-    />
-
+        <Dropdown
+          style={styles.dropdown}
+          placeholderStyle={styles.placeholderStyle}
+          selectedTextStyle={styles.selectedTextStyle}
+          inputSearchStyle={styles.inputSearchStyle}
+          iconStyle={styles.iconStyle}
+          data={deliveryValue} // Data for the dropdown
+          search
+          maxHeight={300}
+          labelField="location" // This is the field shown in the dropdown
+          valueField="price" // This is the value field (used for the `value` state)
+          placeholder="Select Delivery Location"
+          searchPlaceholder="Search Location..."
+          value={value} // Current selected value
+          onChange={(item) => {
+            setValue({ id: item.id, label: item.location, price: item.price }); // Set both label and price in the value state
+          }}
+          renderLeftIcon={() => (
+            <AntDesign
+              style={styles.icon}
+              color="black"
+              name="Safety"
+              size={20}
+            />
+          )}
+        />
 
         {/* <View>
           <Text>checkout</Text>
@@ -144,14 +168,13 @@ const Checkout = ({deliveryValue}) => {
             value={billingAddress.address}
             onChangeText={(text) => handleBillingChange("address", text)}
           />
-          
+
           <TextInput
             style={styles.input}
             placeholder="Phonenumber"
             value={billingAddress.phonenumber}
             onChangeText={(text) => handleBillingChange("phonenumber", text)}
           />
-         
         </View>
 
         <View>
@@ -169,29 +192,31 @@ const Checkout = ({deliveryValue}) => {
 
       {/* Order Summary at Bottom */}
       {deliveryValue ? (
-      <View style={styles.summaryContainer}>
-        <Text style={styles.summaryTitle}>Order Summary</Text>
-        <View style={styles.summaryRow}>
-          <Text style={styles.summaryLabel}>Sub total</Text>
-          <Text style={styles.summaryValue}>Rs. {subtotal}</Text>
-        </View>
-        <View style={styles.divider}></View>
-        <View style={styles.summaryRow}>
-          <Text style={styles.summaryLabel}>Shipping Fee</Text>
-          <Text style={styles.summaryValue}>Rs. {shippingFee}</Text>
-        </View>
-        <View style={styles.divider}></View>
-       
-        <View style={styles.summaryRow}>
-          <Text style={styles.totalTitle}>Total</Text>
-          <Text style={styles.summaryValue}>Rs. {total}</Text>
-        </View>
-        <TouchableOpacity onPress={()=>handleformsubmit()} style={styles.buyButton}>
-          <Text style={styles.buyButtonText}>Checkout</Text>
-        </TouchableOpacity>
-      </View>
+        <View style={styles.summaryContainer}>
+          <Text style={styles.summaryTitle}>Order Summary</Text>
+          <View style={styles.summaryRow}>
+            <Text style={styles.summaryLabel}>Sub total</Text>
+            <Text style={styles.summaryValue}>Rs. {subtotal}</Text>
+          </View>
+          <View style={styles.divider}></View>
+          <View style={styles.summaryRow}>
+            <Text style={styles.summaryLabel}>Shipping Fee</Text>
+            <Text style={styles.summaryValue}>Rs. {shippingFee}</Text>
+          </View>
+          <View style={styles.divider}></View>
 
-    ) : (
+          <View style={styles.summaryRow}>
+            <Text style={styles.totalTitle}>Total</Text>
+            <Text style={styles.summaryValue}>Rs. {total}</Text>
+          </View>
+          <TouchableOpacity
+            onPress={() => handleformsubmit()}
+            style={styles.buyButton}
+          >
+            <Text style={styles.buyButtonText}>Checkout</Text>
+          </TouchableOpacity>
+        </View>
+      ) : (
         <Text>Loading...</Text>
       )}
     </SafeAreaView>
@@ -277,11 +302,11 @@ const styles = StyleSheet.create({
     // paddingVertical: 24,
   },
 
-  // Dropdown style 
+  // Dropdown style
   dropdown: {
     margin: 16,
     height: 50,
-    borderBottomColor: 'gray',
+    borderBottomColor: "gray",
     borderBottomWidth: 0.5,
   },
   icon: {
@@ -301,6 +326,5 @@ const styles = StyleSheet.create({
     height: 40,
     fontSize: 16,
   },
-
 });
 export default Checkout;

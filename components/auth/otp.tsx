@@ -35,7 +35,7 @@ const otp = () => {
       const email = JSON.parse(useremail);
 
       const response = await axios.post(
-        `http://192.168.0.100:8080/api/customer/checkotp/${email}`,
+        `https://sajhamarket.com.np/api/customer/checkotp/${email}`,
         data
       );
 

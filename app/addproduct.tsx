@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { View, Text, Pressable } from "react-native";
+import { View, Text, Pressable, Alert } from "react-native";
 import {
   DataTable,
   MD3LightTheme as DefaultTheme,
@@ -35,17 +35,65 @@ const addproduct = () => {
       console.error("Error fetchingddd data: ", error);
     }
   };
+
   useEffect(() => {
     fetchData();
   }, []);
   const handleProductPress = (product) => {
     console.log("Product pressed:", product.id);
     router.push({
-      pathname: "/productdetail/[index]",
+      pathname: "/productdetails/[index]",
       params: { id: product.id },
     });
     // navigation.navigate("Single", { product });
   };
+
+
+  const handleEditPress = (product) => {
+    console.log("Product pressed:", product.id);
+    router.push({
+      pathname: "/productdetails/[edit]",
+      params: { id: product.id },
+    });
+    // navigation.navigate("Single", { product });
+  };
+
+
+  const handleDeletePress = async (product) => {
+    console.log("Product pressed:", product.id);
+  
+    const productId = product.id;
+  
+    try {
+      const response = await axios.delete(
+        `https://sajhamarket.com.np/api/deleteproduct/${productId}`
+      );
+  
+      if (response.status === 200) {
+        Alert.alert("Success", "You have deleted the product successfully");
+      } else {
+        Alert.alert("Error", `Unexpected response status: ${response.status}`);
+      }
+    } catch (err) {
+      if (err.response) {
+        if (err.response.status === 404) {
+          Alert.alert("Error", "Endpoint not found");
+        } else {
+          Alert.alert("Error", `Server responded with status: ${err.response.status}`);
+        }
+      } else {
+        Alert.alert("Error", `An error occurred: ${err.message}`);
+      }
+    }
+  };
+  
+
+    // router.push({
+    //   pathname: "/productdetail/[index]",
+    //   params: { id: product.id },
+    // });
+    // navigation.navigate("Single", { product });
+
 
   const from = page * itemsPerPage;
   const to = Math.min((page + 1) * itemsPerPage, allProduct.length);
@@ -100,7 +148,29 @@ Add my product    </Text>
                   </View>
                 </Button>
               </DataTable.Cell>
+
+                <Button className="mt-1.5"
+                                  onPress={() => handleDeletePress(item)}
+
+                  // onPress={() => console.log(`Delete ${item.id}`)}
+                >
+                  <View className="p-2 text-white bg-red-400 rounded">
+                    <Text className="text-white ">Delete</Text>
+                  </View>
+                </Button>
+
+                <Button className="mt-1.5"
+                                  onPress={() => handleEditPress(item)}
+
+                  // onPress={() => console.log(`Delete ${item.id}`)}
+                >
+                  <View className="p-2 text-white bg-red-400 rounded">
+                    <Text className="text-white ">Edit</Text>
+                  </View>
+                </Button>
+
             </DataTable.Row>
+            
           ))}
 
           <DataTable.Pagination

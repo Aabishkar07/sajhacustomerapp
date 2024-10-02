@@ -79,9 +79,13 @@ const CreateProduct = () => {
     }
   };
 
-  useEffect(() => {
-    fetchCatgory();
-  }, []);
+
+
+useEffect(()=>{
+  fetchCatgory();
+},[]);
+
+
 
   const onSubmit = async () => {
     if (!email) {

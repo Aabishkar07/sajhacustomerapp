@@ -10,8 +10,8 @@ import {
   SectionList,
   StyleSheet,
   FlatList,
+  Alert,
 } from "react-native";
-
 
 import { AuthContext } from "@/context/context";
 import { addCart } from "@/context/func";
@@ -30,7 +30,9 @@ const SingleProductDetails = ({ productData, productAttribute }) => {
   const [selectedItems, setSelectedItems] = useState({});
   const [quantity, setQuantity] = useState(1);
   const [visible, setVisible] = React.useState(false);
-
+  
+  const [review, setReview] = useState('');
+  const [rating, setRating] = useState(0);
 
   const formatDate = (dateString) => {
     const date = new Date(dateString);
@@ -124,10 +126,8 @@ const SingleProductDetails = ({ productData, productAttribute }) => {
       }
 
       console.log("Price for quantity", quantity, "is", price);
-    }
-    else
-    {
-      price = productData.product_price - productData.discount_amount
+    } else {
+      price = productData.product_price - productData.discount_amount;
     }
 
     // var join = Object.values(selectedItems).join("-");
@@ -167,6 +167,17 @@ const SingleProductDetails = ({ productData, productAttribute }) => {
     } catch (error) {
       console.error("Error updating cart:", error);
     }
+  };
+
+
+  const handleSubmit = () => {
+    if (review.trim() === '' || rating === 0) {
+      Alert.alert('Error', 'Please provide a review and a rating');
+      return;
+    }
+    console.log('Review:', review);
+    console.log('Rating:', rating);
+    Alert.alert('Success', 'Review submitted!');
   };
 
   return (
@@ -290,10 +301,7 @@ const SingleProductDetails = ({ productData, productAttribute }) => {
                       <Text>This is a wholesale product</Text>
                     </View>
                   ) : productData.is_secondhand === 1 ? (
-                 
-
                     <View>
-                     
                       <Text>This is a secondhand product</Text>
 
                       <View className="flex-row justify-between">
@@ -321,80 +329,95 @@ const SingleProductDetails = ({ productData, productAttribute }) => {
                         </Text>
                       </View>
 
-
-
                       <View className="mt-5 overflow-hidden border border-gray-300 rounded-lg">
-   
-      <View className="flex-row border-b border-gray-300">
-        <View className="flex-1 p-2 bg-gray-200">
-          <Text className="font-bold text-center">ad_id</Text>
-        </View>
-        <View className="flex-1 p-2">
-          <Text className="font-bold text-center">{productData.ad_id}</Text>
-        </View>
-      </View>
-      <View className="flex-row border-b border-gray-300">
-        <View className="flex-1 p-2 bg-gray-200">
-          <Text className="font-bold text-center">Address</Text>
-        </View>
-        <View className="flex-1 p-2">
-          <Text className="font-bold text-center">{productData.secondhand_address}</Text>
-        </View>
-      </View>
+                        <View className="flex-row border-b border-gray-300">
+                          <View className="flex-1 p-2 bg-gray-200">
+                            <Text className="font-bold text-center">ad_id</Text>
+                          </View>
+                          <View className="flex-1 p-2">
+                            <Text className="font-bold text-center">
+                              {productData.ad_id}
+                            </Text>
+                          </View>
+                        </View>
+                        <View className="flex-row border-b border-gray-300">
+                          <View className="flex-1 p-2 bg-gray-200">
+                            <Text className="font-bold text-center">
+                              Address
+                            </Text>
+                          </View>
+                          <View className="flex-1 p-2">
+                            <Text className="font-bold text-center">
+                              {productData.secondhand_address}
+                            </Text>
+                          </View>
+                        </View>
 
-      <View className="flex-row border-b border-gray-300">
-        <View className="flex-1 p-2 bg-gray-200">
-          <Text className="font-bold text-center">Negotiable</Text>
-        </View>
-        <View className="flex-1 p-2">
-          <Text className="font-bold text-center">{productData.secondhand_negotiable}</Text>
-        </View>
-      </View>
+                        <View className="flex-row border-b border-gray-300">
+                          <View className="flex-1 p-2 bg-gray-200">
+                            <Text className="font-bold text-center">
+                              Negotiable
+                            </Text>
+                          </View>
+                          <View className="flex-1 p-2">
+                            <Text className="font-bold text-center">
+                              {productData.secondhand_negotiable}
+                            </Text>
+                          </View>
+                        </View>
 
-      <View className="flex-row border-b border-gray-300">
-        <View className="flex-1 p-2 bg-gray-200">
-          <Text className="font-bold text-center">Condition</Text>
-        </View>
-        <View className="flex-1 p-2">
-          <Text className="font-bold text-center">{productData.secondhand_condition}</Text>
-        </View>
-      </View>
+                        <View className="flex-row border-b border-gray-300">
+                          <View className="flex-1 p-2 bg-gray-200">
+                            <Text className="font-bold text-center">
+                              Condition
+                            </Text>
+                          </View>
+                          <View className="flex-1 p-2">
+                            <Text className="font-bold text-center">
+                              {productData.secondhand_condition}
+                            </Text>
+                          </View>
+                        </View>
 
-      <View className="flex-row border-b border-gray-300">
-        <View className="flex-1 p-2 bg-gray-200">
-          <Text className="font-bold text-center">Used For</Text>
-        </View>
-        <View className="flex-1 p-2">
-          <Text className="font-bold text-center">{productData.secondhand_used_for}</Text>
-        </View>
-      </View>
+                        <View className="flex-row border-b border-gray-300">
+                          <View className="flex-1 p-2 bg-gray-200">
+                            <Text className="font-bold text-center">
+                              Used For
+                            </Text>
+                          </View>
+                          <View className="flex-1 p-2">
+                            <Text className="font-bold text-center">
+                              {productData.secondhand_used_for}
+                            </Text>
+                          </View>
+                        </View>
 
-      <View className="flex-row border-b border-gray-300">
-        <View className="flex-1 p-2 bg-gray-200">
-          <Text className="font-bold text-center">Ads Posted</Text>
-        </View>
-        <View className="flex-1 p-2">
-          <Text className="font-bold text-center">{formatDate(productData.created_at)}</Text>
-        </View>
-      </View>
+                        <View className="flex-row border-b border-gray-300">
+                          <View className="flex-1 p-2 bg-gray-200">
+                            <Text className="font-bold text-center">
+                              Ads Posted
+                            </Text>
+                          </View>
+                          <View className="flex-1 p-2">
+                            <Text className="font-bold text-center">
+                              {formatDate(productData.created_at)}
+                            </Text>
+                          </View>
+                        </View>
 
-      <View className="flex-row border-b border-gray-300">
-        <View className="flex-1 p-2 bg-gray-200">
-          <Text className="font-bold text-center">Ads Expiry</Text>
-        </View>
-        <View className="flex-1 p-2">
-          <Text className="font-bold text-center">{productData.secondhand_expiry_date}</Text>
-        </View>
-      </View>
-
-
-    </View>
-
-
-
-
-
-                      
+                        <View className="flex-row border-b border-gray-300">
+                          <View className="flex-1 p-2 bg-gray-200">
+                            <Text className="font-bold text-center">
+                              Ads Expiry
+                            </Text>
+                          </View>
+                          <View className="flex-1 p-2">
+                            <Text className="font-bold text-center">
+                              {productData.secondhand_expiry_date}
+                            </Text>
+                          </View>
+                        </View>
+                      </View>
                     </View>
                   ) : (
                     <View>
@@ -494,145 +517,143 @@ const SingleProductDetails = ({ productData, productAttribute }) => {
                   </View>
                 </View> */}
 
-                  {productData.is_secondhand != 1 && 
+                {productData.is_secondhand != 1 && (
                   <View>
+                    <View>
+                      <Text style={{ fontWeight: "500", marginBottom: 8 }}>
+                        QTY
+                      </Text>
+                      <View
+                        style={{
+                          height: 44,
+                          borderWidth: 1,
+                          borderColor: "#d1d5db",
+                          borderRadius: 22,
+                          flexDirection: "row",
+                          alignItems: "center",
+                          width: 144,
+                          marginTop: 16,
+                        }}
+                      >
+                        <TouchableOpacity
+                          onPress={() => handleQuantityChange(quantity - 1)}
+                          style={{
+                            flex: 1,
+                            justifyContent: "center",
+                            alignItems: "center",
+                            fontSize: 24,
+                            fontWeight: "500",
+                            borderRightWidth: 1,
+                            borderColor: "#d1d5db",
+                          }}
+                        >
+                          <Text>-</Text>
+                        </TouchableOpacity>
+                        <TextInput
+                          style={{
+                            fontSize: 18,
+                            fontWeight: "bold",
+                            textAlign: "center",
+                            flex: 1,
+                            paddingVertical: 4,
+                            backgroundColor: "transparent",
+                          }}
+                          value={String(quantity)}
+                          keyboardType="number-pad"
+                          onChangeText={(text) =>
+                            handleQuantityChange(parseInt(text))
+                          }
+                        />
+                        <TouchableOpacity
+                          onPress={() => handleQuantityChange(quantity + 1)}
+                          style={{
+                            flex: 1,
+                            justifyContent: "center",
+                            alignItems: "center",
+                            fontSize: 24,
+                            fontWeight: "500",
+                            borderLeftWidth: 1,
+                            borderColor: "#d1d5db",
+                          }}
+                        >
+                          <Text>+</Text>
+                        </TouchableOpacity>
+                      </View>
+                    </View>
 
-                <View>
-                  <Text style={{ fontWeight: "500", marginBottom: 8 }}>
-                    QTY
-                  </Text>
-                  <View
-                    style={{
-                      height: 44,
-                      borderWidth: 1,
-                      borderColor: "#d1d5db",
-                      borderRadius: 22,
-                      flexDirection: "row",
-                      alignItems: "center",
-                      width: 144,
-                      marginTop: 16,
-                    }}
-                  >
-                    <TouchableOpacity
-                      onPress={() => handleQuantityChange(quantity - 1)}
+                    <View
                       style={{
-                        flex: 1,
-                        justifyContent: "center",
+                        flexDirection: "row",
                         alignItems: "center",
-                        fontSize: 24,
-                        fontWeight: "500",
-                        borderRightWidth: 1,
-                        borderColor: "#d1d5db",
+                        marginTop: 28,
                       }}
                     >
-                      <Text>-</Text>
-                    </TouchableOpacity>
-                    <TextInput
-                      style={{
-                        fontSize: 18,
-                        fontWeight: "bold",
-                        textAlign: "center",
-                        flex: 1,
-                        paddingVertical: 4,
-                        backgroundColor: "transparent",
-                      }}
-                      value={String(quantity)}
-                      keyboardType="number-pad"
-                      onChangeText={(text) =>
-                        handleQuantityChange(parseInt(text))
-                      }
-                    />
-                    <TouchableOpacity
-                      onPress={() => handleQuantityChange(quantity + 1)}
-                      style={{
-                        flex: 1,
-                        justifyContent: "center",
-                        alignItems: "center",
-                        fontSize: 24,
-                        fontWeight: "500",
-                        borderLeftWidth: 1,
-                        borderColor: "#d1d5db",
-                      }}
-                    >
-                      <Text>+</Text>
-                    </TouchableOpacity>
+                      <TouchableOpacity
+                        style={{
+                          backgroundColor: "#3b82f6",
+                          borderWidth: 1,
+                          borderColor: "#3b82f6",
+                          color: "white",
+                          borderRadius: 4,
+                          paddingHorizontal: 40,
+                          paddingVertical: 10,
+                          marginRight: 8,
+                        }}
+                      >
+                        <Text style={{ color: "white" }}>BUY NOW</Text>
+                      </TouchableOpacity>
+                      <TouchableOpacity
+                        onPress={() => handleCartChange()}
+                        style={{
+                          borderWidth: 1,
+                          borderColor: "#3b82f6",
+                          color: "#3b82f6",
+                          borderRadius: 4,
+                          paddingHorizontal: 24,
+                          paddingVertical: 10,
+                          marginRight: 8,
+                        }}
+                      >
+                        <Text style={{ color: "#3b82f6" }}>Add to cart</Text>
+                      </TouchableOpacity>
+                      <TouchableOpacity
+                        style={{
+                          borderRadius: 4,
+                          paddingHorizontal: 12,
+                          paddingVertical: 8,
+                          marginRight: 8,
+                        }}
+                      >
+                        <Text
+                          style={{
+                            color: "#3b82f6",
+                            fontSize: 18,
+                            fontWeight: "bold",
+                          }}
+                        >
+                          ♡
+                        </Text>
+                      </TouchableOpacity>
+                      <TouchableOpacity
+                        style={{
+                          borderRadius: 4,
+                          paddingHorizontal: 12,
+                          paddingVertical: 8,
+                        }}
+                      >
+                        <Text
+                          style={{
+                            color: "#3b82f6",
+                            fontSize: 18,
+                            fontWeight: "bold",
+                          }}
+                        >
+                          ⇪
+                        </Text>
+                      </TouchableOpacity>
+                    </View>
                   </View>
-                </View>
-
-                <View
-                  style={{
-                    flexDirection: "row",
-                    alignItems: "center",
-                    marginTop: 28,
-                  }}
-                >
-                  <TouchableOpacity
-                    style={{
-                      backgroundColor: "#3b82f6",
-                      borderWidth: 1,
-                      borderColor: "#3b82f6",
-                      color: "white",
-                      borderRadius: 4,
-                      paddingHorizontal: 40,
-                      paddingVertical: 10,
-                      marginRight: 8,
-                    }}
-                  >
-                    <Text style={{ color: "white" }}>BUY NOW</Text>
-                  </TouchableOpacity>
-                  <TouchableOpacity
-                    onPress={() => handleCartChange()}
-                    style={{
-                      borderWidth: 1,
-                      borderColor: "#3b82f6",
-                      color: "#3b82f6",
-                      borderRadius: 4,
-                      paddingHorizontal: 24,
-                      paddingVertical: 10,
-                      marginRight: 8,
-                    }}
-                  >
-                    <Text style={{ color: "#3b82f6" }}>Add to cart</Text>
-                  </TouchableOpacity>
-                  <TouchableOpacity
-                    style={{
-                      borderRadius: 4,
-                      paddingHorizontal: 12,
-                      paddingVertical: 8,
-                      marginRight: 8,
-                    }}
-                  >
-                    <Text
-                      style={{
-                        color: "#3b82f6",
-                        fontSize: 18,
-                        fontWeight: "bold",
-                      }}
-                    >
-                      ♡
-                    </Text>
-                  </TouchableOpacity>
-                  <TouchableOpacity
-                    style={{
-                      borderRadius: 4,
-                      paddingHorizontal: 12,
-                      paddingVertical: 8,
-                    }}
-                  >
-                    <Text
-                      style={{
-                        color: "#3b82f6",
-                        fontSize: 18,
-                        fontWeight: "bold",
-                      }}
-                    >
-                      ⇪
-                    </Text>
-                  </TouchableOpacity>
-                </View>
-                </View>
-                }
-
+                )}
 
                 <View className="flex-row justify-center mt-4 mb-4">
                   <TouchableOpacity
@@ -642,7 +663,6 @@ const SingleProductDetails = ({ productData, productAttribute }) => {
                     <Text className="text-white">Write a review</Text>
                   </TouchableOpacity>
                 </View>
-            
               </View>
             </View>
           </View>
@@ -704,6 +724,8 @@ const SingleProductDetails = ({ productData, productAttribute }) => {
                 <TextInput
                   placeholder="Write a review..."
                   multiline={true}
+                  value={review}
+                  onChangeText={setReview}
                   numberOfLines={4}
                   className="border-salte-200 border-[0.5px] mx-4 my-2 rounded px-3"
                   style={{ backgroundColor: "white" }}
@@ -719,15 +741,16 @@ const SingleProductDetails = ({ productData, productAttribute }) => {
                 // showReadOnlyText={false}
                 fractions={1} // 0-20
                 jumpValue={0}
-                startingValue={1}
+                startingValue={0}
                 onStartRating={(rating) => console.log(`Inital: ${rating}`)}
                 onFinishRating={(rating) =>
-                  console.log(`Rating finished ${rating}`)
+                  setRating(rating)
                 }
                 onSwipeRating={(rating) => console.log(`Swiping: ${rating}`)}
               />
 
-              <TouchableOpacity className="bg-[#3b82f6] mt-5 p-2 rounded w-32 text-center items-center mx-4">
+
+              <TouchableOpacity onPress={handleSubmit} className="bg-[#3b82f6] mt-5 p-2 rounded w-32 text-center items-center mx-4">
                 <Text style={{ color: "white" }}>Post a review</Text>
               </TouchableOpacity>
             </RatingModal>
