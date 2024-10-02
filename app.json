@@ -20,7 +20,7 @@
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "package": "com.aabishkar.SajhaMarketPlace"
+      "package": "com.anup354.SajhaMarketPlace"
     },
     "web": {
       "bundler": "metro",
@@ -38,7 +38,7 @@
         "origin": false
       },
       "eas": {
-        "projectId": "3367ce57-07f5-4727-95b5-509a31f1cd8f"
+        "projectId": "24852df0-982e-4fe4-9ec0-d49d3c921043"
       }
     }
   }
