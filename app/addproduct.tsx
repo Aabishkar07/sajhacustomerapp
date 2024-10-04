@@ -50,9 +50,10 @@ const addproduct = () => {
 
 
   const handleEditPress = (product) => {
+   
     console.log("Product pressed:", product.id);
     router.push({
-      pathname: "/productdetails/[edit]",
+      pathname: "/productdetails/edit/[index]",
       params: { id: product.id },
     });
     // navigation.navigate("Single", { product });
