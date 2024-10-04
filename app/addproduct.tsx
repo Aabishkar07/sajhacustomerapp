@@ -118,7 +118,7 @@ const addproduct = () => {
 
       <Pressable onPress={()=>router.push('/createproduct')}>
 
-<Text>
+<Text className="bg-blue-600 rounded p-2 text-white  w-32 ml-2">
 Add my product    </Text>
 </Pressable>
 
@@ -126,8 +126,13 @@ Add my product    </Text>
           <DataTable.Header>
             <DataTable.Title>Product Name</DataTable.Title>
             <DataTable.Title numeric>Price</DataTable.Title>
-            <DataTable.Title numeric>Stock</DataTable.Title>
+            <DataTable.Title numeric></DataTable.Title>
+            <DataTable.Title numeric></DataTable.Title>
             <DataTable.Title numeric>Action</DataTable.Title>
+            <DataTable.Title numeric></DataTable.Title>
+            <DataTable.Title numeric></DataTable.Title>
+
+
           </DataTable.Header>
 
           {allProduct.slice(from, to).map((item) => (
@@ -136,7 +141,7 @@ Add my product    </Text>
               <DataTable.Cell numeric>
                 {item.product_price - item.discount_amount}
               </DataTable.Cell>
-              <DataTable.Cell numeric>{item.availablestock}</DataTable.Cell>
+              {/* <DataTable.Cell numeric>{item.availablestock}</DataTable.Cell> */}
               <DataTable.Cell numeric>
                 <Button
                   contentStyle={{ paddingVertical: 0, paddingHorizontal: 0 }}
@@ -144,7 +149,7 @@ Add my product    </Text>
 
                   // onPress={() => console.log(`View ${item.product_name}`)}
                 >
-                  <View className="p-2 text-white bg-red-400 rounded">
+                  <View className="p-2 text-white bg-blue-500 rounded">
                     <Text className="text-white ">View</Text>
                   </View>
                 </Button>
@@ -155,7 +160,7 @@ Add my product    </Text>
 
                   // onPress={() => console.log(`Delete ${item.id}`)}
                 >
-                  <View className="p-2 text-white bg-red-400 rounded">
+                  <View className="p-2 text-white bg-red-500 rounded">
                     <Text className="text-white ">Delete</Text>
                   </View>
                 </Button>
@@ -165,7 +170,7 @@ Add my product    </Text>
 
                   // onPress={() => console.log(`Delete ${item.id}`)}
                 >
-                  <View className="p-2 text-white bg-red-400 rounded">
+                  <View className="p-2 text-white bg-green-500 rounded">
                     <Text className="text-white ">Edit</Text>
                   </View>
                 </Button>

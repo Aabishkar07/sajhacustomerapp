@@ -17,7 +17,7 @@ import AntDesign from "react-native-vector-icons/AntDesign";
 import * as ImagePicker from "expo-image-picker";
 import { BaseUrl } from "@/components/baseurl/baseurl";
 import Header from "@/components/layouts/Header";
-import { useLocalSearchParams } from "expo-router";
+import { router, useLocalSearchParams } from "expo-router";
 
 const EditProduct = () => {
   const { id } = useLocalSearchParams();
@@ -31,11 +31,11 @@ const EditProduct = () => {
   const [expiryDate, setExpiryDate] = useState("");
   const [condValue, setCondValue] = useState(null);
   const [email, setEmail] = useState(null);
-  const [categoryData, setcategoryData] = useState([]);
+  const [categoryData, setCategoryData] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState(null);
 
   const [productData, setProductData] = useState(null);
-  const [productAttribute, setProductAttribute] = useState(null);
+
   const fetchEmail = useCallback(async () => {
     try {
       const storedEmail = await AsyncStorage.getItem("userEmail");
@@ -75,22 +75,21 @@ const EditProduct = () => {
     }
   };
 
-  const fetchCatgory = async () => {
+  const fetchCategory = async () => {
     try {
       const response1 = await axios.get(`${BaseUrl}productbyid/${id}`);
       setProductData(response1.data.data.product);
-      setProductAttribute(response1.data.data.attribute);
 
       const response = await axios.get(`${BaseUrl}category`);
-      const catgory = response.data;
-      setcategoryData(catgory);
+      const category = response.data;
+      setCategoryData(category);
     } catch (error) {
       console.log("error", error);
     }
   };
 
   useEffect(() => {
-    fetchCatgory();
+    fetchCategory();
   }, []);
 
   const onSubmit = async () => {
@@ -99,31 +98,27 @@ const EditProduct = () => {
       return;
     }
 
-    if (!billbookImage) {
-      Alert.alert("Error", "Please select an image");
-      return;
-    }
-
     const data = new FormData();
-    data.append("product_name", productName);
-    data.append("secondhand_condition", condValue);
-    data.append("secondhand_address", address);
-    data.append("description", details);
-    data.append("product_price", price);
-    data.append("secondhand_used_for", usedFor);
-    data.append("secondhand_expiry_date", expiryDate);
-    data.append("category_id", selectedCategory);
+    data.append("product_name", productName || productData.product_name);
+    data.append("secondhand_condition", condValue || productData.secondhand_condition);
+    data.append("secondhand_address", address || productData.secondhand_address);
+    data.append("description", details || productData.description);
+    data.append("product_price", price || productData.product_price);
+    data.append("secondhand_used_for", usedFor || productData.secondhand_used_for);
+    data.append("secondhand_expiry_date", expiryDate || productData.secondhand_expiry_date);
+    data.append("category_id", selectedCategory || productData.category.id);
 
-    data.append("image", {
-      uri: billbookImage.uri,
-      type: "image/jpeg",
-      name: billbookImage.fileName || "photo.jpg",
-    });
+    if (billbookImage) {
+      data.append("image", {
+        uri: billbookImage.uri,
+        type: "image/jpeg",
+        name: billbookImage.fileName || "photo.jpg",
+      });
+    }
 
     try {
       const response = await axios.post(
-        `${BaseUrl}secondhand/${email}`,
-
+        `${BaseUrl}product/${id}`,
         data,
         {
           headers: {
@@ -133,7 +128,8 @@ const EditProduct = () => {
       );
 
       if (response.status === 200) {
-        Alert.alert("Success", "You have successfully stored the product");
+        Alert.alert("Success", "Product updated successfully.");
+        router.push('/addproduct');
         resetForm();
       }
     } catch (err) {
@@ -151,7 +147,7 @@ const EditProduct = () => {
     setExpiryDate("");
     setCondValue(null);
     setBillbookImage(null);
-    setSelectedCategory(null); // Reset selected category as well
+    setSelectedCategory(null);
   };
 
   const ConditionValue = [
@@ -168,7 +164,7 @@ const EditProduct = () => {
             <Text style={styles.label}>Product Name:</Text>
             <TextInput
               style={styles.input}
-              value={productData.product_name}
+              value={productName || productData.product_name}
               onChangeText={setProductName}
             />
 
@@ -179,9 +175,14 @@ const EditProduct = () => {
               >
                 <Text style={styles.imagePickerText}>Add a photo</Text>
               </TouchableOpacity>
-              {billbookImage && (
+              {billbookImage ? (
                 <Image
                   source={{ uri: billbookImage.uri }}
+                  style={styles.image}
+                />
+              ) : (
+                <Image
+                  source={{ uri: `${BaseUrl}images/${productData.featured_image}` }}
                   style={styles.image}
                 />
               )}
@@ -199,7 +200,7 @@ const EditProduct = () => {
               labelField="label"
               valueField="value"
               placeholder="Choose a category"
-              value={productData.category.id}
+              value={selectedCategory || productData.category.id}
               onChange={(item) => setSelectedCategory(item.value)}
               renderLeftIcon={() => (
                 <AntDesign
@@ -220,7 +221,7 @@ const EditProduct = () => {
               labelField="condition"
               valueField="condition"
               placeholder="Choose an option"
-              value={productData.secondhand_condition}
+              value={condValue || productData.secondhand_condition}
               onChange={(item) => setCondValue(item.condition)}
               renderLeftIcon={() => (
                 <AntDesign
@@ -235,14 +236,14 @@ const EditProduct = () => {
             <Text style={styles.label}>Address:</Text>
             <TextInput
               style={styles.input}
-              value={productData.secondhand_address}
+              value={address || productData.secondhand_address}
               onChangeText={setAddress}
             />
 
             <Text style={styles.label}>Details:</Text>
             <TextInput
               style={styles.input}
-              value={productData.description}
+              value={details || productData.description}
               onChangeText={setDetails}
               multiline
             />
@@ -250,7 +251,7 @@ const EditProduct = () => {
             <Text style={styles.label}>Used For:</Text>
             <TextInput
               style={styles.input}
-              value={productData.secondhand_used_for}
+              value={usedFor || productData.secondhand_used_for}
               onChangeText={setUsedFor}
             />
 
@@ -258,7 +259,7 @@ const EditProduct = () => {
             <TextInput
               style={styles.input}
               keyboardType="numeric"
-              value={String(parseInt(productData.product_price))}
+              value={String(price || parseInt(productData.product_price))}
               onChangeText={setPrice}
             />
 
@@ -266,7 +267,7 @@ const EditProduct = () => {
             <TextInput
               style={styles.input}
               placeholder="YYYY-MM-DD"
-              value={productData.secondhand_expiry_date}
+              value={expiryDate || productData.secondhand_expiry_date}
               onChangeText={setExpiryDate}
             />
 
@@ -302,51 +303,56 @@ const styles = StyleSheet.create({
   },
   dropdown: {
     height: 50,
-    borderColor: "gray",
+    borderColor: "#ccc",
     borderWidth: 1,
-    borderRadius: 5,
+    borderRadius: 8,
     paddingHorizontal: 8,
     marginBottom: 16,
   },
   placeholderStyle: {
     fontSize: 16,
-    color: "gray",
+    color: "#888",
   },
   selectedTextStyle: {
     fontSize: 16,
-    color: "black",
+    color: "#000",
   },
   icon: {
-    marginRight: 10,
-  },
-  submitButton: {
-    backgroundColor: "#0F6FFF",
-    padding: 15,
-    borderRadius: 8,
-    alignItems: "center",
-  },
-  submitButtonText: {
-    color: "#fff",
-    fontSize: 16,
-    fontWeight: "bold",
-  },
-  image: {
-    width: 100,
-    height: 100,
-    marginVertical: 10,
+    marginRight: 8,
   },
   imagePickerContainer: {
     marginBottom: 16,
   },
   imagePickerButton: {
-    backgroundColor: "#e0e0e0",
-    padding: 10,
-    borderRadius: 5,
-    alignItems: "center",
+    backgroundColor: "#007BFF",
+    paddingVertical: 10,
+    paddingHorizontal: 15,
+    borderRadius: 4,
+    marginBottom: 10,
   },
   imagePickerText: {
-    color: "#333",
-    fontSize: 16,
+    color: "#fff",
+    fontWeight: "bold",
+    textAlign: "center",
+  },
+  image: {
+    width: "100%",
+    height: 200,
+    borderRadius: 8,
+    resizeMode: "contain",
+  },
+  submitButton: {
+    backgroundColor: "#28a745",
+    paddingVertical: 12,
+    paddingHorizontal: 15,
+    borderRadius: 4,
+    marginTop: 20,
+  },
+  submitButtonText: {
+    color: "#fff",
+    fontWeight: "bold",
+    textAlign: "center",
+    fontSize: 18,
   },
 });
 
