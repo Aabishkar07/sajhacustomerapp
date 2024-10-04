@@ -66,7 +66,7 @@ const addproduct = () => {
   
     try {
       const response = await axios.delete(
-        `https://sajhamarket.com.np/api/deleteproduct/${productId}`
+        `${BaseUrl}/deleteproduct/${productId}`
       );
   
       if (response.status === 200) {

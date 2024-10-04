@@ -40,6 +40,7 @@ const Homepage = () => {
   const [allProduct, setProductData] = useState([]); 
 
   const fetchData = async () => {
+    console.log("hello world!");
     try {
       const response = await Promise.all([
         axios.get(`${BaseUrl}category`),
