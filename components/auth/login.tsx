@@ -145,7 +145,7 @@ console.log(storedEmail,"hhh");
               </Text>
             </TouchableOpacity>
 
-            <View className="my-3">
+            {/* <View className="my-3">
               <View>
                 <Text className="inset-x-0 px-2 mx-auto mb-5 text-sm text-center w-fit bg-red">
                   Or continue with
@@ -168,7 +168,7 @@ console.log(storedEmail,"hhh");
                   </TouchableOpacity>
                 </View>
               </View>
-            </View>
+            </View> */}
           </View>
 
           <View className="px-8">
