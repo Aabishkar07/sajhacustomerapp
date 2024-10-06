@@ -35,20 +35,20 @@ const Signup = () => {
       return;
     }
 
-    if(!name){
+    if (!name) {
       Alert.alert("Error", "Name required");
       return;
     }
 
-    if(!email){
+    if (!email) {
       Alert.alert("Error", "Email required");
       return;
     }
-    if(!phone){
+    if (!phone) {
       Alert.alert("Error", "Phone required");
       return;
     }
-    if(!address){
+    if (!address) {
       Alert.alert("Error", "Address required");
       return;
     }
@@ -60,8 +60,7 @@ const Signup = () => {
       password_confirmation: passwordConfirmation,
       name: name,
       phone: phone,
-      address: address
-
+      address: address,
     };
 
     try {
@@ -73,7 +72,7 @@ const Signup = () => {
         Alert.alert("Success", "You have successfully registered");
         AsyncStorage.setItem("user", JSON.stringify(data.email));
 
-        router.push('/otpcheck'); 
+        router.push("/otpcheck");
       }
     } catch (err) {
       if (err.response && err.response.status === 404) {
@@ -87,7 +86,7 @@ const Signup = () => {
   };
 
   return (
-    <View>
+    <View className="pb-28">
       <ScrollView>
         <SafeAreaView>
           <View className="h-full bg-white">
@@ -110,12 +109,7 @@ const Signup = () => {
             </View>
 
             <View className="px-8">
-
-
-
-
-
-            <View className="flex-row items-center mt-5 w-full border border-gray-300 rounded-lg bg-gray-50">
+              <View className="flex-row items-center w-full mt-5 border border-gray-300 rounded-lg bg-gray-50">
                 <View className="p-2 border-r border-r-[#0F6FFF]">
                   <Icon name="account" size={30} color="#0F6FFF" />
                 </View>
@@ -127,7 +121,7 @@ const Signup = () => {
                   keyboardType="name"
                 />
               </View>
-              <View className="flex-row items-center mt-5 w-full border border-gray-300 rounded-lg bg-gray-50">
+              <View className="flex-row items-center w-full mt-5 border border-gray-300 rounded-lg bg-gray-50">
                 <View className="p-2 border-r border-r-[#0F6FFF]">
                   <Icon name="phone" size={30} color="#0F6FFF" />
                 </View>
@@ -137,9 +131,9 @@ const Signup = () => {
                   value={phone}
                   placeholder="Enter Your number"
                   keyboardType="numeric"
-                  />
+                />
               </View>
-              <View className="flex-row items-center mt-5 w-full border border-gray-300 rounded-lg bg-gray-50">
+              <View className="flex-row items-center w-full mt-5 border border-gray-300 rounded-lg bg-gray-50">
                 <View className="p-2 border-r border-r-[#0F6FFF]">
                   <Icon name="map-marker" size={30} color="#0F6FFF" />
                 </View>
@@ -206,7 +200,7 @@ const Signup = () => {
               </TouchableOpacity>
 
               {/* Continue with Google/Facebook */}
-              <View>
+              {/* <View>
                 <Text className="inset-x-0 px-2 mx-auto mb-5 text-sm text-center">
                   Or continue with
                 </Text>
@@ -222,7 +216,7 @@ const Signup = () => {
                     </Text>
                   </TouchableOpacity>
                 </View>
-              </View>
+              </View> */}
 
               {/* Login Redirect */}
               <View className="px-8 my-5">
@@ -232,9 +226,6 @@ const Signup = () => {
                     Login
                   </Text>
                 </TouchableOpacity>
-
-            
-
               </View>
             </View>
           </View>
