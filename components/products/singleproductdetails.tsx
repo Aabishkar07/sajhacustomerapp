@@ -1,4 +1,4 @@
-import { useLocalSearchParams } from "expo-router";
+import { router, useLocalSearchParams } from "expo-router";
 import React, { useContext, useEffect, useState } from "react";
 import {
   View,
@@ -21,6 +21,7 @@ import Icons from "react-native-vector-icons/MaterialCommunityIcons";
 import { AirbnbRating, Rating } from "react-native-ratings";
 import axios from "axios";
 import { BaseUrl } from "../baseurl/baseurl";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 const SingleProductDetails = ({ productData, productAttribute }) => {
   // Assuming useLocalSearchParams is a hook that gets query parameters or similar
   const { id } = useLocalSearchParams();
@@ -170,14 +171,34 @@ const SingleProductDetails = ({ productData, productAttribute }) => {
   };
 
 
-  const handleSubmit = () => {
+  const handleSubmit = async() => {
+    const email = await AsyncStorage.getItem('userEmail');
+      if(!email)
+      {
+        Alert.alert("Please Login to write Review.");
+      }
     if (review.trim() === '' || rating === 0) {
       Alert.alert('Error', 'Please provide a review and a rating');
       return;
     }
+    const data={
+      "review":review,
+      "rating":rating
+    };
+    try {
+      
+    
+      const res=await axios.post(`${BaseUrl}rating/store/${email}/${id}`,data)
+    } catch (error) {
+    console.log("error in rating",error)
+    }
     console.log('Review:', review);
     console.log('Rating:', rating);
     Alert.alert('Success', 'Review submitted!');
+    router.push({
+      pathname: "/productdetails/[index]",
+      params: { id: id },
+    });
   };
 
   return (
