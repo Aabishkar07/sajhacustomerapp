@@ -15,9 +15,9 @@ const   Profile = () => {
   });
 
   const fetchData = async () => {
-    const email = await AsyncStorage.getItem('email');
+    const email = await AsyncStorage.getItem('userEmail');
     try {
-      const response = await axios.get(`${BaseUrl}api/customer/customerdata/${email}`);
+      const response = await axios.get(`${BaseUrl}customer/customerdata/${email}`);
       const customerData = response.data;
       console.log(customerData);
       setData(customerData);
@@ -45,37 +45,31 @@ const   Profile = () => {
       </View>
 
       {/* Change Password */}
-      <TouchableOpacity style={styles.settingContainer}>
+      {/* <TouchableOpacity style={styles.settingContainer}>
         <Text style={styles.label}>Change Password</Text>
         <Icon name="chevron-right" size={24} color="#555" />
-      </TouchableOpacity>
+      </TouchableOpacity> */}
 
       {/* Change Mobile */}
       <TouchableOpacity style={styles.settingContainer}>
-        <Text style={styles.label}>Change Mobile</Text>
-        <Text style={styles.infoText}>{data.mobile}</Text>
-        <Icon name="chevron-right" size={24} color="#555" />
+        <Text style={styles.label}>Mobile</Text>
+        <Text style={styles.infoText}>{data.phone}</Text>
+        {/* <Icon name="chevron-right" size={24} color="#555" /> */}
       </TouchableOpacity>
 
       {/* Change Email */}
       <TouchableOpacity style={styles.settingContainer}>
-        <Text style={styles.label}>Change Email</Text>
-        <Text style={styles.infoText}>{data.email}</Text>
-        <Icon name="chevron-right" size={24} color="#555" />
+        <Text style={styles.label}>Email</Text>
+        <Text style={styles.infoText}> {data.email}</Text>
+        {/* <Icon name="chevron-right" size={24} color="#555" /> */}
       </TouchableOpacity>
 
-      {/* Gender */}
-      <TouchableOpacity style={styles.settingContainer}>
-        <Text style={styles.label}>Gender</Text>
-        <Text style={styles.infoText}>{data.gender}</Text>
-        <Icon name="chevron-right" size={24} color="#555" />
-      </TouchableOpacity>
 
       {/* Birthday */}
       <TouchableOpacity style={styles.settingContainer}>
-        <Text style={styles.label}>Birthday</Text>
-        <Text style={styles.infoText}>{data.birthday}</Text>
-        <Icon name="chevron-right" size={24} color="#555" />
+        <Text style={styles.label}>Address</Text>
+        <Text style={styles.infoText}>{data.address}</Text>
+        {/* <Icon name="chevron-right" size={24} color="#555" /> */}
       </TouchableOpacity>
     </View>
   );

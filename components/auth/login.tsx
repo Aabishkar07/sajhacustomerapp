@@ -45,21 +45,23 @@ const Login = () => {
 
       if (response.status === 200) {
         Alert.alert("Success", "You have successfully loggedin");
+        
         const email = response.data.email;
-console.log(email, "asdas");
+      console.log(email, "asdas");
 
         AsyncStorage.setItem("userEmail", email);  
         
         const storedEmail =  AsyncStorage.getItem('userEmail');
 console.log(storedEmail,"hhh");
         
-        router.push('/homepage')
+        router.push('/profile')
+
       }
     } catch (err) {
       if (err.response && err.response.status === 404) {
         Alert.alert("Error", "Endpoint not found");
       } else {
-        Alert.alert("Error", `An error occurred: ${err.message}`);
+        Alert.alert("Error", `Username or password is incorrect`);
       }
     }
   };
@@ -92,7 +94,7 @@ console.log(storedEmail,"hhh");
             </View>
           </View>
 
-          <View className="px-8 ">
+          <View className="px-8 pt-5">
             {/* email  */}
             <View className="flex-row items-center w-full my-5 border border-gray-300 rounded-lg bg-gray-50">
               <View className="p-2 border-r border-r-[#0F6FFF]">
