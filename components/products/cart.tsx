@@ -22,10 +22,11 @@ import Icons from "react-native-vector-icons/MaterialCommunityIcons";
 import Toast from "react-native-easy-toast";
 import Header from "../layouts/Header";
 import { Link, router } from "expo-router";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const cart = () => {
   const toastRef = React.createRef();
-
+  const [hasEmail, setHasEmail] = useState(false);
   const products = [
     {
       id: 1,
@@ -103,6 +104,23 @@ const cart = () => {
     const cart = await getCart();
     setCartItems(cart);
   };
+
+
+  useEffect(() => {
+    const checkToken = async () => {
+      try {
+        const email = await AsyncStorage.getItem("userEmail");
+
+        console.log(email, "email");
+        if (email) {
+          setHasEmail(true);
+        }
+      } catch (error) {
+        console.error("Failed to fetch the email from AsyncStorage", error);
+      }
+    };
+    checkToken();
+  }, []);
 
   return (
     <View style={styles.container}>
@@ -221,8 +239,8 @@ const cart = () => {
         </View>
         <TouchableOpacity
           style={styles.buyButton}
-          onPress={() => router.push("checkout")}
-        >
+          onPress={() => hasEmail ? router.push("checkout") : router.push("/profile/login")}
+          >
           <Text style={styles.buyButtonText}>BUY</Text>
         </TouchableOpacity>
       </View>
