@@ -609,20 +609,7 @@ const SingleProductDetails = ({ productData, productAttribute }) => {
                         marginTop: 28,
                       }}
                     >
-                      <TouchableOpacity
-                        style={{
-                          backgroundColor: "#3b82f6",
-                          borderWidth: 1,
-                          borderColor: "#3b82f6",
-                          color: "white",
-                          borderRadius: 4,
-                          paddingHorizontal: 40,
-                          paddingVertical: 10,
-                          marginRight: 8,
-                        }}
-                      >
-                        <Text style={{ color: "white" }}>BUY NOW</Text>
-                      </TouchableOpacity>
+                
                       <TouchableOpacity
                         onPress={() => handleCartChange()}
                         style={{
@@ -637,46 +624,8 @@ const SingleProductDetails = ({ productData, productAttribute }) => {
                       >
                         <Text style={{ color: "#3b82f6" }}>Add to cart</Text>
                       </TouchableOpacity>
-                      <TouchableOpacity
-                        style={{
-                          borderRadius: 4,
-                          paddingHorizontal: 12,
-                          paddingVertical: 8,
-                          marginRight: 8,
-                        }}
-                      >
-                        <Text
-                          style={{
-                            color: "#3b82f6",
-                            fontSize: 18,
-                            fontWeight: "bold",
-                          }}
-                        >
-                          ♡
-                        </Text>
-                      </TouchableOpacity>
-                      <TouchableOpacity
-                        style={{
-                          borderRadius: 4,
-                          paddingHorizontal: 12,
-                          paddingVertical: 8,
-                        }}
-                      >
-                        <Text
-                          style={{
-                            color: "#3b82f6",
-                            fontSize: 18,
-                            fontWeight: "bold",
-                          }}
-                        >
-                          ⇪
-                        </Text>
-                      </TouchableOpacity>
-                    </View>
-                  </View>
-                )}
-
-                <View className="flex-row justify-center mt-4 mb-4">
+                 
+                      <View className="flex-row justify-center mt-4 mb-4">
                   <TouchableOpacity
                     className="bg-[#3b82f6] p-2 rounded w-32  text-center items-center mx-4"
                     onPress={() => setVisible(true)}
@@ -684,13 +633,18 @@ const SingleProductDetails = ({ productData, productAttribute }) => {
                     <Text className="text-white">Write a review</Text>
                   </TouchableOpacity>
                 </View>
+                    </View>
+                  </View>
+                )}
+
+       
               </View>
             </View>
           </View>
 
           {/* attributes  */}
           {console.log(sections, "sections")}
-          {productAttribute && (
+          {/* {productAttribute && (
             <SectionList
               sections={sections}
               keyExtractor={(item) => item.id.toString()}
@@ -719,7 +673,68 @@ const SingleProductDetails = ({ productData, productAttribute }) => {
                 <Text style={styles.header}>{title}</Text>
               )}
             />
-          )}
+          )} */}
+
+
+{productAttribute && (
+  <SectionList className="px-5"
+    sections={sections}
+    keyExtractor={(item) => item.id.toString()}
+    renderItem={({ item, section }) => {
+      const isSelected = selectedItems[section.title]?.id === item.id;
+      // return (
+      //   <TouchableOpacity
+      //     style={[
+      //       styles.itemContainer,
+      //       isSelected && styles.selectedItemContainer,
+      //     ]}
+      //     onPress={() => handleItemClick(item, section.title)}
+      //   >
+      //     <Text
+      //       style={[
+      //         styles.itemText,
+      //         isSelected && styles.selectedItemText,
+      //       ]}
+      //     >
+      //       {item.name}
+      //     </Text>
+      //   </TouchableOpacity>
+      // );
+    }}
+    renderSectionHeader={({ section: { title } }) => (
+      <Text className="py-3" style={styles.header}>{title}</Text>
+    )}
+    renderSectionFooter={({ section }) => (
+      <FlatList
+        data={section.data}
+        keyExtractor={(item) => item.id.toString()}
+        horizontal
+        renderItem={({ item }) => {
+          const isSelected = selectedItems[section.title]?.id === item.id;
+          return (
+            <TouchableOpacity 
+            className="py-2 px-3"
+              style={[
+                styles.itemContainer,
+                isSelected && styles.selectedItemContainer,
+              ]}
+              onPress={() => handleItemClick(item, section.title)}
+            >
+              <Text 
+                style={[
+                  styles.itemText,
+                  isSelected && styles.selectedItemText,
+                ]}
+              >
+                {item.name}
+              </Text>
+            </TouchableOpacity>
+          );
+        }}
+      />
+    )}
+  />
+)}
 
           {/* RatingModal */}
           <View
@@ -794,12 +809,12 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     marginBottom: 16,
   },
-  header: {
-    fontSize: 18,
-    fontWeight: "bold",
-    marginTop: 16,
-    marginBottom: 8,
-  },
+  // header: {
+  //   fontSize: 18,
+  //   fontWeight: "bold",
+  //   marginTop: 16,
+  //   marginBottom: 8,
+  // },
   modalheader: {
     width: "100%",
     height: 40,
@@ -808,8 +823,7 @@ const styles = StyleSheet.create({
   },
   itemContainer: {
     padding: 8,
-    borderBottomWidth: 1,
-    borderBottomColor: "#ddd",
+    
   },
   selectedItemContainer: {
     backgroundColor: "#cce5ff", // Light blue background for selected item
@@ -826,8 +840,10 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     paddingBottom: 5,
-    borderBottomWidth: 1,
+    // borderBottomWidth: 1,
     borderBottomColor: "#ddd",
+        fontSize: 18,
+
   },
   headerText: {
     fontWeight: "bold",
