@@ -1,7 +1,8 @@
 {
   "expo": {
     "name": "Sajha MarketPlace",
-    "slug": "Sajha-MarketPlace",
+    "owner": "softsaro",
+    "slug": "sajha-marketplace-or-e-commerce",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/logo.png",
@@ -38,7 +39,7 @@
         "origin": false
       },
       "eas": {
-        "projectId": "24852df0-982e-4fe4-9ec0-d49d3c921043"
+        "projectId": "ff1edac3-d01c-43ec-9bb1-43559e55499e"
       }
     }
   }
