@@ -35,6 +35,11 @@ const SingleProductDetails = ({ productData, productAttribute }) => {
   const [review, setReview] = useState('');
   const [rating, setRating] = useState(0);
 
+
+
+
+
+
   const formatDate = (dateString) => {
     const date = new Date(dateString);
     return date.toLocaleDateString(); // Default format, can be customized
@@ -43,6 +48,42 @@ const SingleProductDetails = ({ productData, productAttribute }) => {
   const handleQuantityChange = (value) => {
     if (value >= 0) setQuantity(value);
   };
+
+
+// const fetchData = async()=>{
+//   const productid=id;
+//  try{
+//   const response = await axios.get(`${BaseUrl}rating/${productid}`);
+//   const alldata=response.data;
+//   console.log(alldata,"revieswsasdasdasd");
+//   setAllReview(alldata);
+// }catch(error){
+//   console.log('error', error);
+// }
+// }
+
+
+const [allReview, setAllReview] = useState([]);
+const [userData, setUserData] = useState([]);
+const productid = id; 
+
+const fetchData = async () => {
+  try {
+    const [allDataResponse, ratingResponse] = await Promise.all([
+      axios.get(`${BaseUrl}customeralldata`),
+      axios.get(`${BaseUrl}rating/${productid}`)
+    ]);
+
+    setUserData(allDataResponse.data);
+    setAllReview(ratingResponse.data);
+  } catch (error) {
+    console.log('error', error);
+  }
+};
+
+useEffect(() => {
+  fetchData();
+}, []);
 
   useEffect(() => {
     if (productAttribute) {
@@ -736,6 +777,32 @@ const SingleProductDetails = ({ productData, productAttribute }) => {
   />
 )}
 
+
+<View className="p-4 bg-gray-100 rounded-lg shadow-md">
+        <Text className="text-lg font-semibold mb-2 text-center text-gray-700">
+          Customer Reviews
+        </Text>
+        
+        {allReview.map((review) => {
+        const user = userData.find((user) => user.id === review.user_id); // Find the user with matching ID
+        const userName = user ? user.name : 'Unknown User'; // If user exists, use name; otherwise, fallback to 'Unknown User'
+        
+        return (
+          <View 
+            key={review.id} 
+            className="bg-white p-4 mb-4 rounded-lg shadow-sm border border-gray-200"
+          >
+            <Text className="text-sm text-gray-600 font-medium">User: {userName}</Text>
+            <Text className="text-sm text-gray-600 font-medium">Rating: {review.rating} ⭐</Text>
+            <Text className="mt-1 text-gray-800">{review.feedback}</Text>
+            <Text className="text-xs text-gray-500 mt-2">
+              {new Date(review.created_at).toLocaleDateString()}
+            </Text>
+          </View>
+        );
+      })}
+      </View>
+
           {/* RatingModal */}
           <View
             className="relative"
@@ -795,6 +862,15 @@ const SingleProductDetails = ({ productData, productAttribute }) => {
       ) : (
         <Text>Loading...</Text>
       )}
+
+
+
+
+
+
+
+
+
     </ScrollView>
   );
 };
