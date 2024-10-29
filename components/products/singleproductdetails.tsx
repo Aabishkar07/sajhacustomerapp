@@ -778,8 +778,8 @@ useEffect(() => {
 )}
 
 
-<View className="p-4 bg-gray-100 rounded-lg shadow-md">
-        <Text className="text-lg font-semibold mb-2 text-center text-gray-700">
+<View className="p-4 bg-gray-100 rounded-lg shadow-md mt-5">
+        <Text className="text-lg font-semibold mb-2 text-center text-gray-700 ">
           Customer Reviews
         </Text>
         
