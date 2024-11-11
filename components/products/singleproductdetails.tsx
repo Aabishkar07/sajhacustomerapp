@@ -35,6 +35,11 @@ const SingleProductDetails = ({ productData, productAttribute }) => {
   const [review, setReview] = useState('');
   const [rating, setRating] = useState(0);
 
+
+
+
+
+
   const formatDate = (dateString) => {
     const date = new Date(dateString);
     return date.toLocaleDateString(); // Default format, can be customized
@@ -43,6 +48,42 @@ const SingleProductDetails = ({ productData, productAttribute }) => {
   const handleQuantityChange = (value) => {
     if (value >= 0) setQuantity(value);
   };
+
+
+// const fetchData = async()=>{
+//   const productid=id;
+//  try{
+//   const response = await axios.get(`${BaseUrl}rating/${productid}`);
+//   const alldata=response.data;
+//   console.log(alldata,"revieswsasdasdasd");
+//   setAllReview(alldata);
+// }catch(error){
+//   console.log('error', error);
+// }
+// }
+
+
+const [allReview, setAllReview] = useState([]);
+const [userData, setUserData] = useState([]);
+const productid = id; 
+
+const fetchData = async () => {
+  try {
+    const [allDataResponse, ratingResponse] = await Promise.all([
+      axios.get(`${BaseUrl}customeralldata`),
+      axios.get(`${BaseUrl}rating/${productid}`)
+    ]);
+
+    setUserData(allDataResponse.data);
+    setAllReview(ratingResponse.data);
+  } catch (error) {
+    console.log('error', error);
+  }
+};
+
+useEffect(() => {
+  fetchData();
+}, []);
 
   useEffect(() => {
     if (productAttribute) {
@@ -609,20 +650,7 @@ const SingleProductDetails = ({ productData, productAttribute }) => {
                         marginTop: 28,
                       }}
                     >
-                      <TouchableOpacity
-                        style={{
-                          backgroundColor: "#3b82f6",
-                          borderWidth: 1,
-                          borderColor: "#3b82f6",
-                          color: "white",
-                          borderRadius: 4,
-                          paddingHorizontal: 40,
-                          paddingVertical: 10,
-                          marginRight: 8,
-                        }}
-                      >
-                        <Text style={{ color: "white" }}>BUY NOW</Text>
-                      </TouchableOpacity>
+                
                       <TouchableOpacity
                         onPress={() => handleCartChange()}
                         style={{
@@ -637,46 +665,8 @@ const SingleProductDetails = ({ productData, productAttribute }) => {
                       >
                         <Text style={{ color: "#3b82f6" }}>Add to cart</Text>
                       </TouchableOpacity>
-                      <TouchableOpacity
-                        style={{
-                          borderRadius: 4,
-                          paddingHorizontal: 12,
-                          paddingVertical: 8,
-                          marginRight: 8,
-                        }}
-                      >
-                        <Text
-                          style={{
-                            color: "#3b82f6",
-                            fontSize: 18,
-                            fontWeight: "bold",
-                          }}
-                        >
-                          ♡
-                        </Text>
-                      </TouchableOpacity>
-                      <TouchableOpacity
-                        style={{
-                          borderRadius: 4,
-                          paddingHorizontal: 12,
-                          paddingVertical: 8,
-                        }}
-                      >
-                        <Text
-                          style={{
-                            color: "#3b82f6",
-                            fontSize: 18,
-                            fontWeight: "bold",
-                          }}
-                        >
-                          ⇪
-                        </Text>
-                      </TouchableOpacity>
-                    </View>
-                  </View>
-                )}
-
-                <View className="flex-row justify-center mt-4 mb-4">
+                 
+                      <View className="flex-row justify-center mt-4 mb-4">
                   <TouchableOpacity
                     className="bg-[#3b82f6] p-2 rounded w-32  text-center items-center mx-4"
                     onPress={() => setVisible(true)}
@@ -684,13 +674,18 @@ const SingleProductDetails = ({ productData, productAttribute }) => {
                     <Text className="text-white">Write a review</Text>
                   </TouchableOpacity>
                 </View>
+                    </View>
+                  </View>
+                )}
+
+       
               </View>
             </View>
           </View>
 
           {/* attributes  */}
           {console.log(sections, "sections")}
-          {productAttribute && (
+          {/* {productAttribute && (
             <SectionList
               sections={sections}
               keyExtractor={(item) => item.id.toString()}
@@ -719,7 +714,94 @@ const SingleProductDetails = ({ productData, productAttribute }) => {
                 <Text style={styles.header}>{title}</Text>
               )}
             />
-          )}
+          )} */}
+
+
+{productAttribute && (
+  <SectionList className="px-5"
+    sections={sections}
+    keyExtractor={(item) => item.id.toString()}
+    renderItem={({ item, section }) => {
+      const isSelected = selectedItems[section.title]?.id === item.id;
+      // return (
+      //   <TouchableOpacity
+      //     style={[
+      //       styles.itemContainer,
+      //       isSelected && styles.selectedItemContainer,
+      //     ]}
+      //     onPress={() => handleItemClick(item, section.title)}
+      //   >
+      //     <Text
+      //       style={[
+      //         styles.itemText,
+      //         isSelected && styles.selectedItemText,
+      //       ]}
+      //     >
+      //       {item.name}
+      //     </Text>
+      //   </TouchableOpacity>
+      // );
+    }}
+    renderSectionHeader={({ section: { title } }) => (
+      <Text className="py-3" style={styles.header}>{title}</Text>
+    )}
+    renderSectionFooter={({ section }) => (
+      <FlatList
+        data={section.data}
+        keyExtractor={(item) => item.id.toString()}
+        horizontal
+        renderItem={({ item }) => {
+          const isSelected = selectedItems[section.title]?.id === item.id;
+          return (
+            <TouchableOpacity 
+            className="py-2 px-3"
+              style={[
+                styles.itemContainer,
+                isSelected && styles.selectedItemContainer,
+              ]}
+              onPress={() => handleItemClick(item, section.title)}
+            >
+              <Text 
+                style={[
+                  styles.itemText,
+                  isSelected && styles.selectedItemText,
+                ]}
+              >
+                {item.name}
+              </Text>
+            </TouchableOpacity>
+          );
+        }}
+      />
+    )}
+  />
+)}
+
+
+<View className="p-4 bg-gray-100 rounded-lg shadow-md mt-5">
+        <Text className="text-lg font-semibold mb-2 text-center text-gray-700 ">
+          Customer Reviews
+        </Text>
+        
+        {allReview.map((review) => {
+        const user = userData.find((user) => user.id === review.user_id); // Find the user with matching ID
+        const userName = user ? user.name : 'Unknown User'; // If user exists, use name; otherwise, fallback to 'Unknown User'
+        
+        return (
+          <View 
+            key={review.id} 
+            className="bg-white p-4 mb-4 rounded-lg shadow-sm border border-gray-200"
+          >
+            <Text className="text-sm text-gray-600 font-medium">User: {userName}</Text>
+            <Text className="text-sm text-gray-600 font-medium">Rating: {review.rating} ⭐</Text>
+            <Text className="mt-1 text-gray-800">{review.feedback}</Text>
+            <Text className="text-xs text-gray-500 mt-2">
+              {new Date(review.created_at).toLocaleDateString()}
+            </Text>
+          </View>
+        );
+      })}
+      </View>
 
           {/* RatingModal */}
           <View
@@ -780,6 +862,15 @@ const SingleProductDetails = ({ productData, productAttribute }) => {
       ) : (
         <Text>Loading...</Text>
       )}
+
+
+
+
+
+
+
+
+
     </ScrollView>
   );
 };
@@ -794,12 +885,12 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     marginBottom: 16,
   },
-  header: {
-    fontSize: 18,
-    fontWeight: "bold",
-    marginTop: 16,
-    marginBottom: 8,
-  },
+  // header: {
+  //   fontSize: 18,
+  //   fontWeight: "bold",
+  //   marginTop: 16,
+  //   marginBottom: 8,
+  // },
   modalheader: {
     width: "100%",
     height: 40,
@@ -808,8 +899,7 @@ const styles = StyleSheet.create({
   },
   itemContainer: {
     padding: 8,
-    borderBottomWidth: 1,
-    borderBottomColor: "#ddd",
+    
   },
   selectedItemContainer: {
     backgroundColor: "#cce5ff", // Light blue background for selected item
@@ -826,8 +916,10 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     paddingBottom: 5,
-    borderBottomWidth: 1,
+    // borderBottomWidth: 1,
     borderBottomColor: "#ddd",
+        fontSize: 18,
+
   },
   headerText: {
     fontWeight: "bold",
