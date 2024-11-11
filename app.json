@@ -5,7 +5,7 @@
     "slug": "sajha-marketplace-or-e-commerce",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/images/logo.png",
+    "icon": "./assets/images/logo.jpg",
     "scheme": "myapp",
     "userInterfaceStyle": "automatic",
     "splash": {
@@ -18,7 +18,7 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/images/adaptive-icon.png",
+        "foregroundImage": "./assets/images/logo.jpg",
         "backgroundColor": "#ffffff"
       },
       "package": "com.anup354.SajhaMarketPlace"
