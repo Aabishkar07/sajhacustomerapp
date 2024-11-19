@@ -14,8 +14,7 @@
       "backgroundColor": "#ffffff"
     },
     "ios": {
-      "supportsTablet": true,
-      "bundleIdentifier": "com.anup354.SajhaMarketPlace"
+      "supportsTablet": true
     },
     "android": {
       "adaptiveIcon": {
