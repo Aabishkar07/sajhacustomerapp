@@ -1,36 +1,17 @@
 {
   "expo": {
-    "name": "Sajha MarketPlace",
     "owner": "softsaro",
+    "name": "Sajha MarketPlace",
     "slug": "sajha-marketplace-or-e-commerce",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "orientation": "portrait",
-    "icon": "./assets/images/logo.jpg",
+    "icon": "./assets/images/applogo.png",
     "scheme": "myapp",
     "userInterfaceStyle": "automatic",
-    "splash": {
-      "image": "./assets/images/splash.png",
-      "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
-    },
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.anup354.SajhaMarketPlace"
     },
-    "android": {
-      "adaptiveIcon": {
-        "foregroundImage": "./assets/images/logo.jpg",
-        "backgroundColor": "#ffffff"
-      },
-      "package": "com.anup354.SajhaMarketPlace"
-    },
-    "web": {
-      "bundler": "metro",
-      "output": "static",
-      "favicon": "./assets/images/favicon.png"
-    },
-    "plugins": [
-      "expo-router"
-    ],
     "experiments": {
       "typedRoutes": true
     },
@@ -41,6 +22,9 @@
       "eas": {
         "projectId": "ff1edac3-d01c-43ec-9bb1-43559e55499e"
       }
+    },
+    "android": {
+      "package": "com.anup354.SajhaMarketPlace"
     }
   }
 }
